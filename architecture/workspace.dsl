@@ -240,6 +240,100 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
         vrata.arApi -> vrata.db "Pravice uradnikov" "JDBC"
         vrata.admin -> vrata.idp "Prijava upravljavcev (MFA)"
         vrata.tct -> vrata.gateService.registri "Rezultat TCT za priklop"
+
+        prod = deploymentEnvironment "Produkcija" {
+            lok1 = deploymentGroup "Lokacija 1"
+            lok2 = deploymentGroup "Lokacija 2"
+        dc1 = deploymentNode "Podatkovni center 1 (primarna lokacija)" "Aktivna lokacija; varianta gostovanja H1/H2/H3 po M2." "Slovenija" {
+            dc1Dmz = deploymentNode "Cona DMZ" "Vstopna točka in eDelivery." "Požarni zid, WAF" {
+                dc1Waf = infrastructureNode "Vstopna točka (reverse proxy, API gateway, WAF)" "TLS 1.2+, mTLS, omejevanje hitrosti (2 VM)." "" "Dodatek SI"
+                deploymentNode "eDelivery Access Point" "" "VM, 2 × 4 vCPU / 8 GB" "" 2 {
+                    containerInstance vrata.ap lok1
+                }
+            }
+            dc1App = deploymentNode "Aplikacijska cona" "" "Virtualizacija ali gruča vsebnikov" {
+                deploymentNode "eFTI Gate Service" "" "VM ali pod, 3 × 4 vCPU / 8 GB" "" 3 {
+                    containerInstance vrata.gateService lok1
+                    containerInstance vrata.caApi lok1
+                }
+                deploymentNode "Storitve upravljanja" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
+                    containerInstance vrata.adminApi lok1
+                    containerInstance vrata.auditApi lok1
+                    containerInstance vrata.admin lok1
+                }
+                deploymentNode "Strežnik identitet" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
+                    containerInstance vrata.idp lok1
+                }
+                deploymentNode "Sporočilni posrednik" "" "gruča, 3 × 2 vCPU / 4 GB" "" 3 {
+                    containerInstance vrata.mq lok1
+                }
+            }
+            dc1Data = deploymentNode "Podatkovna cona" "" "šifrirana shramba" {
+                deploymentNode "PostgreSQL" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
+                    containerInstance vrata.db lok1
+                }
+                deploymentNode "MariaDB" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
+                    containerInstance vrata.apDb lok1
+                }
+                deploymentNode "Objektna shramba WORM" "" "≥ 1 TB" {
+                    containerInstance vrata.logStore lok1
+                }
+            }
+            dc1Mgmt = deploymentNode "Upravljalna cona" "" "dostop le prek bastiona" {
+                deploymentNode "Nadzor in dnevniki" "" "2 × 4 vCPU / 16 GB / 500 GB" "" 2 {
+                    containerInstance vrata.monitoring lok1
+                }
+                dc1Bastion = infrastructureNode "Bastion" "Upravljalni dostop z MFA." "" "Dodatek SI"
+            }
+            dc1Hsm = infrastructureNode "HSM (2 × v HA)" "Zasebni ključi eDelivery Access Point (FIPS 140-2/3 raven 3 ali CC EAL4+)." "PKCS#11" "Dodatek SI"
+        }
+
+        dc2 = deploymentNode "Podatkovni center 2 (rezervna lokacija)" "Pripravljena lokacija (aktivno-pasivno), RTO 4 h, RPO 15 min." "Slovenija" {
+            dc2Dmz = deploymentNode "Cona DMZ" "Vstopna točka in eDelivery." "Požarni zid, WAF" {
+                dc2Waf = infrastructureNode "Vstopna točka (reverse proxy, API gateway, WAF)" "TLS 1.2+, mTLS, omejevanje hitrosti (2 VM)." "" "Dodatek SI"
+                deploymentNode "eDelivery Access Point" "" "VM, 2 × 4 vCPU / 8 GB" "" 2 {
+                    containerInstance vrata.ap lok2
+                }
+            }
+            dc2App = deploymentNode "Aplikacijska cona" "" "Virtualizacija ali gruča vsebnikov" {
+                deploymentNode "eFTI Gate Service" "" "VM ali pod, 3 × 4 vCPU / 8 GB" "" 3 {
+                    containerInstance vrata.gateService lok2
+                    containerInstance vrata.caApi lok2
+                }
+                deploymentNode "Storitve upravljanja" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
+                    containerInstance vrata.adminApi lok2
+                    containerInstance vrata.auditApi lok2
+                    containerInstance vrata.admin lok2
+                }
+                deploymentNode "Strežnik identitet" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
+                    containerInstance vrata.idp lok2
+                }
+                deploymentNode "Sporočilni posrednik" "" "gruča, 3 × 2 vCPU / 4 GB" "" 3 {
+                    containerInstance vrata.mq lok2
+                }
+            }
+            dc2Data = deploymentNode "Podatkovna cona" "" "šifrirana shramba" {
+                deploymentNode "PostgreSQL" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
+                    containerInstance vrata.db lok2
+                }
+                deploymentNode "MariaDB" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
+                    containerInstance vrata.apDb lok2
+                }
+                deploymentNode "Objektna shramba WORM" "" "≥ 1 TB" {
+                    containerInstance vrata.logStore lok2
+                }
+            }
+            dc2Mgmt = deploymentNode "Upravljalna cona" "" "dostop le prek bastiona" {
+                deploymentNode "Nadzor in dnevniki" "" "2 × 4 vCPU / 16 GB / 500 GB" "" 2 {
+                    containerInstance vrata.monitoring lok2
+                }
+                dc2Bastion = infrastructureNode "Bastion" "Upravljalni dostop z MFA." "" "Dodatek SI"
+            }
+            dc2Hsm = infrastructureNode "HSM (2 × v HA)" "Zasebni ključi eDelivery Access Point (FIPS 140-2/3 raven 3 ali CC EAL4+)." "PKCS#11" "Dodatek SI"
+        }
+
+            dc1 -> dc2 "Asinhrona replikacija podatkov in revizijskih sledi; varnostne kopije" "šifrirana povezava ≥ 1 Gbit/s"
+        }
     }
 
     views {
@@ -271,6 +365,17 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
 
         component vrata.gateService "C3-Komponente" "Raven 3: komponente eFTI Gate Service" {
             include *
+            autoLayout lr
+        }
+
+        deployment vrata "Produkcija" "C4-Namestitev-Pregled" "Produkcija na dveh lokacijah: cone, HSM, replikacija (pogl. 5.5)" {
+            include prod.dc1 prod.dc2
+            exclude "element.type==ContainerInstance"
+            autoLayout lr
+        }
+
+        deployment vrata "Produkcija" "C4-Namestitev-Lokacija" "Podrobna namestitev na eni lokaciji (rezervna lokacija je enaka)" {
+            include prod.dc1
             autoLayout lr
         }
 
@@ -363,6 +468,10 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
             }
             element "Database" {
                 shape Cylinder
+            }
+            element "Deployment Node" {
+                background #ffffff
+                color #000000
             }
             element "API" {
                 shape Hexagon

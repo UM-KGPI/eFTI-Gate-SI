@@ -1,0 +1,267 @@
+@startuml
+set separator none
+title eFTI Gate - Deployment - Produkcija
+
+left to right direction
+skinparam ranksep 60
+skinparam nodesep 30
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Bastion>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam database<<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.MariaDB.Bazadostopnetočke_1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.HSM2vHA>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.MariaDB>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Nadzorindnevniki.NadzordelovanjainSIEM_1>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Nadzorindnevniki>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam database<<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.PostgreSQL.PodatkovnabazaeFTIGate_1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.PostgreSQL>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam database<<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM.Shrambarevizijskihsledi_1>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Sporočilniposrednik>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam queue<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Sporočilniposrednik.Sporočilniposrednik_1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet.Strežnikidentitet_1>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.Upravljavskaaplikacija_1>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.VstopnatočkareverseproxyAPIgatewayWAF>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint.eDeliveryAccessPoint_1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam hexagon<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateAAPAPI3_1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam hexagon<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAdministrationAPI_1>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam hexagon<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAuditandStatisticsAPI_1>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+  shadowing false
+}
+skinparam rectangle<<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+
+rectangle "Podatkovni center 1 (primarna lokacija)\n<size:10>[Deployment Node: Slovenija]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija>> as Produkcija.Podatkovnicenter1primarnalokacija {
+  rectangle "Cona DMZ\n<size:10>[Deployment Node: Požarni zid, WAF]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ>> as Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ {
+    rectangle "==Vstopna točka (reverse proxy, API gateway, WAF)\n<size:10>[Infrastructure Node]</size>\n\nTLS 1.2+, mTLS, omejevanje hitrosti (2 VM)." <<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.VstopnatočkareverseproxyAPIgatewayWAF>> as Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.VstopnatočkareverseproxyAPIgatewayWAF
+    rectangle "eDelivery Access Point (x2)\n<size:10>[Deployment Node: VM, 2 × 4 vCPU / 8 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint>> as Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint {
+      rectangle "==eDelivery Access Point\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint.eDeliveryAccessPoint_1>> as Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint.eDeliveryAccessPoint_1
+    }
+
+  }
+
+  rectangle "Aplikacijska cona\n<size:10>[Deployment Node: Virtualizacija ali gruča vsebnikov]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona {
+    rectangle "eFTI Gate Service (x3)\n<size:10>[Deployment Node: VM ali pod, 3 × 4 vCPU / 8 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService {
+      rectangle "==eFTI Gate Service\n<size:10>[Container: Java 21+, Spring Boot]</size>\n\nJedro eFTI Gate: vmesniki, obdelava zahtev, usmerjanje, revizijska sled. V RI ena storitev iz knjižnic." <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1
+      hexagon "==eFTI Gate AAP API (#3)\n<size:10>[Container: REST/JSON, mTLS, OAuth 2.0]</size>\n\nOpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateAAPAPI3_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateAAPAPI3_1
+    }
+
+    rectangle "Storitve upravljanja (x2)\n<size:10>[Deployment Node: VM ali pod, 2 × 2 vCPU / 4 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja {
+      hexagon "==eFTI Gate Administration API\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nOpenAPI: registri eFTI Gate, AAP in Registry of eFTI Platforms, priklop (čl. 6(4)), začasni odklop, šifranti, sinhronizacija statusov (R2)." <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAdministrationAPI_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAdministrationAPI_1
+      hexagon "==eFTI Gate Audit and Statistics API\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nOpenAPI: iskanje po revizijski sledi, izvozi za pristojne organe, letna statistika (čl. 17 Uredbe 2020/1056)." <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAuditandStatisticsAPI_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAuditandStatisticsAPI_1
+      rectangle "==Upravljavska aplikacija\n<size:10>[Container: Spletna aplikacija]</size>\n\nRegistri povezav, priklop eFTI Platform (tudi čl. 6(4)), certifikati, šifranti, pregled revizijskih sledi, statistika." <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.Upravljavskaaplikacija_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.Upravljavskaaplikacija_1
+    }
+
+    rectangle "Strežnik identitet (x2)\n<size:10>[Deployment Node: VM ali pod, 2 × 2 vCPU / 4 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet {
+      rectangle "==Strežnik identitet\n<size:10>[Container: OIDC (npr. Keycloak)]</size>\n\nOIDC/OAuth2 za upravljavce in strojne odjemalce; v RI le primer (Keycloak)." <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet.Strežnikidentitet_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet.Strežnikidentitet_1
+    }
+
+    rectangle "Sporočilni posrednik (x3)\n<size:10>[Deployment Node: gruča, 3 × 2 vCPU / 4 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Sporočilniposrednik>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Sporočilniposrednik {
+      queue "==Sporočilni posrednik\n<size:10>[Container: RabbitMQ]</size>\n\nTrajna vrsta asinhronih zahtev." <<Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Sporočilniposrednik.Sporočilniposrednik_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Sporočilniposrednik.Sporočilniposrednik_1
+    }
+
+  }
+
+  rectangle "Podatkovna cona\n<size:10>[Deployment Node: šifrirana shramba]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona>> as Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona {
+    rectangle "PostgreSQL (x2)\n<size:10>[Deployment Node: primarna + replika, 4 vCPU / 16 GB / 250 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.PostgreSQL>> as Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.PostgreSQL {
+      database "==Podatkovna baza eFTI Gate\n<size:10>[Container: PostgreSQL]</size>\n\nRegistry of Identifiers, registri povezav, stanje zahtev." <<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.PostgreSQL.PodatkovnabazaeFTIGate_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.PostgreSQL.PodatkovnabazaeFTIGate_1
+    }
+
+    rectangle "MariaDB (x2)\n<size:10>[Deployment Node: primarna + replika, 4 vCPU / 16 GB / 250 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.MariaDB>> as Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.MariaDB {
+      database "==Baza dostopne točke\n<size:10>[Container: MariaDB]</size>\n\nSporočila in konfiguracija Domibus." <<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.MariaDB.Bazadostopnetočke_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.MariaDB.Bazadostopnetočke_1
+    }
+
+    rectangle "Objektna shramba WORM\n<size:10>[Deployment Node: ≥ 1 TB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM>> as Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM {
+      database "==Shramba revizijskih sledi\n<size:10>[Container]</size>\n\nNespremenljiva hramba (npr. WORM ali veriženje zgoščenih vrednosti), 2 leti ali več (čl. 6(2)(h))." <<Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM.Shrambarevizijskihsledi_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM.Shrambarevizijskihsledi_1
+    }
+
+  }
+
+  rectangle "Upravljalna cona\n<size:10>[Deployment Node: dostop le prek bastiona]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona>> as Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona {
+    rectangle "Nadzor in dnevniki (x2)\n<size:10>[Deployment Node: 2 × 4 vCPU / 16 GB / 500 GB]</size>" <<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Nadzorindnevniki>> as Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Nadzorindnevniki {
+      rectangle "==Nadzor delovanja in SIEM\n<size:10>[Container]</size>\n\nMetrike, alarmi, varnostni dogodki; povezava s SOC." <<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Nadzorindnevniki.NadzordelovanjainSIEM_1>> as Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Nadzorindnevniki.NadzordelovanjainSIEM_1
+    }
+
+    rectangle "==Bastion\n<size:10>[Infrastructure Node]</size>\n\nUpravljalni dostop z MFA." <<Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Bastion>> as Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Bastion
+  }
+
+  rectangle "==HSM (2 × v HA)\n<size:10>[Infrastructure Node: PKCS#11]</size>\n\nZasebni ključi eDelivery Access Point (FIPS 140-2/3 raven 3 ali CC EAL4+)." <<Produkcija.Podatkovnicenter1primarnalokacija.HSM2vHA>> as Produkcija.Podatkovnicenter1primarnalokacija.HSM2vHA
+}
+
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint.eDeliveryAccessPoint_1 : "<color:#707070>Pošiljanje in prejem sporočil AS4\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
+Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint.eDeliveryAccessPoint_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 : "<color:#707070>Dostava prejetih sporočil\n<color:#707070><size:8>[JMS/WS]</size>"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateAAPAPI3_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 : "<color:#707070>Predaja zahtev"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAdministrationAPI_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 : "<color:#707070>Branje in pisanje registrov"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAuditandStatisticsAPI_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 : "<color:#707070>Letna statistika"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.Upravljavskaaplikacija_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAdministrationAPI_1 : "<color:#707070>Upravljanje registrov, priklopa in šifrantov\n<color:#707070><size:8>[HTTPS/JSON]</size>"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.Upravljavskaaplikacija_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAuditandStatisticsAPI_1 : "<color:#707070>Revizijska sled, izvozi, statistika\n<color:#707070><size:8>[HTTPS/JSON]</size>"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateAAPAPI3_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet.Strežnikidentitet_1 : "<color:#707070>Preverjanje odjemalca in žetonov"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAdministrationAPI_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet.Strežnikidentitet_1 : "<color:#707070>Preverjanje žetonov"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAuditandStatisticsAPI_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet.Strežnikidentitet_1 : "<color:#707070>Preverjanje žetonov"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.Upravljavskaaplikacija_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Strežnikidentitet.Strežnikidentitet_1 : "<color:#707070>Prijava upravljavcev (MFA)"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Sporočilniposrednik.Sporočilniposrednik_1 : "<color:#707070>Asinhrona obdelava\n<color:#707070><size:8>[AMQP]</size>"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.PostgreSQL.PodatkovnabazaeFTIGate_1 : "<color:#707070>Stanje zahtev\n<color:#707070><size:8>[JDBC]</size>"
+Produkcija.Podatkovnicenter1primarnalokacija.ConaDMZ.eDeliveryAccessPoint.eDeliveryAccessPoint_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.MariaDB.Bazadostopnetočke_1 : "<color:#707070>Sporočila\n<color:#707070><size:8>[JDBC]</size>"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM.Shrambarevizijskihsledi_1 : "<color:#707070>Zapisi revizijske sledi"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.Storitveupravljanja.eFTIGateAuditandStatisticsAPI_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Podatkovnacona.ObjektnashrambaWORM.Shrambarevizijskihsledi_1 : "<color:#707070>Branje revizijskih sledi"
+Produkcija.Podatkovnicenter1primarnalokacija.Aplikacijskacona.eFTIGateService.eFTIGateService_1 .[#707070,thickness=2].> Produkcija.Podatkovnicenter1primarnalokacija.Upravljalnacona.Nadzorindnevniki.NadzordelovanjainSIEM_1 : "<color:#707070>Tehnični in varnostni dogodki"
+@enduml

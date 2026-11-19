@@ -1,0 +1,86 @@
+@startuml
+set separator none
+
+skinparam {
+  shadowing false
+  arrowFontSize 15
+  defaultTextAlignment center
+  wrapWidth 100
+  maxMessageSize 100
+}
+hide stereotype
+
+skinparam rectangle<<_transparent>> {
+  BorderColor transparent
+  BackgroundColor transparent
+  FontColor transparent
+}
+
+skinparam rectangle<<1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+rectangle "==Container" <<1>>
+
+skinparam hexagon<<2>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+hexagon "==Container, API" <<2>>
+
+skinparam hexagon<<3>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+hexagon "==Container, API, Dodatek SI" <<3>>
+
+skinparam database<<4>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+database "==Container, Database" <<4>>
+
+skinparam rectangle<<5>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+rectangle "==Container, Dodatek SI" <<5>>
+
+skinparam database<<6>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+database "==Container, Dodatek SI, Database" <<6>>
+
+skinparam queue<<7>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+queue "==Container, Queue" <<7>>
+
+skinparam rectangle<<8>> {
+  BackgroundColor #ffffff
+  FontColor #000000
+  BorderColor #888888
+}
+rectangle "==Deployment Node" <<8>>
+
+skinparam rectangle<<9>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+rectangle "==Dodatek SI" <<9>>
+
+rectangle "." <<_transparent>> as 10
+10 .[#707070,thickness=2].> 10 : "<color:#707070>Relationship"
+
+
+@enduml
