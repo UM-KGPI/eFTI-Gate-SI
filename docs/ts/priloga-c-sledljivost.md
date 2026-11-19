@@ -2,7 +2,7 @@
 
 > **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.
 >
-> Število zahtev: 122. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0.
+> Število zahtev: 190. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0.
 
 | Oznaka | Kratek opis | Vir | P | Komp. | Preverjanje | Pogl. |
 |---|---|---|---|---|---|---|
@@ -128,3 +128,71 @@
 | SI-GATE-FR-292 | Identifikatorji strank in končnih točk morajo slediti dogovorjenim pravilom poimenovanja (ICD v0.5 P-22; … | ICD v0.5 §6.1 | M | ED, OP | P | 7 |
 | SI-GATE-FR-293 | Povezovalnik mora preslikati korelacijske identifikatorje v glavo AS4 (MessageId, ConversationId, … | ICD v0.5 §8.4 | M | PE, ED | T | 7 |
 | SI-GATE-FR-294 | Prehod mora podpirati nadgradnjo dostopne točke eDelivery (npr. na Domibus 2.x) brez spremembe vmesnikov #1 … | Praga, Q&A DG MOVE (vpr. 14) | M | ED, OP | A | 7 |
+| SI-GATE-NFR-001 | Prehod eFTI mora delovati neprekinjeno (24/7/365), ker nadzor prevozov poteka ves čas. | NL PvE NF-1; čl. 3(3)(d) | M | PE, ED | A, T | 8 |
+| SI-GATE-NFR-002 | Mesečna razpoložljivost storitev prehoda (vmesniki #1, #2, #3) mora znašati vsaj **99,5 %** [predlog], brez … | TG1.3 (Praga); [predlog] | M | PE, OP | A | 8 |
+| SI-GATE-NFR-003 | Načrtovano vzdrževanje mora biti napovedano vsaj en delovni dan vnaprej uporabnikom in drugim prehodom po … | TG1.3 (Praga) | M | OP | P | 8 |
+| SI-GATE-NFR-004 | Register platform (preverjanje certifikata in certifikacijskega statusa) mora odgovoriti na poizvedbo … | TGD §8.3 | M | PE, UP | T | 8 |
+| SI-GATE-NFR-005 | Rešitev mora imeti načrt neprekinjenega poslovanja in obnove po katastrofi s ciljnim časom obnove (RTO) **4 … | NL PvE NF-15; [predlog] | M | OP | P, D | 8 |
+| SI-GATE-NFR-010 | Prehod mora pred priklopom v produkcijsko omrežje prehodov uspešno opraviti teste skladnosti proti … | TG2.2 (Praga), ADR-0002 | M | PE, ED | T | 8 |
+| SI-GATE-NFR-011 | Prehod mora opraviti tehnične teste skladnosti (TCT) in varnostne teste, ki jih zagotavlja EK oziroma … | TG2.2 Launchpad (Praga); D2.2 | M | PE | T | 8 |
+| SI-GATE-NFR-012 | Prehod mora hkrati podpirati vsaj dve zaporedni veljavni različici sheme XSD v prehodnem obdobju po izdaji … | ICD v0.5 §13; AG Gate integration (odprto vpr.) | M | PE | T | 8 |
+| SI-GATE-NFR-013 | Izvajalec mora v 3 mesecih [predlog] po izdaji nove obvezne različice XSD ali sprememb TGD/ICD, ki jih … | čl. 6(3)(g), 13; [predlog] | M | OP | P | 8 |
+| SI-GATE-NFR-014 | Specifikacija vmesnika #3 (in morebitnega profila REST za #2) mora biti objavljena v strojno berljivi obliki … | čl. 9(4); ICD v0.5 §9 | M | PE | P | 8 |
+| SI-GATE-NFR-020 | Uporabniški vmesniki, pomoč in uporabniška dokumentacija morajo biti v slovenskem jeziku; tehnična … | NL PvE NF-7; [predlog] | M | UP, UA | P | 8 |
+| SI-GATE-NFR-021 | Spletni uporabniški vmesniki morajo izpolnjevati zahteve dostopnosti WCAG 2.1, raven AA (standard EN 301 … | NL PvE NF-8–10; [preveriti: veljavni nacionalni predpis] | M | UP, UA | P | 8 |
+| SI-GATE-NFR-022 | Uporabniška aplikacija mora delovati na mobilnih napravah, ki jih uporabljajo nadzorniki na terenu (branje … | TGD §3.3.1; NL PvE NF-3 | P | UA | D | 8 |
+| SI-GATE-NFR-023 | Vmesnik mora uporabniku jasno sporočiti uspeh ali napako vsakega dejanja; sporočila »ni odgovora«, »podatki … | NL PvE NF-4; čl. 3(3) | M | UA, UP | D | 8 |
+| SI-GATE-NFR-030 | Rešitev mora imeti aktivno spremljanje (grozečih) motenj, napak in zmogljivosti z alarmiranjem upravljavca. | NL PvE NF-12, NF-13 | M | OP | D | 8 |
+| SI-GATE-NFR-031 | Izvajalec mora imeti postopek varnostnega kopiranja in obnove, ki ga preizkusi vsaj enkrat letno in o tem … | NL PvE NF-15 | M | OP | P, D | 8 |
+| SI-GATE-NFR-032 | Vsaka namestitev nove različice mora imeti preizkušen postopek povrnitve (roll-back). | NL PvE NF-16 | M | OP | D | 8 |
+| SI-GATE-NFR-033 | Izguba povezave z enim prehodom ali platformo ne sme vplivati na obdelavo zahtev do drugih prehodov in … | CTG Security (risk #5, #6); [predlog] | M | PE | T | 8 |
+| SI-GATE-NFR-034 | Asinhrone zahteve se ob okvari ali ponovnem zagonu posameznega vozlišča ne smejo izgubiti (trajna vrsta … | RI (RabbitMQ); [predlog] | M | PE | T | 8 |
+| SI-GATE-NFR-050 | Rešitev in njeno obratovanje morajo izpolnjevati obveznosti po ZInfV-1 in njegovih podzakonskih aktih, ki … | ZInfV-1 (UL RS 40/25); NIS2 | M | OP | P | 8 |
+| SI-GATE-NFR-051 | Izvajalec mora imeti vzpostavljen sistem upravljanja informacijske varnosti po ISO/IEC 27001 (certifikat ali … | NL PvE NF-20 | M | OP | P | 8 |
+| SI-GATE-NFR-052 | Izvajalec mora pred prevzemom izdelati oceno tveganj po metodologiji ENISA in modeliranju groženj STRIDE za … | CTG Security (Risk Analysis) | M | OP | P | 8 |
+| SI-GATE-NFR-053 | Vsi podatki, dnevniki in varnostne kopije se morajo hraniti in obdelovati izključno v EGP; dostop iz tretjih … | NL PvE NF-24, NF-39 | M | OP | P | 8 |
+| SI-GATE-NFR-054 | Osebni podatki (npr. identifikacijske reference uradnikov v dnevnikih) se morajo obdelovati po GDPR in … | čl. 2(5); TGD §9.2; CTG Security (GDPR) | M | OP | P | 8 |
+| SI-GATE-NFR-055 | Razvoj mora slediti načelom varnosti že v zasnovi (secure by design) in OWASP ASVS, raven 2 [predlog]. | NL PvE NF-27; [predlog] | M | PE | P, T | 8 |
+| SI-GATE-NFR-056 | MZIE ima pravico do revizije varnosti, kakovosti in finančnih vidikov storitve. | NL PvE NF-43 | M | OP | P | 8 |
+| SI-GATE-NFR-060 | Vsa komunikacija med komponentami mora biti šifrirana; zunanji vmesniki morajo uporabljati TLS 1.2 ali … | TGD §8.1; CTG Security (Testfest: TLS1.2+) | M | PE, ED, AAP | T | 8 |
+| SI-GATE-NFR-061 | Varnostne ključe dostopne točke eDelivery mora izvajalec zamenjati vsaj enkrat letno. | TGD §8.1 | M | ED, OP | P | 8 |
+| SI-GATE-NFR-062 | Prehod mora pred vsako uporabo certifikata preveriti njegovo veljavnost in status preklica (OCSP ali CRL); … | TGD §8.1; CTG Security (risk #1, #7) | M | PE, ED | T | 8 |
+| SI-GATE-NFR-063 | Zasebni ključi prehoda morajo biti hranjeni v strojnem varnostnem modulu (HSM) ali enakovredni zaščiteni … | čl. 10(2); TGD §8.1 | M | ED, OP | P, A | 8 |
+| SI-GATE-NFR-064 | Certifikate drugih prehodov mora prehod hraniti v statični shrambi zaupanja; izmenjava certifikatov mora … | TGD §8.2; AG Gate integration (»secure channel«) | M | ED, OP | P | 8 |
+| SI-GATE-NFR-065 | Izvajalec mora imeti postopek za ravnanje ob kompromitaciji ključa ali certifikata (preklic, zamenjava, … | TGD §8.1; CTG Security (backlog #8) | M | OP | P, D | 8 |
+| SI-GATE-NFR-070 | Dostop upravljavcev in skrbnikov mora biti mogoč le z večfaktorsko avtentikacijo in po načelu najmanjših … | NL PvE NF-33, NF-34 | M | UP, OP | P, T | 8 |
+| SI-GATE-NFR-071 | Seja uporabnika se mora samodejno končati po največ 15 minutah nedejavnosti [predlog; prilagodi se terenski … | NL PvE NF-35 | M | UP, UA | T | 8 |
+| SI-GATE-NFR-072 | Prehod mora omejevati število zahtev po AAP, platformi in prehodu (kvote, omejevanje hitrosti) in zaznavati … | CTG Security (»Account-hijack DoS«, backlog #4, #6) | M | PE | T | 8 |
+| SI-GATE-NFR-073 | Prehod mora biti zaščiten pred napadi DoS na omrežni ravni (zaščita pred porazdeljenimi napadi, ločena … | CTG Security (backlog #4) | M | OP | P | 8 |
+| SI-GATE-NFR-074 | Razvojno, testno, predprodukcijsko in produkcijsko okolje morajo biti ločeni; produkcijski podatki se v … | NL PvE NF-31 | M | OP | P | 8 |
+| SI-GATE-NFR-080 | Prehod mora beležiti obvezne podatke iz TGD §9.2, tab. 6, in strukturo dnevnika iz TGD Annex 1; poleg zahtev … | čl. 6(2)(c), 6(2)(g); TGD §9.2 | M | PE | T | 8 |
+| SI-GATE-NFR-081 | Vsak zapis mora imeti časovni žig z natančnostjo vsaj milisekunde in časovnim pasom; prehod mora hraniti … | TGD §9.3 (1) | M | PE | T | 8 |
+| SI-GATE-NFR-082 | Revizijske sledi morajo biti zaščitene pred spremembo in izbrisom (npr. shranjevanje WORM, veriženje … | TGD §9.3 (3), (7) | M | PE, OP | T, P | 8 |
+| SI-GATE-NFR-083 | Dostop do dnevnikov morajo imeti le identificirani, avtenticirani in pooblaščeni uporabniki z vlogami; vsak … | TGD §9.4; NL PvE NF-39 | M | UP, OP | T | 8 |
+| SI-GATE-NFR-084 | Izvajalec mora na zahtevo pristojnega organa iz dnevnikov pripraviti človeku berljiv izpis za posamezno … | TGD §9.4 | M | UP, OP | D | 8 |
+| SI-GATE-NFR-085 | Varnostni dogodki in dogodki aktivnosti uporabnikov (tudi skrbnikov) se morajo posredovati v sistem za … | NL PvE NF-38, NF-40 | M | OP | D | 8 |
+| SI-GATE-NFR-090 | Pred prevzemom in nato vsaj enkrat letno mora neodvisni izvajalec opraviti penetracijski test; ugotovitve … | NL PvE NF-36; CTG Security (Testfest Security) | M | OP | P | 8 |
+| SI-GATE-NFR-091 | Izvajalec mora imeti postopek upravljanja ranljivosti s spremljanjem odvisnosti (tudi referenčne … | NL PvE NF-37, NF-50–51; [predlog] | M | OP | P | 8 |
+| SI-GATE-NFR-092 | Izvajalec mora varnostni incident, ki vpliva na razpoložljivost, zaupnost ali celovitost, sporočiti MZIE … | NL PvE NF-41; ZInfV-1 | M | OP | P | 8 |
+| SI-GATE-NFR-093 | Izvajalec mora imeti načrt odzivanja na incidente z razvrstitvijo, analizo vzrokov in usklajen z incidentnim … | NL PvE NF-42; TG1.3 (Praga) | M | OP | P | 8 |
+| SI-GATE-NFR-100 | Izvajalec mora uporabljati neprekinjeno integracijo in dostavo (CI/CD) z avtomatiziranimi testi enot, … | NL PvE NF-46, NF-47 | M | OP | P, D | 8 |
+| SI-GATE-NFR-101 | Predprodukcijsko okolje mora biti po funkcionalnosti in zmogljivosti reprezentativno za produkcijo in … | NL PvE NF-48; TG2.2 (Praga) | M | OP | D | 8 |
+| SI-GATE-NFR-102 | Izvajalec mora zagotoviti testne nadomestke (stubs) za platforme, tuje prehode in AAP (npr. simulator iz … | NL PvE NF-49; RI (platform-gate-simulator) | M | OP | D | 8 |
+| SI-GATE-NFR-103 | Izvajalec mora spremljati izdaje referenčne implementacije in sheme XSD (TG2.2, CTG Data Model & Interfaces) … | ADR-0002; TG2.2 načrt izdaj | M | OP | P | 8 |
+| SI-GATE-NFR-104 | Upravljanje sprememb mora slediti priznanemu okviru (npr. ITIL) z evidenco, oceno tveganja in postopkom … | NL PvE NF-57–59; TG1.3 (ITIL) | M | OP | P | 8 |
+| SI-GATE-NFR-105 | Ob vsaki izdaji mora izvajalec predati posodobljeno dokumentacijo, opombe ob izdaji in poročila o testiranju. | NL PvE NF-45, NF-62 | M | OP | P | 8 |
+| SI-GATE-NFR-120 | Služba za pomoč izvajalca mora biti enotna kontaktna točka za prijave motenj in zahtevkov za prehod. | NL PvE NF-67 | M | OP | P | 8 |
+| SI-GATE-NFR-121 | Razpoložljivost službe za pomoč mora vsaj ustrezati čl. 12(4) (delavniki 10.00–16.00 CET/CEST; dežurstvo ob … | čl. 12(4); TGD §10.2 | M | OP | P | 8 |
+| SI-GATE-NFR-122 | Za vsaj 90 % prijav na prvi ravni mora biti začetni odziv v 15 minutah in prvi stik v 30 minutah znotraj … | TG1.3 (Praga) | M | OP | P | 8 |
+| SI-GATE-NFR-123 | Odzivni in rešitveni časi morajo biti določeni po prioritetah v pogodbi o ravni storitev (SLA); prioriteta … | NL PvE NF-69; TG1.3 C4 | M | OP | P | 8 |
+| SI-GATE-NFR-124 | Orodje za prijave mora podpirati izmenjavo prijav z drugimi službami (lastna oznaka, oznaka vira, oznaka … | čl. 12(5); TG1.3 C5, C8 | M | OP | D | 8 |
+| SI-GATE-NFR-130 | Prehod mora ob 60-sekundni zakonski meji dodati k času odgovora platforme ali drugega prehoda največ **1 s** … | čl. 3(3)(d), 6(2)(f); ICD v0.5 §10; [predlog] | M | PE | T | 8 |
+| SI-GATE-NFR-131 | Lokalno iskanje v registru identifikatorjev mora vrniti rezultat v največ **1 s** pri 95 % iskanj [predlog]. | [predlog] | M | RI | T | 8 |
+| SI-GATE-NFR-132 | Rešitev mora biti horizontalno razširljiva brez prekinitve storitve in dimenzionirana na obremenitev iz … | CTG Security (risk #6, Performance track); [predlog] | M | PE, OP | T | 8 |
+| SI-GATE-NFR-133 | Prehod mora prenesti konice zahtev ob terenskih nadzorih (sočasna iskanja po identifikatorjih, ki se … | CTG Security (Testfest Performance) | M | PE | T | 8 |
+| SI-GATE-NFR-140 | Izvajalec mora v 5 delovnih dneh po koncu meseca predložiti poročilo o storitvah: razpoložljivost, prijave s … | NL PvE NF-75–78 | M | OP | P | 8 |
+| SI-GATE-NFR-141 | Izvajalec mora MZIE zagotoviti podatke o delovanju za nacionalno kontaktno točko eFTI in poročanje v mreži … | čl. 12(6), 13(3)(a) | M | OP | P | 8 |
+| SI-GATE-NFR-150 | MZIE postane lastnik izvorne kode, konfiguracije in dokumentacije rešitve ob predaji; uporabljene … | NL PvE NF-84; ADR-0002 | M | OP | P | 8 |
+| SI-GATE-NFR-151 | Ob prenehanju pogodbe mora izvajalec brezplačno predati vso izvorno kodo in podatke v izvirnih, trajnih … | NL PvE NF-83 | M | OP | P | 8 |
+| SI-GATE-NFR-152 | Rešitev mora biti nameščljiva v standardnih vsebnikih (npr. OCI) in prenosljiva med okolji gostovanja brez … | NL PvE NF-81; RI (Docker) | M | PE, OP | D | 8 |
+| SI-GATE-NFR-153 | Rešitev mora biti predana v produkcijo in v upravljanje MZIE najpozneje do 9. 7. 2027 (časovni načrt v pogl. … | NL PvE NF-85; čl. 5(1) Uredbe (EU) 2020/1056 [preveriti datum v aktu] | M | OP | P | 8 |
