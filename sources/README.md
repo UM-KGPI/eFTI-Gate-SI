@@ -16,7 +16,7 @@ Izvirni dokumenti **niso v repozitoriju**. Javni viri imajo povezavo; interni do
 | CTG-SEC | CTG Security, Authorisation & Testing | jun. 2026 | eFTI4LIVE (interno) | pogl. 8 (varnost), tveganja |
 | PRG | Konzorcijski sestanek Praga, dan 1 in 2 | 18.–19. 11. 2026 | eFTI4LIVE (interno) | ICD v0.5 povzetek, RI, XSD, roki |
 | NL-PvE | Programma van Eisen eFTI Gate (NL) | v1.0, jun. 2025 | naročnik (MZIE) | zgled za del II |
-| NL-PSA | Project Start Architectuur eFTI Gate (NL) | v1.0, jun. 2025 | eFTI4LIVE (interno) | zgled za pogl. 5 |
+| NL-PSA | Project Start Architectuur eFTI Gate (NL) | v1.0, jun. 2025 | naročnik (MZIE) | zgled za pogl. 5 |
 | RI | Referenčna implementacija eFTI-vrat | main, 10. 11. 2026 (oznaka v0.5.0) | javno: github.com/EFTI4EU/reference-implementation | Priloga D, ADR-0002 |
 
 ## Manjka

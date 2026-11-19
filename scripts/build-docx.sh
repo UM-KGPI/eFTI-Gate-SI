@@ -6,6 +6,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p build
 FILES=(docs/ts/README.md)
+[[ "${1:-}" == "--final" ]] || true  # interno pogl. 0 je zunaj repozitorija
 FILES+=(docs/ts/0[1-9]-*.md docs/ts/1[0-9]-*.md docs/ts/priloga-*.md)
 REF=()
 [[ -f templates/reference.docx ]] && REF=(--reference-doc templates/reference.docx)
