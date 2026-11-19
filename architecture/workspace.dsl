@@ -22,13 +22,13 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
         }
 
         # ---------- Osebe ----------
-        uradnik = person "Uradnik pristojnega organa" "Policist, inšpektor ali carinik, ki med nadzorom zahteva podatke eFTI (čl. 1(3) IU 2024/1942)." "Zunanji"
-        operater = person "Upravljavec eFTI Gate" "Skrbnik pri MZIE ali izvajalcu vzdrževanja; nacionalna služba za pomoč (raven 2)."
-        gospodarskiSubjekt = person "Gospodarski subjekt" "Prevoznik, špediter, pošiljatelj ali prejemnik; podatke eFTI vodi na certificirani eFTI Platform." "Zunanji"
+        officer = person "Uradnik pristojnega organa" "Policist, inšpektor ali carinik, ki med nadzorom zahteva podatke eFTI (čl. 1(3) IU 2024/1942)." "Zunanji"
+        operator = person "Upravljavec eFTI Gate" "Skrbnik pri MZIE ali izvajalcu vzdrževanja; nacionalna služba za pomoč (raven 2)."
+        economicOperator = person "Gospodarski subjekt" "Prevoznik, špediter, pošiljatelj ali prejemnik; podatke eFTI vodi na certificirani eFTI Platform." "Zunanji"
 
         # ---------- Sistemi ----------
         group "Slovenija" {
-            vrata = softwareSystem "eFTI Gate" "Slovenski eFTI Gate (čl. 6 IU 2024/1942) z search mechanism (čl. 8) in Registry of Identifiers (čl. 11)." {
+            gate = softwareSystem "eFTI Gate" "Slovenski eFTI Gate (čl. 6 IU 2024/1942) z search mechanism (čl. 8) in Registry of Identifiers (čl. 11)." {
                 properties {
                     "komp" "EG"
                 }
@@ -37,12 +37,12 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                     properties {
                         "komp" "EG"
                     }
-                    jedro = component "Jedro (Gate Core)" "Obdelava zahtev prek UIL, iskanj po identifikatorjih in follow-up communication; vloga requesting eFTI Gate in receiving eFTI Gate; časovna omejitev 60 s." "Spring Boot" "RI" {
+                    core = component "Jedro (Gate Core)" "Obdelava zahtev prek UIL, iskanj po identifikatorjih in follow-up communication; vloga requesting eFTI Gate in receiving eFTI Gate; časovna omejitev 60 s." "Spring Boot" "RI" {
                         properties {
                             "komp" "EG"
                         }
                     }
-                    iskalnik = component "Search mechanism" "Iz UIL razbere eFTI Gate in eFTI Platform, išče v Registry of Identifiers, posreduje iskanja drugim eFTI Gate, združi rezultate (čl. 8; TGD §6.2–6.3)." "Java" "RI" {
+                    searchMechanism = component "Search mechanism" "Iz UIL razbere eFTI Gate in eFTI Platform, išče v Registry of Identifiers, posreduje iskanja drugim eFTI Gate, združi rezultate (čl. 8; TGD §6.2–6.3)." "Java" "RI" {
                         properties {
                             "komp" "SM"
                         }
@@ -52,7 +52,7 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                             "komp" "RoI"
                         }
                     }
-                    registri = component "Registri povezav" "Register eFTI Gate drugih DČ (ID, certifikati), register AAP (ID, certifikati), Registry of eFTI Platforms (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." "Java" "Dodatek SI" {
+                    registries = component "Registri povezav" "Register eFTI Gate drugih DČ (ID, certifikati), register AAP (ID, certifikati), Registry of eFTI Platforms (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." "Java" "Dodatek SI" {
                         properties {
                             "komp" "EG"
                         }
@@ -77,7 +77,7 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                             "komp" "EG"
                         }
                     }
-                    statistika = component "Statistika in metrike" "Metrike za nadzor delovanja; letna statistika dostopov za poročanje po čl. 17 Uredbe (EU) 2020/1056." "Java" "Dodatek SI" {
+                    statistics = component "Statistika in metrike" "Metrike za nadzor delovanja; letna statistika dostopov za poročanje po čl. 17 Uredbe (EU) 2020/1056." "Java" "Dodatek SI" {
                         properties {
                             "komp" "EG"
                         }
@@ -89,7 +89,7 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                     }
                 }
 
-                caApi = container "eFTI Gate AAP API (#3)" "OpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." "REST/JSON, mTLS, OAuth 2.0" "API,RI" {
+                aapApi = container "eFTI Gate AAP API (#3)" "OpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." "REST/JSON, mTLS, OAuth 2.0" "API,RI" {
                     properties {
                         "openapi" "interfaces/openapi/efti-gate-aap-api.yaml"
                         "komp" "EG"
@@ -120,7 +120,7 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                         "komp" "EG"
                     }
                 }
-                admin = container "Upravljavska aplikacija" "Registri povezav, priklop eFTI Platform (tudi čl. 6(4)), certifikati, šifranti, pregled revizijskih sledi, statistika." "Spletna aplikacija" "Dodatek SI" {
+                adminApp = container "Upravljavska aplikacija" "Registri povezav, priklop eFTI Platform (tudi čl. 6(4)), certifikati, šifranti, pregled revizijskih sledi, statistika." "Spletna aplikacija" "Dodatek SI" {
                     properties {
                         "komp" "UP"
                     }
@@ -160,22 +160,22 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                 }
             }
 
-            organi = softwareSystem "Sistemi pristojnih organov (AAP, Authorisation Registry, UAP)" "AAP (čl. 4), Authorisation Registry (čl. 5) in UAP (čl. 7) Policije, FURS, IRSI in drugih organov. V eFTI Gate ali pri organih: odloči M2 (čl. 4(4))." "Odprto" {
+            authorities = softwareSystem "Sistemi pristojnih organov (AAP, Authorisation Registry, UAP)" "AAP (čl. 4), Authorisation Registry (čl. 5) in UAP (čl. 7) Policije, FURS, IRSI in drugih organov. V eFTI Gate ali pri organih: odloči M2 (čl. 4(4))." "Odprto" {
                 properties {
                     "komp" "AAP"
                 }
             }
-            platformaSI = softwareSystem "eFTI Platform (SI)" "eFTI Platform, certificirane v Sloveniji ali priključene po čl. 6(4)." "Zunanji"
-            siGradniki = softwareSystem "Nacionalni gradniki e-identitete" "SI-PASS, SI-CAS, SIGEN-CA." "Zunanji"
-            akreditacija = softwareSystem "Nacionalni seznam certificiranih eFTI Platform" "Imenovani organ in organi za ugotavljanje skladnosti (akreditira Slovenska akreditacija)." "Zunanji,Odprto"
+            platformsSI = softwareSystem "eFTI Platform (SI)" "eFTI Platform, certificirane v Sloveniji ali priključene po čl. 6(4)." "Zunanji"
+            nationalEid = softwareSystem "Nacionalni gradniki e-identitete" "SI-PASS, SI-CAS, SIGEN-CA." "Zunanji"
+            nationalPlatformList = softwareSystem "Nacionalni seznam certificiranih eFTI Platform" "Imenovani organ in organi za ugotavljanje skladnosti (akreditira Slovenska akreditacija)." "Zunanji,Odprto"
         }
 
         group "EU eFTI okolje" {
-            tujaVrata = softwareSystem "eFTI Gate drugih DČ" "Mrežna topologija eFTI Gate." "Zunanji"
-            referencniSeznam = softwareSystem "Unijski referenčni seznam" "Statusi certifikatov eFTI Platform (DU o certificiranju, v sprejemanju)." "Zunanji,Odprto"
+            foreignGates = softwareSystem "eFTI Gate drugih DČ" "Mrežna topologija eFTI Gate." "Zunanji"
+            unionReferenceList = softwareSystem "Unijski referenčni seznam" "Statusi certifikatov eFTI Platform (DU o certificiranju, v sprejemanju)." "Zunanji,Odprto"
             smlSmp = softwareSystem "eDelivery SML/SMP" "Dinamično odkrivanje eFTI Platform za #2." "Zunanji"
-            tujePlatforme = softwareSystem "eFTI Platform drugih DČ" "Priključene na eFTI Gate drugih DČ." "Zunanji"
-            helpdeskEU = softwareSystem "Služba za pomoč EK (raven 3)" "Čl. 12(2) IU 2024/1942." "Zunanji"
+            foreignPlatforms = softwareSystem "eFTI Platform drugih DČ" "Priključene na eFTI Gate drugih DČ." "Zunanji"
+            euHelpdesk = softwareSystem "Služba za pomoč EK (raven 3)" "Čl. 12(2) IU 2024/1942." "Zunanji"
         }
 
         group "Testno okolje eFTI4LIVE" {
@@ -183,105 +183,105 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
         }
 
         # ---------- Odnosi: osebe ----------
-        uradnik -> organi "Vloži zahtevo za dostop ali follow-up communication"
-        gospodarskiSubjekt -> platformaSI "Vodi podatke eFTI"
-        operater -> vrata.admin "Upravlja eFTI Gate"
-        vrata.monitoring -> operater "Alarmi"
-        operater -> helpdeskEU "Prijave na raven 3"
+        officer -> authorities "Vloži zahtevo za dostop ali follow-up communication"
+        economicOperator -> platformsSI "Vodi podatke eFTI"
+        operator -> gate.adminApp "Upravlja eFTI Gate"
+        gate.monitoring -> operator "Alarmi"
+        operator -> euHelpdesk "Prijave na raven 3"
 
         # ---------- Odnosi: zunanji ----------
-        organi -> vrata.caApi "#3 G2A: zahteve prek UIL, iskanja, follow-up communication" "REST/JSON, mTLS"
-        organi -> siGradniki "Identifikacija uradnikov" "SAML/OIDC"
-        vrata.ap -> platformaSI "#2 G2P: zahteve za eFTI dataset, follow-up communication" "AS4"
-        platformaSI -> vrata.ap "#2 P2G: nalaganje identifikatorjev, odgovori" "AS4"
-        vrata.ap -> tujaVrata "#1 G2G: posredovanje zahtev in iskanj" "AS4, statično odkrivanje"
-        tujaVrata -> vrata.ap "#1 G2G: zahteve in iskanja drugih DČ, odgovori" "AS4"
-        tujaVrata -> tujePlatforme "#2 G2P" "AS4"
-        vrata.ap -> smlSmp "Odkrivanje eFTI Platform" "SML/SMP"
-        vrata.gateService.certCheck -> referencniSeznam "Sinhronizacija statusov certifikatov (R2)" "HTTPS"
-        vrata.gateService.certCheck -> akreditacija "Nacionalni vnosi certificiranih eFTI Platform" "HTTPS ali ročno"
-        vrata.ap -> ri "Testi skladnosti pred vstopom v mrežo" "AS4"
-        platformaSI -> vrata.tct "Testi TCT pred priklopom (R2)" "AS4/REST"
+        authorities -> gate.aapApi "#3 G2A: zahteve prek UIL, iskanja, follow-up communication" "REST/JSON, mTLS"
+        authorities -> nationalEid "Identifikacija uradnikov" "SAML/OIDC"
+        gate.ap -> platformsSI "#2 G2P: zahteve za eFTI dataset, follow-up communication" "AS4"
+        platformsSI -> gate.ap "#2 P2G: nalaganje identifikatorjev, odgovori" "AS4"
+        gate.ap -> foreignGates "#1 G2G: posredovanje zahtev in iskanj" "AS4, statično odkrivanje"
+        foreignGates -> gate.ap "#1 G2G: zahteve in iskanja drugih DČ, odgovori" "AS4"
+        foreignGates -> foreignPlatforms "#2 G2P" "AS4"
+        gate.ap -> smlSmp "Odkrivanje eFTI Platform" "SML/SMP"
+        gate.gateService.certCheck -> unionReferenceList "Sinhronizacija statusov certifikatov (R2)" "HTTPS"
+        gate.gateService.certCheck -> nationalPlatformList "Nacionalni vnosi certificiranih eFTI Platform" "HTTPS ali ročno"
+        gate.ap -> ri "Testi skladnosti pred vstopom v mrežo" "AS4"
+        platformsSI -> gate.tct "Testi TCT pred priklopom (R2)" "AS4/REST"
 
         # ---------- Odnosi: znotraj prehoda ----------
-        vrata.caApi -> vrata.gateService.jedro "Predaja zahtev"
-        vrata.caApi -> vrata.idp "Preverjanje odjemalca in žetonov"
-        vrata.gateService.jedro -> vrata.mq "Asinhrona obdelava" "AMQP"
-        vrata.gateService.jedro -> vrata.gateService.iskalnik "Razreši cilj, išči"
-        vrata.gateService.jedro -> vrata.gateService.registri "Preveri pošiljatelja (AAP, eFTI Gate)"
-        vrata.gateService.jedro -> vrata.gateService.certCheck "Preveri eFTI Platform"
-        vrata.gateService.jedro -> vrata.gateService.edeliveryConnector "Pošlji in prejmi sporočila"
-        vrata.gateService.jedro -> vrata.gateService.logger "Revizijska sled"
-        vrata.gateService.jedro -> vrata.gateService.statistika "Dogodki"
-        vrata.gateService.jedro -> vrata.gateService.commons "Validacija in modeli"
-        vrata.gateService.jedro -> vrata.db "Stanje zahtev" "JDBC"
-        vrata.gateService.iskalnik -> vrata.gateService.roi "Lokalno iskanje"
-        vrata.gateService.iskalnik -> vrata.gateService.registri "eFTI Gate za posredovanje iskanj"
-        vrata.gateService.iskalnik -> vrata.gateService.edeliveryConnector "Iskanje v drugih eFTI Gate"
-        vrata.gateService.certCheck -> vrata.gateService.registri "Registry of eFTI Platforms"
-        vrata.gateService.roi -> vrata.db "Zapisi UIL in identifikatorjev" "JDBC"
-        vrata.gateService.registri -> vrata.db "Registri povezav" "JDBC"
-        vrata.gateService.edeliveryConnector -> vrata.gateService.wsPlugin "Uporablja"
-        vrata.gateService.wsPlugin -> vrata.ap "Pošiljanje in prejem sporočil AS4" "SOAP/HTTPS"
-        vrata.ap -> vrata.gateService.edeliveryConnector "Dostava prejetih sporočil" "JMS/WS"
-        vrata.ap -> vrata.apDb "Sporočila" "JDBC"
-        vrata.gateService.logger -> vrata.logStore "Zapisi revizijske sledi"
-        vrata.gateService.logger -> vrata.monitoring "Tehnični in varnostni dogodki"
-        vrata.gateService.statistika -> vrata.monitoring "Metrike"
-        vrata.admin -> vrata.adminApi "Upravljanje registrov, priklopa in šifrantov" "HTTPS/JSON"
-        vrata.adminApi -> vrata.gateService.registri "Branje in pisanje registrov"
-        vrata.adminApi -> vrata.idp "Preverjanje žetonov"
-        vrata.admin -> vrata.auditApi "Revizijska sled, izvozi, statistika" "HTTPS/JSON"
-        vrata.auditApi -> vrata.gateService.statistika "Letna statistika"
-        vrata.auditApi -> vrata.idp "Preverjanje žetonov"
-        vrata.auditApi -> vrata.logStore "Branje revizijskih sledi"
-        operater -> vrata.auditApi "Poročanje MZIE (čl. 17)" "HTTPS/JSON"
-        organi -> vrata.arApi "Sinhronizacija pravic uradnikov (R2)" "REST/JSON, mTLS"
-        vrata.arApi -> vrata.db "Pravice uradnikov" "JDBC"
-        vrata.admin -> vrata.idp "Prijava upravljavcev (MFA)"
-        vrata.tct -> vrata.gateService.registri "Rezultat TCT za priklop"
+        gate.aapApi -> gate.gateService.core "Predaja zahtev"
+        gate.aapApi -> gate.idp "Preverjanje odjemalca in žetonov"
+        gate.gateService.core -> gate.mq "Asinhrona obdelava" "AMQP"
+        gate.gateService.core -> gate.gateService.searchMechanism "Razreši cilj, išči"
+        gate.gateService.core -> gate.gateService.registries "Preveri pošiljatelja (AAP, eFTI Gate)"
+        gate.gateService.core -> gate.gateService.certCheck "Preveri eFTI Platform"
+        gate.gateService.core -> gate.gateService.edeliveryConnector "Pošlji in prejmi sporočila"
+        gate.gateService.core -> gate.gateService.logger "Revizijska sled"
+        gate.gateService.core -> gate.gateService.statistics "Dogodki"
+        gate.gateService.core -> gate.gateService.commons "Validacija in modeli"
+        gate.gateService.core -> gate.db "Stanje zahtev" "JDBC"
+        gate.gateService.searchMechanism -> gate.gateService.roi "Lokalno iskanje"
+        gate.gateService.searchMechanism -> gate.gateService.registries "eFTI Gate za posredovanje iskanj"
+        gate.gateService.searchMechanism -> gate.gateService.edeliveryConnector "Iskanje v drugih eFTI Gate"
+        gate.gateService.certCheck -> gate.gateService.registries "Registry of eFTI Platforms"
+        gate.gateService.roi -> gate.db "Zapisi UIL in identifikatorjev" "JDBC"
+        gate.gateService.registries -> gate.db "Registri povezav" "JDBC"
+        gate.gateService.edeliveryConnector -> gate.gateService.wsPlugin "Uporablja"
+        gate.gateService.wsPlugin -> gate.ap "Pošiljanje in prejem sporočil AS4" "SOAP/HTTPS"
+        gate.ap -> gate.gateService.edeliveryConnector "Dostava prejetih sporočil" "JMS/WS"
+        gate.ap -> gate.apDb "Sporočila" "JDBC"
+        gate.gateService.logger -> gate.logStore "Zapisi revizijske sledi"
+        gate.gateService.logger -> gate.monitoring "Tehnični in varnostni dogodki"
+        gate.gateService.statistics -> gate.monitoring "Metrike"
+        gate.adminApp -> gate.adminApi "Upravljanje registrov, priklopa in šifrantov" "HTTPS/JSON"
+        gate.adminApi -> gate.gateService.registries "Branje in pisanje registrov"
+        gate.adminApi -> gate.idp "Preverjanje žetonov"
+        gate.adminApp -> gate.auditApi "Revizijska sled, izvozi, statistika" "HTTPS/JSON"
+        gate.auditApi -> gate.gateService.statistics "Letna statistika"
+        gate.auditApi -> gate.idp "Preverjanje žetonov"
+        gate.auditApi -> gate.logStore "Branje revizijskih sledi"
+        operator -> gate.auditApi "Poročanje MZIE (čl. 17)" "HTTPS/JSON"
+        authorities -> gate.arApi "Sinhronizacija pravic uradnikov (R2)" "REST/JSON, mTLS"
+        gate.arApi -> gate.db "Pravice uradnikov" "JDBC"
+        gate.adminApp -> gate.idp "Prijava upravljavcev (MFA)"
+        gate.tct -> gate.gateService.registries "Rezultat TCT za priklop"
 
-        prod = deploymentEnvironment "Produkcija" {
-            lok1 = deploymentGroup "Lokacija 1"
-            lok2 = deploymentGroup "Lokacija 2"
+        production = deploymentEnvironment "Produkcija" {
+            site1 = deploymentGroup "Lokacija 1"
+            site2 = deploymentGroup "Lokacija 2"
         dc1 = deploymentNode "Podatkovni center 1 (primarna lokacija)" "Aktivna lokacija; varianta gostovanja H1/H2/H3 po M2." "Slovenija" {
             dc1Dmz = deploymentNode "Cona DMZ" "Vstopna točka in eDelivery." "Požarni zid, WAF" {
                 dc1Waf = infrastructureNode "Vstopna točka (reverse proxy, API gateway, WAF)" "TLS 1.2+, mTLS, omejevanje hitrosti (2 VM)." "" "Dodatek SI"
                 deploymentNode "eDelivery Access Point" "" "VM, 2 × 4 vCPU / 8 GB" "" 2 {
-                    containerInstance vrata.ap lok1
+                    containerInstance gate.ap site1
                 }
             }
             dc1App = deploymentNode "Aplikacijska cona" "" "Virtualizacija ali gruča vsebnikov" {
                 deploymentNode "eFTI Gate Service" "" "VM ali pod, 3 × 4 vCPU / 8 GB" "" 3 {
-                    containerInstance vrata.gateService lok1
-                    containerInstance vrata.caApi lok1
+                    containerInstance gate.gateService site1
+                    containerInstance gate.aapApi site1
                 }
                 deploymentNode "Storitve upravljanja" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
-                    containerInstance vrata.adminApi lok1
-                    containerInstance vrata.auditApi lok1
-                    containerInstance vrata.admin lok1
+                    containerInstance gate.adminApi site1
+                    containerInstance gate.auditApi site1
+                    containerInstance gate.adminApp site1
                 }
                 deploymentNode "Strežnik identitet" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
-                    containerInstance vrata.idp lok1
+                    containerInstance gate.idp site1
                 }
                 deploymentNode "Sporočilni posrednik" "" "gruča, 3 × 2 vCPU / 4 GB" "" 3 {
-                    containerInstance vrata.mq lok1
+                    containerInstance gate.mq site1
                 }
             }
             dc1Data = deploymentNode "Podatkovna cona" "" "šifrirana shramba" {
                 deploymentNode "PostgreSQL" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
-                    containerInstance vrata.db lok1
+                    containerInstance gate.db site1
                 }
                 deploymentNode "MariaDB" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
-                    containerInstance vrata.apDb lok1
+                    containerInstance gate.apDb site1
                 }
                 deploymentNode "Objektna shramba WORM" "" "≥ 1 TB" {
-                    containerInstance vrata.logStore lok1
+                    containerInstance gate.logStore site1
                 }
             }
             dc1Mgmt = deploymentNode "Upravljalna cona" "" "dostop le prek bastiona" {
                 deploymentNode "Nadzor in dnevniki" "" "2 × 4 vCPU / 16 GB / 500 GB" "" 2 {
-                    containerInstance vrata.monitoring lok1
+                    containerInstance gate.monitoring site1
                 }
                 dc1Bastion = infrastructureNode "Bastion" "Upravljalni dostop z MFA." "" "Dodatek SI"
             }
@@ -292,40 +292,40 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
             dc2Dmz = deploymentNode "Cona DMZ" "Vstopna točka in eDelivery." "Požarni zid, WAF" {
                 dc2Waf = infrastructureNode "Vstopna točka (reverse proxy, API gateway, WAF)" "TLS 1.2+, mTLS, omejevanje hitrosti (2 VM)." "" "Dodatek SI"
                 deploymentNode "eDelivery Access Point" "" "VM, 2 × 4 vCPU / 8 GB" "" 2 {
-                    containerInstance vrata.ap lok2
+                    containerInstance gate.ap site2
                 }
             }
             dc2App = deploymentNode "Aplikacijska cona" "" "Virtualizacija ali gruča vsebnikov" {
                 deploymentNode "eFTI Gate Service" "" "VM ali pod, 3 × 4 vCPU / 8 GB" "" 3 {
-                    containerInstance vrata.gateService lok2
-                    containerInstance vrata.caApi lok2
+                    containerInstance gate.gateService site2
+                    containerInstance gate.aapApi site2
                 }
                 deploymentNode "Storitve upravljanja" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
-                    containerInstance vrata.adminApi lok2
-                    containerInstance vrata.auditApi lok2
-                    containerInstance vrata.admin lok2
+                    containerInstance gate.adminApi site2
+                    containerInstance gate.auditApi site2
+                    containerInstance gate.adminApp site2
                 }
                 deploymentNode "Strežnik identitet" "" "VM ali pod, 2 × 2 vCPU / 4 GB" "" 2 {
-                    containerInstance vrata.idp lok2
+                    containerInstance gate.idp site2
                 }
                 deploymentNode "Sporočilni posrednik" "" "gruča, 3 × 2 vCPU / 4 GB" "" 3 {
-                    containerInstance vrata.mq lok2
+                    containerInstance gate.mq site2
                 }
             }
             dc2Data = deploymentNode "Podatkovna cona" "" "šifrirana shramba" {
                 deploymentNode "PostgreSQL" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
-                    containerInstance vrata.db lok2
+                    containerInstance gate.db site2
                 }
                 deploymentNode "MariaDB" "" "primarna + replika, 4 vCPU / 16 GB / 250 GB" "" 2 {
-                    containerInstance vrata.apDb lok2
+                    containerInstance gate.apDb site2
                 }
                 deploymentNode "Objektna shramba WORM" "" "≥ 1 TB" {
-                    containerInstance vrata.logStore lok2
+                    containerInstance gate.logStore site2
                 }
             }
             dc2Mgmt = deploymentNode "Upravljalna cona" "" "dostop le prek bastiona" {
                 deploymentNode "Nadzor in dnevniki" "" "2 × 4 vCPU / 16 GB / 500 GB" "" 2 {
-                    containerInstance vrata.monitoring lok2
+                    containerInstance gate.monitoring site2
                 }
                 dc2Bastion = infrastructureNode "Bastion" "Upravljalni dostop z MFA." "" "Dodatek SI"
             }
@@ -341,103 +341,103 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
             "plantuml.sequenceDiagram" "false"
         }
 
-        systemLandscape "C0-Pokrajina" "eFTI Gate v okolju eFTI" {
+        systemLandscape "C0-Landscape" "eFTI Gate v okolju eFTI" {
             include *
             autoLayout lr
         }
 
-        systemContext vrata "C1-Kontekst" "Raven 1: kontekst eFTI Gate" {
+        systemContext gate "C1-Context" "Raven 1: kontekst eFTI Gate" {
             include *
-            include uradnik gospodarskiSubjekt tujePlatforme
+            include officer economicOperator foreignPlatforms
             autoLayout lr
         }
 
-        container vrata "C2-API" "Storitve OpenAPI eFTI Gate in njihovi odjemalci (Priloga E)" {
-            include vrata.caApi vrata.adminApi vrata.auditApi vrata.arApi
-            include organi operater vrata.admin vrata.gateService vrata.idp vrata.logStore vrata.db
+        container gate "C2-API" "Storitve OpenAPI eFTI Gate in njihovi odjemalci (Priloga E)" {
+            include gate.aapApi gate.adminApi gate.auditApi gate.arApi
+            include authorities operator gate.adminApp gate.gateService gate.idp gate.logStore gate.db
             autoLayout lr
         }
 
-        container vrata "C2-Vsebniki" "Raven 2: vsebniki eFTI Gate (izhodišče RI, dodatki SI, R2)" {
-            include *
-            autoLayout lr
-        }
-
-        component vrata.gateService "C3-Komponente" "Raven 3: komponente eFTI Gate Service" {
+        container gate "C2-Containers" "Raven 2: vsebniki eFTI Gate (izhodišče RI, dodatki SI, R2)" {
             include *
             autoLayout lr
         }
 
-        deployment vrata "Produkcija" "C4-Namestitev-Pregled" "Produkcija na dveh lokacijah: cone, HSM, replikacija (pogl. 5.5)" {
-            include prod.dc1 prod.dc2
+        component gate.gateService "C3-Components" "Raven 3: komponente eFTI Gate Service" {
+            include *
+            autoLayout lr
+        }
+
+        deployment gate "Produkcija" "C4-Deployment-Overview" "Produkcija na dveh lokacijah: cone, HSM, replikacija (pogl. 5.5)" {
+            include production.dc1 production.dc2
             exclude "element.type==ContainerInstance"
             autoLayout lr
         }
 
-        deployment vrata "Produkcija" "C4-Namestitev-Lokacija" "Podrobna namestitev na eni lokaciji (rezervna lokacija je enaka)" {
-            include prod.dc1
+        deployment gate "Produkcija" "C4-Deployment-Site" "Podrobna namestitev na eni lokaciji (rezervna lokacija je enaka)" {
+            include production.dc1
             autoLayout lr
         }
 
-        dynamic vrata "D1-UIL-lokalna-eFTI-Platform" "PU-CA-1 / PU-G2P-1: dostop prek UIL, eFTI Platform na slovenskem eFTI Gate (TGD §3.3.1 a, c)" {
-            organi -> vrata.caApi "Zahteva z UIL in pravicami obdelave"
-            vrata.caApi -> vrata.gateService "Predaja (ID zahteve vrnjen organu)"
-            vrata.gateService -> vrata.mq "Asinhrona obdelava"
-            vrata.gateService -> vrata.ap "Zahteva za eFTI dataset"
-            vrata.ap -> platformaSI "#2 G2P (eFTI Platform odgovori v 50 s)"
-            platformaSI -> vrata.ap "Odgovor s podsklopi po pravicah"
-            vrata.ap -> vrata.gateService "Dostava odgovora"
-            vrata.gateService -> vrata.db "Shrani odgovor"
-            organi -> vrata.caApi "Pridobi odgovor (≤ 60 s ali »ni odgovora«)"
+        dynamic gate "D1-UIL-local-platform" "PU-CA-1 / PU-G2P-1: dostop prek UIL, eFTI Platform na slovenskem eFTI Gate (TGD §3.3.1 a, c)" {
+            authorities -> gate.aapApi "Zahteva z UIL in pravicami obdelave"
+            gate.aapApi -> gate.gateService "Predaja (ID zahteve vrnjen organu)"
+            gate.gateService -> gate.mq "Asinhrona obdelava"
+            gate.gateService -> gate.ap "Zahteva za eFTI dataset"
+            gate.ap -> platformsSI "#2 G2P (eFTI Platform odgovori v 50 s)"
+            platformsSI -> gate.ap "Odgovor s podsklopi po pravicah"
+            gate.ap -> gate.gateService "Dostava odgovora"
+            gate.gateService -> gate.db "Shrani odgovor"
+            authorities -> gate.aapApi "Pridobi odgovor (≤ 60 s ali »ni odgovora«)"
             autoLayout lr
         }
 
-        dynamic vrata "D2-UIL-tuji-eFTI-Gate" "PU-CA-1 / PU-G2G-1: dostop prek UIL, eFTI Platform na tujem eFTI Gate (TGD §3.3.1 b)" {
-            organi -> vrata.caApi "Zahteva z UIL"
-            vrata.caApi -> vrata.gateService "Predaja"
-            vrata.gateService -> vrata.ap "UIL kaže na drug eFTI Gate"
-            vrata.ap -> tujaVrata "#1 G2G zahteva (statično odkrivanje)"
-            tujaVrata -> tujePlatforme "#2 G2P"
-            tujaVrata -> vrata.ap "Odgovor po isti poti"
-            vrata.ap -> vrata.gateService "Preveri ključ eFTI Gate, dostavi"
-            organi -> vrata.caApi "Pridobi odgovor"
+        dynamic gate "D2-UIL-foreign-gate" "PU-CA-1 / PU-G2G-1: dostop prek UIL, eFTI Platform na tujem eFTI Gate (TGD §3.3.1 b)" {
+            authorities -> gate.aapApi "Zahteva z UIL"
+            gate.aapApi -> gate.gateService "Predaja"
+            gate.gateService -> gate.ap "UIL kaže na drug eFTI Gate"
+            gate.ap -> foreignGates "#1 G2G zahteva (statično odkrivanje)"
+            foreignGates -> foreignPlatforms "#2 G2P"
+            foreignGates -> gate.ap "Odgovor po isti poti"
+            gate.ap -> gate.gateService "Preveri ključ eFTI Gate, dostavi"
+            authorities -> gate.aapApi "Pridobi odgovor"
             autoLayout lr
         }
 
-        dynamic vrata.gateService "D3-Iskanje-po-identifikatorjih" "PU-CA-2/3, PU-G2G-3: iskanje po identifikatorjih (TGD §3.3.2–3.3.3, §6)" {
-            vrata.caApi -> vrata.gateService.jedro "Iskanje (npr. registrska oznaka)"
-            vrata.gateService.jedro -> vrata.gateService.iskalnik "Išči"
-            vrata.gateService.iskalnik -> vrata.gateService.roi "Lokalni zadetki"
-            vrata.gateService.iskalnik -> vrata.gateService.registri "Seznam eFTI Gate"
-            vrata.gateService.iskalnik -> vrata.gateService.edeliveryConnector "Posreduj iskanje vsem eFTI Gate"
-            vrata.gateService.edeliveryConnector -> vrata.gateService.wsPlugin "Pošlji"
-            vrata.gateService.wsPlugin -> vrata.ap "#1 G2G iskanje"
-            vrata.ap -> vrata.gateService.edeliveryConnector "Delni rezultati drugih eFTI Gate"
-            vrata.gateService.jedro -> vrata.db "Asinhrono: sprotni rezultati; sinhrono: združeni s statusi"
+        dynamic gate.gateService "D3-Identifier-search" "PU-CA-2/3, PU-G2G-3: iskanje po identifikatorjih (TGD §3.3.2–3.3.3, §6)" {
+            gate.aapApi -> gate.gateService.core "Iskanje (npr. registrska oznaka)"
+            gate.gateService.core -> gate.gateService.searchMechanism "Išči"
+            gate.gateService.searchMechanism -> gate.gateService.roi "Lokalni zadetki"
+            gate.gateService.searchMechanism -> gate.gateService.registries "Seznam eFTI Gate"
+            gate.gateService.searchMechanism -> gate.gateService.edeliveryConnector "Posreduj iskanje vsem eFTI Gate"
+            gate.gateService.edeliveryConnector -> gate.gateService.wsPlugin "Pošlji"
+            gate.gateService.wsPlugin -> gate.ap "#1 G2G iskanje"
+            gate.ap -> gate.gateService.edeliveryConnector "Delni rezultati drugih eFTI Gate"
+            gate.gateService.core -> gate.db "Asinhrono: sprotni rezultati; sinhrono: združeni s statusi"
             autoLayout lr
         }
 
-        dynamic vrata.gateService "D4-Nalaganje-identifikatorjev" "PU-P2G-1/2: nalaganje, zamenjava in deaktivacija identifikatorjev (čl. 11; TGD §6.1)" {
-            vrata.ap -> vrata.gateService.edeliveryConnector "#2 P2G nalaganje UIL in identifikatorjev"
-            vrata.gateService.edeliveryConnector -> vrata.gateService.jedro "Predaja"
-            vrata.gateService.jedro -> vrata.gateService.certCheck "eFTI Platform v registru, status veljaven?"
-            vrata.gateService.certCheck -> vrata.gateService.registri "Registry of eFTI Platforms"
-            vrata.gateService.jedro -> vrata.gateService.commons "Celoten nabor veljaven? (sicer zavrni vse)"
-            vrata.gateService.jedro -> vrata.gateService.iskalnik "Shrani"
-            vrata.gateService.iskalnik -> vrata.gateService.roi "Dodaj ali zamenjaj; ob eFTI188 deaktiviraj (cestni prevoz: po obdobju kabotaže)"
-            vrata.gateService.roi -> vrata.db "Zapis"
-            vrata.gateService.jedro -> vrata.gateService.logger "Revizijska sled"
+        dynamic gate.gateService "D4-Identifier-upload" "PU-P2G-1/2: nalaganje, zamenjava in deaktivacija identifikatorjev (čl. 11; TGD §6.1)" {
+            gate.ap -> gate.gateService.edeliveryConnector "#2 P2G nalaganje UIL in identifikatorjev"
+            gate.gateService.edeliveryConnector -> gate.gateService.core "Predaja"
+            gate.gateService.core -> gate.gateService.certCheck "eFTI Platform v registru, status veljaven?"
+            gate.gateService.certCheck -> gate.gateService.registries "Registry of eFTI Platforms"
+            gate.gateService.core -> gate.gateService.commons "Celoten nabor veljaven? (sicer zavrni vse)"
+            gate.gateService.core -> gate.gateService.searchMechanism "Shrani"
+            gate.gateService.searchMechanism -> gate.gateService.roi "Dodaj ali zamenjaj; ob eFTI188 deaktiviraj (cestni prevoz: po obdobju kabotaže)"
+            gate.gateService.roi -> gate.db "Zapis"
+            gate.gateService.core -> gate.gateService.logger "Revizijska sled"
             autoLayout lr
         }
 
-        dynamic vrata "D5-Nadaljnje-ukrepanje" "PU-CA-4 / PU-G2P-2: follow-up communication (TGD §3.3.4)" {
-            organi -> vrata.caApi "Sporočilo z UIL in ID izvorne zahteve"
-            vrata.caApi -> vrata.gateService "Predaja"
-            vrata.gateService -> vrata.ap "Posreduj"
-            vrata.ap -> platformaSI "#2 G2P follow-up communication"
-            platformaSI -> vrata.ap "Potrdilo o prejemu in shranitvi"
-            vrata.ap -> vrata.gateService "Dostava potrdila"
-            organi -> vrata.caApi "Pridobi potrdilo"
+        dynamic gate "D5-Follow-up" "PU-CA-4 / PU-G2P-2: follow-up communication (TGD §3.3.4)" {
+            authorities -> gate.aapApi "Sporočilo z UIL in ID izvorne zahteve"
+            gate.aapApi -> gate.gateService "Predaja"
+            gate.gateService -> gate.ap "Posreduj"
+            gate.ap -> platformsSI "#2 G2P follow-up communication"
+            platformsSI -> gate.ap "Potrdilo o prejemu in shranitvi"
+            gate.ap -> gate.gateService "Dostava potrdila"
+            authorities -> gate.aapApi "Pridobi potrdilo"
             autoLayout lr
         }
 

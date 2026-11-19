@@ -124,7 +124,7 @@ Uradnik pripravi sporočilo z UIL → AAP preveri pravico → eFTI Gate dostavi 
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
-| SI-GATE-FR-250 | eFTI Gate mora pristojnim organom zagotoviti programski vmesnik (#3) za PU-CA-1 do PU-CA-4 po specifikaciji eFTI Gate AAP API (SI-GATE-FR-300). | čl. 6(3)(b); ICD v0.5 §3.1 | M | EG (`vrata.caApi`) | P, T |
+| SI-GATE-FR-250 | eFTI Gate mora pristojnim organom zagotoviti programski vmesnik (#3) za PU-CA-1 do PU-CA-4 po specifikaciji eFTI Gate AAP API (SI-GATE-FR-300). | čl. 6(3)(b); ICD v0.5 §3.1 | M | EG (`gate.aapApi`) | P, T |
 | SI-GATE-FR-251 | Vmesnik #3 mora podpirati asinhrono obdelavo: AAP ob zahtevi prejme identifikator in pozneje pridobi odgovor (poizvedovanje ali potisno obvestilo). Ali se dodatno zahteva sinhroni način, je odprto (7.8). | TGD §6.3; RI (REST API za organe) | M | EG | T |
 | SI-GATE-FR-252 | Vmesnik #3 mora za podatke uporabljati standardne tipe sporočil eFTI (XSD), kjer je to mogoče. (osnutek) | ICD v0.5 P-01 | P | EG | P |
 | SI-GATE-FR-253 | Vmesnik #3 mora omogočiti zahtevo za določeno različico eFTI dataset, ki se prenese v kontekstu sporočila. (osnutek) | ICD v0.5 §13, P-06 | P | EG | T |
@@ -156,10 +156,10 @@ TS določa programske vmesnike REST eFTI Gate kot **pogodbe OpenAPI 3.1** (»con
 
 | Storitev | Vmesnik | Odjemalci | Element C4 | Izdaja | Specifikacija |
 |---|---|---|---|---|---|
-| eFTI Gate AAP API | #3 G2A | AAP pristojnih organov | `vrata.caApi` | R1 | `efti-gate-aap-api.yaml` |
-| eFTI Gate Administration API | upravljanje | upravljavska aplikacija, avtomatizacija MZIE | `vrata.adminApi` | R1 (sinhronizacija statusov R2) | `efti-gate-admin-api.yaml` |
-| eFTI Gate Audit and Statistics API | revizija, poročanje | upravljavska aplikacija, poročanje MZIE | `vrata.auditApi` | R1 | `efti-gate-audit-api.yaml` |
-| eFTI Authorisation Registry API | Authorisation Registry | kadrovski sistemi pristojnih organov | `vrata.arApi` | R2, pogojno (M2) | `efti-authorisation-registry-api.yaml` |
+| eFTI Gate AAP API | #3 G2A | AAP pristojnih organov | `gate.aapApi` | R1 | `efti-gate-aap-api.yaml` |
+| eFTI Gate Administration API | upravljanje | upravljavska aplikacija, avtomatizacija MZIE | `gate.adminApi` | R1 (sinhronizacija statusov R2) | `efti-gate-admin-api.yaml` |
+| eFTI Gate Audit and Statistics API | revizija, poročanje | upravljavska aplikacija, poročanje MZIE | `gate.auditApi` | R1 | `efti-gate-audit-api.yaml` |
+| eFTI Authorisation Registry API | Authorisation Registry | kadrovski sistemi pristojnih organov | `gate.arApi` | R2, pogojno (M2) | `efti-authorisation-registry-api.yaml` |
 | eFTI Gate Platform REST API | #2 (nacionalna možnost) | eFTI Platform | — | odprto | ni specificirana (čl. 9(4); osnova RI `schema/api-schemas`, ICD v0.5 §9) |
 
 Vmesnika #1 in #2 (eDelivery, AS4) nista storitvi OpenAPI; določata ju TGD Annex 1 in ICD (7.7).

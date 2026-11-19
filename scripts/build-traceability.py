@@ -15,16 +15,16 @@ OUT = TS / "priloga-c-sledljivost.md"
 DSL = ROOT / "architecture" / "workspace.dsl"
 # oznaka komponente (stolpec Komp.) -> element modela C4 (architecture/workspace.dsl)
 C4 = {
-    "EG": "vrata.gateService",
-    "SM": "vrata.gateService.iskalnik",
-    "RoI": "vrata.gateService.roi",
-    "ED": "vrata.ap",
-    "AAP": "organi",
-    "AR": "organi",
-    "UAP": "organi",
-    "UP": "vrata.admin",
+    "EG": "gate.gateService",
+    "SM": "gate.gateService.searchMechanism",
+    "RoI": "gate.gateService.roi",
+    "ED": "gate.ap",
+    "AAP": "authorities",
+    "AR": "authorities",
+    "UAP": "authorities",
+    "UP": "gate.adminApp",
     "OP": None,  # obratovanje in organizacija: ni elementa modela
-    "TCT": "vrata.tct",
+    "TCT": "gate.tct",
 }
 ROW = re.compile(r"^\|\s*(SI-GATE-(?:FR|NFR)-\d{3})\s*\|(.*)\|\s*$")
 REF = re.compile(r"SI-GATE-(?:FR|NFR)-\d{3}")
@@ -105,7 +105,7 @@ def main():
     for rid in sorted(reqs, key=key):
         r = reqs[rid]
         codes = [c for c in re.split(r"[,\s]+", re.sub(r"\([^)]*\)", "", r["komp"])) if c]
-        elems = sorted({C4[c] for c in codes if C4.get(c)}) if "vse" not in codes else ["vrata", "organi"]
+        elems = sorted({C4[c] for c in codes if C4.get(c)}) if "vse" not in codes else ["gate", "authorities"]
         c4 = ", ".join(f"`{e}`" for e in elems) or "—"
         lines.append(f"| {rid} | {short(r['opis'])} | {r['vir']} | {r['p']} | {'R2' if rid in r2 else 'R1'} | {r['komp']} | {c4} | {r['prev']} | {r['pogl']} |")
     OUT.write_text("\n".join(lines) + "\n")

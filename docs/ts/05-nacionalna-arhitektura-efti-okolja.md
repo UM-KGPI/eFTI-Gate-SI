@@ -47,14 +47,14 @@ Iz predpostavk: revizijska sled potrebuje približno 90 GB za 2 leti z indeksi; 
 | Komponenta | Element C4 | Št. VM | vCPU/VM | RAM GB/VM | Sistemski disk GB/VM | Podatkovni disk GB/VM |
 |---|---|---|---|---|---|---|
 | Vstopna točka (reverse proxy, API gateway, WAF) | — | 2 | 2 | 4 | 40 | — |
-| eFTI Gate Service (vključno z eFTI Gate AAP API) | `vrata.gateService`, `vrata.caApi` | 3 | 4 | 8 | 40 | — |
-| Administration API, Audit and Statistics API, upravljavska aplikacija | `vrata.adminApi`, `vrata.auditApi`, `vrata.admin` | 2 | 2 | 4 | 40 | — |
-| Strežnik identitet (OIDC) | `vrata.idp` | 2 | 2 | 4 | 40 | — |
-| Sporočilni posrednik (gruča) | `vrata.mq` | 3 | 2 | 4 | 40 | 50 |
-| eDelivery Access Point (Domibus) | `vrata.ap` | 2 | 4 | 8 | 40 | — |
-| Baza dostopovne točke (primarna + replika) | `vrata.apDb` | 2 | 4 | 16 | 40 | 250 |
-| Podatkovna baza eFTI Gate (primarna + replika) | `vrata.db` | 2 | 4 | 16 | 40 | 250 |
-| Nadzor delovanja in zbiranje dnevnikov | `vrata.monitoring` | 2 | 4 | 16 | 40 | 500 |
+| eFTI Gate Service (vključno z eFTI Gate AAP API) | `gate.gateService`, `gate.aapApi` | 3 | 4 | 8 | 40 | — |
+| Administration API, Audit and Statistics API, upravljavska aplikacija | `gate.adminApi`, `gate.auditApi`, `gate.adminApp` | 2 | 2 | 4 | 40 | — |
+| Strežnik identitet (OIDC) | `gate.idp` | 2 | 2 | 4 | 40 | — |
+| Sporočilni posrednik (gruča) | `gate.mq` | 3 | 2 | 4 | 40 | 50 |
+| eDelivery Access Point (Domibus) | `gate.ap` | 2 | 4 | 8 | 40 | — |
+| Baza dostopovne točke (primarna + replika) | `gate.apDb` | 2 | 4 | 16 | 40 | 250 |
+| Podatkovna baza eFTI Gate (primarna + replika) | `gate.db` | 2 | 4 | 16 | 40 | 250 |
+| Nadzor delovanja in zbiranje dnevnikov | `gate.monitoring` | 2 | 4 | 16 | 40 | 500 |
 | Upravljalni strežnik (bastion) | — | 1 | 2 | 4 | 40 | — |
 | **Skupaj na lokacijo** | | **21** | **64** | **176** | **2.990 (sistemski in podatkovni skupaj)** | |
 
