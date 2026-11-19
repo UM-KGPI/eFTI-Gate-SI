@@ -90,7 +90,7 @@ gantt
 | Izdaja | Obseg | Rok |
 |---|---|---|
 | **R1 (zagon)** | vse zahteve iz pogl. 6 (pravne obveznosti), zahteve pogl. 7 za vmesnike #1, #2 in #3, Registry of Identifiers, preverjanje certifikacijskega statusa (vsaj ročno vodeni Registry of eFTI Platforms), dnevniki in revizijska sled, varnost (8.5), služba za pomoč (čl. 12), prevzemne faze F1–F4 | 9. 7. 2027 |
-| **R2** | SI-GATE-FR-233 (API Authorisation Registry), SI-GATE-FR-253 (izbira različice eFTI dataset), SI-GATE-FR-271 (samodejna sinhronizacija z Unijskim referenčnim seznamom; v R1 se status vodi v Registry of eFTI Platforms), SI-GATE-NFR-281 (okolje TCT pri eFTI Gate) | 6 mesecev po zagonu [predlog] |
+| **R2** | SI-GATE-FR-233 in SI-GATE-FR-305 (eFTI Authorisation Registry API), SI-GATE-FR-253 (izbira različice eFTI dataset), SI-GATE-FR-271 (samodejna sinhronizacija z Unijskim referenčnim seznamom; v R1 se status vodi v Registry of eFTI Platforms), SI-GATE-NFR-281 (okolje TCT pri eFTI Gate) | 6 mesecev po zagonu [predlog] |
 
 Razdelitev med R1 in R2 je predlog; dokončno jo določi MZIE skupaj z izbiro variante v M2. Zahteve, ki niso navedene pri R2, sodijo v R1; Priloga C ima stolpec »Izdaja«. Nastavljivost nabora identifikatorjev (SI-GATE-FR-213) in politike priklopa (SI-GATE-NFR-282) sta v R1, ker je po zagonu treba le spremeniti vsebino; ali Slovenija uporabi PRA, odloči MZIE (9.8).
 

@@ -23,78 +23,99 @@ skinparam rectangle<<1>> {
 }
 rectangle "==Container" <<1>>
 
-skinparam database<<2>> {
+skinparam hexagon<<2>> {
   BackgroundColor #438dd5
   FontColor #ffffff
   BorderColor #2e6295
 }
-database "==Container, Database" <<2>>
+hexagon "==Container, API" <<2>>
 
-skinparam rectangle<<3>> {
+skinparam hexagon<<3>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
 }
-rectangle "==Container, Dodatek SI" <<3>>
+hexagon "==Container, API, Dodatek SI" <<3>>
 
-skinparam database<<4>> {
-  BackgroundColor #2e8b57
-  FontColor #ffffff
-  BorderColor #20613c
-}
-database "==Container, Dodatek SI, Database" <<4>>
-
-skinparam rectangle<<5>> {
+skinparam hexagon<<4>> {
   BackgroundColor #8e44ad
   FontColor #ffffff
   BorderColor #632f79
 }
-rectangle "==Container, Dodatek SI, Odprto, R2" <<5>>
+hexagon "==Container, API, Dodatek SI, Odprto, R2" <<4>>
 
-skinparam queue<<6>> {
+skinparam database<<5>> {
   BackgroundColor #438dd5
   FontColor #ffffff
   BorderColor #2e6295
 }
-queue "==Container, Queue" <<6>>
+database "==Container, Database" <<5>>
 
-skinparam person<<7>> {
+skinparam rectangle<<6>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+rectangle "==Container, Dodatek SI" <<6>>
+
+skinparam database<<7>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+database "==Container, Dodatek SI, Database" <<7>>
+
+skinparam rectangle<<8>> {
+  BackgroundColor #8e44ad
+  FontColor #ffffff
+  BorderColor #632f79
+}
+rectangle "==Container, Dodatek SI, Odprto, R2" <<8>>
+
+skinparam queue<<9>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+queue "==Container, Queue" <<9>>
+
+skinparam person<<10>> {
   BackgroundColor #08427b
   FontColor #ffffff
   BorderColor #052e56
 }
-person "==Person" <<7>>
+person "==Person" <<10>>
 
-skinparam rectangle<<8>> {
+skinparam rectangle<<11>> {
   BackgroundColor #e67e22
   FontColor #ffffff
   BorderColor #a15817
 }
-rectangle "==Software System, Odprto" <<8>>
+rectangle "==Software System, Odprto" <<11>>
 
-skinparam rectangle<<9>> {
+skinparam rectangle<<12>> {
   BackgroundColor #8a8a8a
   FontColor #ffffff
   BorderColor #606060
 }
-rectangle "==Software System, Zunanji" <<9>>
+rectangle "==Software System, Zunanji" <<12>>
 
-skinparam rectangle<<10>> {
+skinparam rectangle<<13>> {
   BackgroundColor #e67e22
   FontColor #ffffff
   BorderColor #a15817
 }
-rectangle "==Software System, Zunanji, Odprto" <<10>>
+rectangle "==Software System, Zunanji, Odprto" <<13>>
 
-skinparam rectangle<<11>> {
+skinparam rectangle<<14>> {
   BackgroundColor #b8860b
   FontColor #ffffff
   BorderColor #805d07
 }
-rectangle "==Software System, Zunanji, Test" <<11>>
+rectangle "==Software System, Zunanji, Test" <<14>>
 
-rectangle "." <<_transparent>> as 12
-12 .[#707070,thickness=2].> 12 : "<color:#707070>Relationship"
+rectangle "." <<_transparent>> as 15
+15 .[#707070,thickness=2].> 15 : "<color:#707070>Relationship"
 
 
 @enduml

@@ -15,12 +15,6 @@ skinparam {
 
 hide stereotype
 
-skinparam rectangle<<eFTIGate.APIzapristojneorgane3>> {
-  BackgroundColor #438dd5
-  FontColor #ffffff
-  BorderColor #2e6295
-  shadowing false
-}
 skinparam rectangle<<SistemipristojnihorganovAAPAuthorisationRegistryUAP>> {
   BackgroundColor #e67e22
   FontColor #ffffff
@@ -28,6 +22,12 @@ skinparam rectangle<<SistemipristojnihorganovAAPAuthorisationRegistryUAP>> {
   shadowing false
 }
 skinparam rectangle<<eFTIGate.eDeliveryAccessPoint>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam hexagon<<eFTIGate.eFTIGateAAPAPI3>> {
   BackgroundColor #438dd5
   FontColor #ffffff
   BorderColor #2e6295
@@ -58,7 +58,7 @@ skinparam rectangle<<eFTIGate>> {
 }
 
 rectangle "eFTI Gate\n<size:10>[Software System]</size>" <<eFTIGate>> {
-  rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<eFTIGate.APIzapristojneorgane3>> as eFTIGate.APIzapristojneorgane3
+  hexagon "==eFTI Gate AAP API (#3)\n<size:10>[Container: REST/JSON, mTLS, OAuth 2.0]</size>\n\nOpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." <<eFTIGate.eFTIGateAAPAPI3>> as eFTIGate.eFTIGateAAPAPI3
   rectangle "==eDelivery Access Point\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.eDeliveryAccessPoint>> as eFTIGate.eDeliveryAccessPoint
   rectangle "==eFTI Gate Service\n<size:10>[Container: Java 21+, Spring Boot]</size>\n\nJedro eFTI Gate: vmesniki, obdelava zahtev, usmerjanje, revizijska sled. V RI ena storitev iz knjižnic." <<eFTIGate.eFTIGateService>> as eFTIGate.eFTIGateService
 }
@@ -67,12 +67,12 @@ rectangle "==Sistemi pristojnih organov (AAP, Authorisation Registry, UAP)\n<siz
 rectangle "==eFTI Gate drugih DČ\n<size:10>[Software System]</size>\n\nMrežna topologija eFTI Gate." <<eFTIGatedrugihDČ>> as eFTIGatedrugihDČ
 rectangle "==eFTI Platform drugih DČ\n<size:10>[Software System]</size>\n\nPriključene na eFTI Gate drugih DČ." <<eFTIPlatformdrugihDČ>> as eFTIPlatformdrugihDČ
 
-SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.APIzapristojneorgane3 : "<color:#707070>1. Zahteva z UIL\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
-eFTIGate.APIzapristojneorgane3 .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>2. Predaja"
+SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.eFTIGateAAPAPI3 : "<color:#707070>1. Zahteva z UIL\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+eFTIGate.eFTIGateAAPAPI3 .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>2. Predaja"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.eDeliveryAccessPoint : "<color:#707070>3. UIL kaže na drug eFTI Gate\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIGatedrugihDČ : "<color:#707070>4. #1 G2G zahteva (statično odkrivanje)\n<color:#707070><size:8>[AS4, statično odkrivanje]</size>"
 eFTIGatedrugihDČ .[#707070,thickness=2].> eFTIPlatformdrugihDČ : "<color:#707070>5. #2 G2P\n<color:#707070><size:8>[AS4]</size>"
 eFTIGatedrugihDČ .[#707070,thickness=2].> eFTIGate.eDeliveryAccessPoint : "<color:#707070>6. Odgovor po isti poti\n<color:#707070><size:8>[AS4]</size>"
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>7. Preveri ključ eFTI Gate, dostavi\n<color:#707070><size:8>[JMS/WS]</size>"
-SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.APIzapristojneorgane3 : "<color:#707070>8. Pridobi odgovor\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.eFTIGateAAPAPI3 : "<color:#707070>8. Pridobi odgovor\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
 @enduml

@@ -15,12 +15,6 @@ skinparam {
 
 hide stereotype
 
-skinparam rectangle<<eFTIGate.APIzapristojneorgane3>> {
-  BackgroundColor #438dd5
-  FontColor #ffffff
-  BorderColor #2e6295
-  shadowing false
-}
 skinparam database<<eFTIGate.Bazadostopnetočke>> {
   BackgroundColor #438dd5
   FontColor #ffffff
@@ -111,6 +105,30 @@ skinparam rectangle<<eDeliverySMLSMP>> {
   BorderColor #606060
   shadowing false
 }
+skinparam hexagon<<eFTIGate.eFTIAuthorisationRegistryAPI>> {
+  BackgroundColor #8e44ad
+  FontColor #ffffff
+  BorderColor #632f79
+  shadowing false
+}
+skinparam hexagon<<eFTIGate.eFTIGateAAPAPI3>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam hexagon<<eFTIGate.eFTIGateAdministrationAPI>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
+skinparam hexagon<<eFTIGate.eFTIGateAuditandStatisticsAPI>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+  shadowing false
+}
 skinparam rectangle<<eFTIGate.eFTIGateService>> {
   BackgroundColor #438dd5
   FontColor #ffffff
@@ -145,25 +163,37 @@ rectangle "==eDelivery SML/SMP\n<size:10>[Software System]</size>\n\nDinamično 
 rectangle "==Referenčni eFTI Gate (RI) in Launchpad\n<size:10>[Software System]</size>\n\nSidro skladnosti v integracijskem omrežju; TCT in varnostni testi s podpisanim poročilom." <<ReferenčnieFTIGateRIinLaunchpad>> as ReferenčnieFTIGateRIinLaunchpad
 
 rectangle "eFTI Gate\n<size:10>[Software System]</size>" <<eFTIGate>> {
-  rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<eFTIGate.APIzapristojneorgane3>> as eFTIGate.APIzapristojneorgane3
+  hexagon "==eFTI Gate AAP API (#3)\n<size:10>[Container: REST/JSON, mTLS, OAuth 2.0]</size>\n\nOpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." <<eFTIGate.eFTIGateAAPAPI3>> as eFTIGate.eFTIGateAAPAPI3
   queue "==Sporočilni posrednik\n<size:10>[Container: RabbitMQ]</size>\n\nTrajna vrsta asinhronih zahtev." <<eFTIGate.Sporočilniposrednik>> as eFTIGate.Sporočilniposrednik
   database "==Podatkovna baza eFTI Gate\n<size:10>[Container: PostgreSQL]</size>\n\nRegistry of Identifiers, registri povezav, stanje zahtev." <<eFTIGate.PodatkovnabazaeFTIGate>> as eFTIGate.PodatkovnabazaeFTIGate
   rectangle "==eDelivery Access Point\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.eDeliveryAccessPoint>> as eFTIGate.eDeliveryAccessPoint
   database "==Baza dostopne točke\n<size:10>[Container: MariaDB]</size>\n\nSporočila in konfiguracija Domibus." <<eFTIGate.Bazadostopnetočke>> as eFTIGate.Bazadostopnetočke
   rectangle "==Strežnik identitet\n<size:10>[Container: OIDC (npr. Keycloak)]</size>\n\nOIDC/OAuth2 za upravljavce in strojne odjemalce; v RI le primer (Keycloak)." <<eFTIGate.Strežnikidentitet>> as eFTIGate.Strežnikidentitet
   rectangle "==Upravljavska aplikacija\n<size:10>[Container: Spletna aplikacija]</size>\n\nRegistri povezav, priklop eFTI Platform (tudi čl. 6(4)), certifikati, šifranti, pregled revizijskih sledi, statistika." <<eFTIGate.Upravljavskaaplikacija>> as eFTIGate.Upravljavskaaplikacija
+  hexagon "==eFTI Gate Administration API\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nOpenAPI: registri eFTI Gate, AAP in Registry of eFTI Platforms, priklop (čl. 6(4)), začasni odklop, šifranti, sinhronizacija statusov (R2)." <<eFTIGate.eFTIGateAdministrationAPI>> as eFTIGate.eFTIGateAdministrationAPI
+  hexagon "==eFTI Gate Audit and Statistics API\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nOpenAPI: iskanje po revizijski sledi, izvozi za pristojne organe, letna statistika (čl. 17 Uredbe 2020/1056)." <<eFTIGate.eFTIGateAuditandStatisticsAPI>> as eFTIGate.eFTIGateAuditandStatisticsAPI
+  hexagon "==eFTI Authorisation Registry API\n<size:10>[Container: REST/JSON, mTLS, OAuth 2.0]</size>\n\nOpenAPI: pravice dostopa in obdelave uradnikov, zgodovina sprememb (čl. 5). Pogojno po M2." <<eFTIGate.eFTIAuthorisationRegistryAPI>> as eFTIGate.eFTIAuthorisationRegistryAPI
   database "==Shramba revizijskih sledi\n<size:10>[Container]</size>\n\nNespremenljiva hramba (npr. WORM ali veriženje zgoščenih vrednosti), 2 leti ali več (čl. 6(2)(h))." <<eFTIGate.Shrambarevizijskihsledi>> as eFTIGate.Shrambarevizijskihsledi
   rectangle "==Nadzor delovanja in SIEM\n<size:10>[Container]</size>\n\nMetrike, alarmi, varnostni dogodki; povezava s SOC." <<eFTIGate.NadzordelovanjainSIEM>> as eFTIGate.NadzordelovanjainSIEM
   rectangle "==Okolje TCT za eFTI Platform\n<size:10>[Container]</size>\n\nUsklajeni testni scenariji TCT za vmesnik #2 pred priklopom eFTI Platform (decentraliziran model M2.3)." <<eFTIGate.OkoljeTCTzaeFTIPlatform>> as eFTIGate.OkoljeTCTzaeFTIPlatform
   rectangle "==eFTI Gate Service\n<size:10>[Container: Java 21+, Spring Boot]</size>\n\nJedro eFTI Gate: vmesniki, obdelava zahtev, usmerjanje, revizijska sled. V RI ena storitev iz knjižnic." <<eFTIGate.eFTIGateService>> as eFTIGate.eFTIGateService
 }
 
-eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.Shrambarevizijskihsledi : "<color:#707070>Pregled revizijskih sledi"
+eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.eFTIGateAdministrationAPI : "<color:#707070>Upravljanje registrov, priklopa in šifrantov\n<color:#707070><size:8>[HTTPS/JSON]</size>"
+eFTIGate.eFTIGateAdministrationAPI .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>Branje in pisanje registrov"
+eFTIGate.eFTIGateAdministrationAPI .[#707070,thickness=2].> eFTIGate.Strežnikidentitet : "<color:#707070>Preverjanje žetonov"
+eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.eFTIGateAuditandStatisticsAPI : "<color:#707070>Revizijska sled, izvozi, statistika\n<color:#707070><size:8>[HTTPS/JSON]</size>"
+eFTIGate.eFTIGateAuditandStatisticsAPI .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>Letna statistika"
+eFTIGate.eFTIGateAuditandStatisticsAPI .[#707070,thickness=2].> eFTIGate.Strežnikidentitet : "<color:#707070>Preverjanje žetonov"
+eFTIGate.eFTIGateAuditandStatisticsAPI .[#707070,thickness=2].> eFTIGate.Shrambarevizijskihsledi : "<color:#707070>Branje revizijskih sledi"
+UpravljaveceFTIGate .[#707070,thickness=2].> eFTIGate.eFTIGateAuditandStatisticsAPI : "<color:#707070>Poročanje MZIE (čl. 17)\n<color:#707070><size:8>[HTTPS/JSON]</size>"
+SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.eFTIAuthorisationRegistryAPI : "<color:#707070>Sinhronizacija pravic uradnikov (R2)\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+eFTIGate.eFTIAuthorisationRegistryAPI .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>Pravice uradnikov\n<color:#707070><size:8>[JDBC]</size>"
 eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.Strežnikidentitet : "<color:#707070>Prijava upravljavcev (MFA)"
 eFTIGate.OkoljeTCTzaeFTIPlatform .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>Rezultat TCT za priklop"
 UpravljaveceFTIGate .[#707070,thickness=2].> eFTIGate.Upravljavskaaplikacija : "<color:#707070>Upravlja eFTI Gate"
 eFTIGate.NadzordelovanjainSIEM .[#707070,thickness=2].> UpravljaveceFTIGate : "<color:#707070>Alarmi"
-SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.APIzapristojneorgane3 : "<color:#707070>#3 G2A: zahteve prek UIL, iskanja, follow-up communication\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.eFTIGateAAPAPI3 : "<color:#707070>#3 G2A: zahteve prek UIL, iskanja, follow-up communication\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIPlatformSI : "<color:#707070>#2 G2P: zahteve za eFTI dataset, follow-up communication\n<color:#707070><size:8>[AS4]</size>"
 eFTIPlatformSI .[#707070,thickness=2].> eFTIGate.eDeliveryAccessPoint : "<color:#707070>#2 P2G: nalaganje identifikatorjev, odgovori\n<color:#707070><size:8>[AS4]</size>"
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIGatedrugihDČ : "<color:#707070>#1 G2G: posredovanje zahtev in iskanj\n<color:#707070><size:8>[AS4, statično odkrivanje]</size>"
@@ -173,8 +203,8 @@ eFTIGate.eFTIGateService .[#707070,thickness=2].> Unijskireferenčniseznam : "<c
 eFTIGate.eFTIGateService .[#707070,thickness=2].> NacionalniseznamcertificiraniheFTIPlatform : "<color:#707070>Nacionalni vnosi certificiranih eFTI Platform\n<color:#707070><size:8>[HTTPS ali ročno]</size>"
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> ReferenčnieFTIGateRIinLaunchpad : "<color:#707070>Testi skladnosti pred vstopom v mrežo\n<color:#707070><size:8>[AS4]</size>"
 eFTIPlatformSI .[#707070,thickness=2].> eFTIGate.OkoljeTCTzaeFTIPlatform : "<color:#707070>Testi TCT pred priklopom (R2)\n<color:#707070><size:8>[AS4/REST]</size>"
-eFTIGate.APIzapristojneorgane3 .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>Predaja zahtev"
-eFTIGate.APIzapristojneorgane3 .[#707070,thickness=2].> eFTIGate.Strežnikidentitet : "<color:#707070>Preverjanje odjemalca in žetonov"
+eFTIGate.eFTIGateAAPAPI3 .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>Predaja zahtev"
+eFTIGate.eFTIGateAAPAPI3 .[#707070,thickness=2].> eFTIGate.Strežnikidentitet : "<color:#707070>Preverjanje odjemalca in žetonov"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.Sporočilniposrednik : "<color:#707070>Asinhrona obdelava\n<color:#707070><size:8>[AMQP]</size>"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>Stanje zahtev\n<color:#707070><size:8>[JDBC]</size>"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.eDeliveryAccessPoint : "<color:#707070>Pošiljanje in prejem sporočil AS4\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
@@ -182,5 +212,4 @@ eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIGate.eFTIGateService 
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIGate.Bazadostopnetočke : "<color:#707070>Sporočila\n<color:#707070><size:8>[JDBC]</size>"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.Shrambarevizijskihsledi : "<color:#707070>Zapisi revizijske sledi"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.NadzordelovanjainSIEM : "<color:#707070>Tehnični in varnostni dogodki"
-eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>Upravljanje registrov in politike priklopa"
 @enduml

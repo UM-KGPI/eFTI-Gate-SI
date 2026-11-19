@@ -1,0 +1,469 @@
+openapi: 3.1.0
+info:
+  title: eFTI Gate Administration API
+  version: 1.0.0-draft.1
+  summary: Management of connection registries, eFTI Platform onboarding and shared configuration.
+  description: |
+    Draft contract for the administration of the Slovenian eFTI Gate (TS 7.6, 7.9). Used by the
+    upravljavska aplikacija and by MZIE automation.
+
+    * Registry of eFTI Gates (IU 2024/1942 Art. 6(3)(e)), AAP registry (Art. 6(3)(d)) and
+      Registry of eFTI Platforms with certification status and connection policy (Art. 6(3)(f), 6(4); TS 9.7).
+    * Shared code lists, error codes and configuration agreed in the operational support network (Art. 6(3)(g)).
+    * Synchronisation with the Union Reference List is release R2 (TS 10.5).
+    * Every call is recorded in the audit trail (TS SI-GATE-NFR-083).
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://{host}/admin/v1
+    variables:
+      host:
+        default: efti-gate.example.si
+security:
+  - mutualTLS: []
+    oidc: [efti.admin]
+tags:
+  - name: Gates
+    description: Registry of eFTI Gates of other Member States
+  - name: AAPs
+    description: Registry of Authority Access Points
+  - name: Platforms
+    description: Registry of eFTI Platforms and onboarding
+  - name: Configuration
+    description: Shared code lists and configuration
+  - name: Certification
+    description: Synchronisation of certification status (R2)
+paths:
+  /gates:
+    get:
+      tags: [Gates]
+      operationId: listGates
+      summary: List registered eFTI Gates
+      responses:
+        '200':
+          description: Registered eFTI Gates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Gate'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    post:
+      tags: [Gates]
+      operationId: registerGate
+      summary: Register an eFTI Gate and its security certificate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Gate'}
+      responses:
+        '201':
+          description: Registered.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Gate'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '409': {$ref: '#/components/responses/Conflict'}
+  /gates/{gateId}:
+    parameters:
+      - $ref: '#/components/parameters/gateId'
+    get:
+      tags: [Gates]
+      operationId: getGate
+      summary: Get an eFTI Gate
+      responses:
+        '200':
+          description: eFTI Gate.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Gate'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    put:
+      tags: [Gates]
+      operationId: updateGate
+      summary: Update endpoint, certificate or status of an eFTI Gate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Gate'}
+      responses:
+        '200':
+          description: Updated.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Gate'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /aaps:
+    get:
+      tags: [AAPs]
+      operationId: listAaps
+      summary: List registered AAPs
+      responses:
+        '200':
+          description: Registered AAPs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Aap'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    post:
+      tags: [AAPs]
+      operationId: registerAap
+      summary: Register an AAP and its security certificate (IU Art. 6(3)(d))
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Aap'}
+      responses:
+        '201':
+          description: Registered.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Aap'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '409': {$ref: '#/components/responses/Conflict'}
+  /aaps/{aapId}:
+    parameters:
+      - name: aapId
+        in: path
+        required: true
+        schema: {type: string}
+    put:
+      tags: [AAPs]
+      operationId: updateAap
+      summary: Update certificate or status of an AAP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Aap'}
+      responses:
+        '200':
+          description: Updated.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Aap'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /platforms:
+    get:
+      tags: [Platforms]
+      operationId: listPlatforms
+      summary: List the Registry of eFTI Platforms
+      parameters:
+        - name: certificationStatus
+          in: query
+          schema: {$ref: '#/components/schemas/CertificationStatus'}
+      responses:
+        '200':
+          description: Registered eFTI Platforms.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Platform'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    post:
+      tags: [Platforms]
+      operationId: onboardPlatform
+      summary: Onboard an eFTI Platform (TS SI-GATE-NFR-280)
+      description: |
+        Registers the eFTI Platform with its keys, certification status and connection policy. For a
+        platform certified in another Member State while no CAB is accredited in Slovenia, `art64` must
+        contain the confirmation of that Member State (IU Art. 6(4)).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Platform'}
+      responses:
+        '201':
+          description: Onboarded.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Platform'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '409': {$ref: '#/components/responses/Conflict'}
+  /platforms/{platformId}:
+    parameters:
+      - $ref: '#/components/parameters/platformId'
+    get:
+      tags: [Platforms]
+      operationId: getPlatform
+      summary: Get an eFTI Platform
+      responses:
+        '200':
+          description: eFTI Platform.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Platform'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    put:
+      tags: [Platforms]
+      operationId: updatePlatform
+      summary: Update keys, certification status or connection policy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Platform'}
+      responses:
+        '200':
+          description: Updated.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Platform'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /platforms/{platformId}/suspension:
+    parameters:
+      - $ref: '#/components/parameters/platformId'
+    put:
+      tags: [Platforms]
+      operationId: suspendPlatform
+      summary: Temporarily disconnect an eFTI Platform (TS SI-GATE-NFR-283)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason: {type: string}
+                until: {type: string, format: date-time}
+      responses:
+        '204': {description: Suspended.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    delete:
+      tags: [Platforms]
+      operationId: resumePlatform
+      summary: Lift the suspension of an eFTI Platform
+      responses:
+        '204': {description: Resumed.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /code-lists/{codeListId}:
+    parameters:
+      - name: codeListId
+        in: path
+        required: true
+        schema: {type: string, examples: [CL-060]}
+    get:
+      tags: [Configuration]
+      operationId: getCodeList
+      summary: Get a shared code list
+      responses:
+        '200':
+          description: Code list.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CodeList'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    put:
+      tags: [Configuration]
+      operationId: updateCodeList
+      summary: Replace a shared code list without code changes (IU Art. 6(3)(g))
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CodeList'}
+      responses:
+        '200':
+          description: Updated.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CodeList'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /certification/sync:
+    post:
+      tags: [Certification]
+      operationId: syncCertificationStatus
+      summary: Synchronise certification status with the Union Reference List (R2)
+      responses:
+        '202':
+          description: Synchronisation started.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/SyncRun'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    get:
+      tags: [Certification]
+      operationId: getCertificationSync
+      summary: Status of the last synchronisation (R2)
+      responses:
+        '200':
+          description: Last run.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/SyncRun'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+components:
+  securitySchemes:
+    mutualTLS:
+      type: mutualTLS
+    oidc:
+      type: openIdConnect
+      description: Administrators sign in with MFA (TS SI-GATE-NFR-070); role efti.admin.
+      openIdConnectUrl: https://efti-gate.example.si/auth/.well-known/openid-configuration
+  parameters:
+    gateId:
+      name: gateId
+      in: path
+      required: true
+      schema: {type: string, examples: [EU-AT1]}
+    platformId:
+      name: platformId
+      in: path
+      required: true
+      schema: {type: string, examples: [SI-TRN]}
+  responses:
+    BadRequest:
+      description: Invalid input.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    Unauthorized:
+      description: Not authenticated or not authorised.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    NotFound:
+      description: Not found.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    Conflict:
+      description: Already registered.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+  schemas:
+    Certificate:
+      type: object
+      required: [pem]
+      properties:
+        pem: {type: string, description: X.509 certificate (PEM).}
+        notAfter: {type: string, format: date-time, readOnly: true}
+        fingerprintSha256: {type: string, readOnly: true}
+    Gate:
+      type: object
+      required: [gateId, country, as4PartyId, certificate, status]
+      properties:
+        gateId: {type: string, maxLength: 17, pattern: '^[A-Z0-9-]+$'}
+        country: {type: string, pattern: '^[A-Z]{2}$'}
+        as4PartyId: {type: string, description: eDelivery party identifier (naming convention per ICD).}
+        as4Endpoint: {type: string, format: uri}
+        certificate: {$ref: '#/components/schemas/Certificate'}
+        status: {type: string, enum: [ACTIVE, TEST, DISABLED]}
+        supportedMessageTypes:
+          type: array
+          items: {type: string, examples: [FTI009, FTI010]}
+        contact: {$ref: '#/components/schemas/Contact'}
+    Aap:
+      type: object
+      required: [aapId, authority, certificate, status]
+      properties:
+        aapId: {type: string}
+        authority: {type: string, description: Competent authority operating the AAP.}
+        certificate: {$ref: '#/components/schemas/Certificate'}
+        status: {type: string, enum: [ACTIVE, TEST, DISABLED]}
+        rateLimitPerMinute: {type: integer, description: TS SI-GATE-NFR-072.}
+        contact: {$ref: '#/components/schemas/Contact'}
+    CertificationStatus:
+      type: string
+      description: |
+        CERTIFIED – certified by an accredited CAB; PRA – connected on the basis of a TCT report if MZIE
+        accepts PRA (TS 9.7); SUSPENDED / WITHDRAWN – per the certifying CAB; NONE – not certified.
+      enum: [CERTIFIED, PRA, SUSPENDED, WITHDRAWN, NONE]
+    Platform:
+      type: object
+      required: [platformId, name, operator, certificate, certification, connectionPolicy]
+      properties:
+        platformId: {type: string, maxLength: 17, pattern: '^[A-Z0-9-]+$'}
+        name: {type: string}
+        operator: {type: string, description: eFTI Service Provider or economic operator.}
+        certificate: {$ref: '#/components/schemas/Certificate'}
+        smpParticipantId: {type: string, description: Participant identifier for dynamic discovery (SML/SMP).}
+        certification:
+          type: object
+          required: [status, source]
+          properties:
+            status: {$ref: '#/components/schemas/CertificationStatus'}
+            certificateId: {type: string}
+            cab: {type: string, description: Conformity assessment body.}
+            memberState: {type: string, pattern: '^[A-Z]{2}$'}
+            validUntil: {type: string, format: date}
+            source: {type: string, enum: [UNION_LIST, NATIONAL_LIST, ART_6_4, MANUAL]}
+            tctReport: {type: string, description: Reference to the TCT report (PRA).}
+        connectionPolicy:
+          type: string
+          description: Which certification statuses allow data exchange (configurable, TS SI-GATE-NFR-282).
+          enum: [CERTIFIED_ONLY, CERTIFIED_OR_PRA]
+        art64:
+          type: object
+          description: Confirmation by the certifying Member State (IU Art. 6(4)).
+          properties:
+            memberState: {type: string, pattern: '^[A-Z]{2}$'}
+            requestedAt: {type: string, format: date}
+            confirmedAt: {type: string, format: date}
+            reference: {type: string}
+        errorRateThreshold:
+          type: number
+          description: Share of failed exchanges that triggers an alert (TS SI-GATE-NFR-283).
+        contact: {$ref: '#/components/schemas/Contact'}
+    CodeList:
+      type: object
+      required: [codeListId, version, entries]
+      properties:
+        codeListId: {type: string}
+        version: {type: string}
+        entries:
+          type: array
+          items:
+            type: object
+            required: [code]
+            properties:
+              code: {type: string}
+              name: {type: string}
+              description: {type: string}
+    SyncRun:
+      type: object
+      properties:
+        runId: {type: string}
+        startedAt: {type: string, format: date-time}
+        finishedAt: {type: string, format: date-time}
+        status: {type: string, enum: [RUNNING, SUCCEEDED, FAILED]}
+        changes: {type: integer, description: Number of platforms whose status changed.}
+    Contact:
+      type: object
+      properties:
+        name: {type: string}
+        email: {type: string, format: email}
+        phone: {type: string}
+    Problem:
+      type: object
+      description: RFC 9457 Problem Details.
+      properties:
+        type: {type: string, format: uri}
+        title: {type: string}
+        status: {type: integer}
+        detail: {type: string}
+        instance: {type: string}

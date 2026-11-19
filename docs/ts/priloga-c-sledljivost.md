@@ -2,7 +2,7 @@
 
 > **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.
 >
-> Število zahtev: 227. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D). Izdaja po pogl. 10.5.
+> Število zahtev: 237. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D). Izdaja po pogl. 10.5.
 
 | Oznaka | Kratek opis | Vir | P | Izdaja | Komp. | Element C4 | Preverjanje | Pogl. |
 |---|---|---|---|---|---|---|---|---|
@@ -113,7 +113,7 @@
 | SI-GATE-FR-240 | Pri sestavljenih iskalnih poljih (uporabljeno prevozno sredstvo, uporabljena ali prevažana prevozna oprema) … | TGD §6.4 | M | R1 | SM | `vrata.gateService.iskalnik` | T | 7 |
 | SI-GATE-FR-241 | Iskanje mora vrniti seznam celotnih zapisov (UIL in identifikatorji) aktivnih eFTI dataset; register vrača … | TGD §6 | M | R1 | SM, RoI | `vrata.gateService.iskalnik`, `vrata.gateService.roi` | T | 7 |
 | SI-GATE-FR-242 | Iskanje mora biti enako pri iskanju slovenskega organa in pri iskanju, prejetem od drugega eFTI Gate (enaka … | TGD §6.4 | M | R1 | SM | `vrata.gateService.iskalnik` | T | 7 |
-| SI-GATE-FR-250 | eFTI Gate mora pristojnim organom zagotoviti programski vmesnik (#3) za PU-CA-1 do PU-CA-4 z javno, … | čl. 6(3)(b); ICD v0.5 §3.1 | M | R1 | EG (`vrata.caApi`) | `vrata.gateService` | P, T | 7 |
+| SI-GATE-FR-250 | eFTI Gate mora pristojnim organom zagotoviti programski vmesnik (#3) za PU-CA-1 do PU-CA-4 po specifikaciji … | čl. 6(3)(b); ICD v0.5 §3.1 | M | R1 | EG (`vrata.caApi`) | `vrata.gateService` | P, T | 7 |
 | SI-GATE-FR-251 | Vmesnik #3 mora podpirati asinhrono obdelavo: AAP ob zahtevi prejme identifikator in pozneje pridobi odgovor … | TGD §6.3; RI (REST API za organe) | M | R1 | EG | `vrata.gateService` | T | 7 |
 | SI-GATE-FR-252 | Vmesnik #3 mora za podatke uporabljati standardne tipe sporočil eFTI (XSD), kjer je to mogoče. (osnutek) | ICD v0.5 P-01 | P | R1 | EG | `vrata.gateService` | P | 7 |
 | SI-GATE-FR-253 | Vmesnik #3 mora omogočiti zahtevo za določeno različico eFTI dataset, ki se prenese v kontekstu sporočila. … | ICD v0.5 §13, P-06 | P | R2 | EG | `vrata.gateService` | T | 7 |
@@ -128,6 +128,16 @@
 | SI-GATE-FR-292 | Identifikatorji strank in končnih točk morajo slediti dogovorjenim pravilom poimenovanja (ICD v0.5 P-22; … | ICD v0.5 §6.1 | M | R1 | ED, OP | `vrata.ap` | P | 7 |
 | SI-GATE-FR-293 | Povezovalnik mora preslikati korelacijske identifikatorje v glavo AS4 (MessageId, ConversationId, … | ICD v0.5 §8.4 | M | R1 | EG, ED | `vrata.ap`, `vrata.gateService` | T | 7 |
 | SI-GATE-FR-294 | eFTI Gate mora podpirati nadgradnjo eDelivery Access Point (npr. na Domibus 2.x) brez spremembe vmesnikov #1 … | Praga, Q&A DG MOVE (vpr. 14) | M | R1 | ED, OP | `vrata.ap` | A | 7 |
+| SI-GATE-FR-300 | eFTI Gate mora zagotavljati eFTI Gate AAP API po specifikaciji `interfaces/openapi/efti-gate-aap-api.yaml` … | čl. 6(3)(b); RI (`/v1/aap/control/...`); ICD v0.5 §3.1 | M | R1 | EG | `vrata.gateService` | T | 7 |
+| SI-GATE-FR-301 | Vse storitve OpenAPI morajo biti opisane s specifikacijo OpenAPI 3.1, ki je vir resnice (contract-first); … | [predlog] | M | R1 | EG | `vrata.gateService` | T, P | 7 |
+| SI-GATE-FR-302 | Storitve morajo imeti različico v poti (`/v1`) in semantično različico specifikacije; nezdružljive spremembe … | SI-GATE-NFR-014; [predlog] | M | R1 | EG | `vrata.gateService` | P | 7 |
+| SI-GATE-FR-303 | eFTI Gate mora zagotavljati eFTI Gate Administration API po specifikaciji `efti-gate-admin-api.yaml` za … | čl. 6(3)(d)–(g), 6(4); SI-GATE-FR-270–275 | M | R1 | EG, UP | `vrata.admin`, `vrata.gateService` | T | 7 |
+| SI-GATE-FR-304 | eFTI Gate mora zagotavljati eFTI Gate Audit and Statistics API po specifikaciji `efti-gate-audit-api.yaml` … | čl. 6(2)(c), (g), (h); SI-GATE-NFR-084, NFR-142 | M | R1 | EG | `vrata.gateService` | T | 7 |
+| SI-GATE-FR-305 | Če je Authorisation Registry v obsegu JN, mora biti na voljo eFTI Authorisation Registry API po … | čl. 5; SI-GATE-FR-233 | P | R2 | AR | `organi` | T | 7 |
+| SI-GATE-FR-306 | Če MZIE odloči za profil REST na vmesniku #2 (čl. 9(4)), mora izvajalec pripraviti in javno objaviti … | čl. 9(4); ICD v0.5 §9, P-02; SI-GATE-FR-134 | P | R1 | EG | `vrata.gateService` | P | 7 |
+| SI-GATE-FR-307 | Vse storitve OpenAPI morajo uporabljati medsebojno avtentikacijo TLS; strojni odjemalci OAuth 2.0 (client … | čl. 6(3)(b), (d); SI-GATE-NFR-060, NFR-070 | M | R1 | EG | `vrata.gateService` | T | 7 |
+| SI-GATE-FR-308 | Napake vseh storitev OpenAPI morajo biti v obliki RFC 9457 (Problem Details) z dodatno kodo napake eFTI, … | ICD v0.5 §11 (osnutek); [predlog] | M | R1 | EG | `vrata.gateService` | T | 7 |
+| SI-GATE-FR-309 | eFTI Gate mora avtenticiranim odjemalcem objaviti veljavno specifikacijo OpenAPI vsake storitve (npr. … | SI-GATE-NFR-014 | M | R1 | EG | `vrata.gateService` | D | 7 |
 | SI-GATE-NFR-001 | eFTI Gate mora delovati neprekinjeno (24/7/365), ker nadzor prevozov poteka ves čas. | NL PvE NF-1; čl. 3(3)(d) | M | R1 | EG, ED | `vrata.ap`, `vrata.gateService` | A, T | 8 |
 | SI-GATE-NFR-002 | Mesečna razpoložljivost storitev eFTI Gate (vmesniki #1, #2, #3) mora znašati vsaj **99,5 %** [predlog]; … | TG1.3 (Praga); [predlog] | M | R1 | EG, OP | `vrata.gateService` | A | 8 |
 | SI-GATE-NFR-003 | Načrtovano vzdrževanje mora biti napovedano vsaj en delovni dan vnaprej uporabnikom in drugim eFTI Gate po … | TG1.3 (Praga) | M | R1 | OP | — | P | 8 |

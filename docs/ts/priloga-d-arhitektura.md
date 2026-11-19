@@ -16,6 +16,7 @@ Arhitektura je opisana po modelu C4: pokrajina (C0), kontekst (C1), vsebniki (C2
 | vijolična | R2 | predvideno v izdaji R2 (pogl. 10.5); vsi drugi elementi so v R1 |
 | siva | Zunanji | zunanji sistem ali oseba |
 | zlata | Test | testno okolje eFTI4LIVE |
+| šesterokotnik | API | storitev OpenAPI (Priloga E) |
 
 **Izrazi.** Diagrami in besedilo TS uporabljajo dogovorjene izraze eFTI v angleščini (eFTI Gate, eFTI Platform, AAP, Registry of Identifiers …); slovenski ustrezniki in razlage so v Prilogi B. Slovenski eFTI Gate je v modelu element `vrata`.
 
@@ -60,6 +61,19 @@ Vmesniki po ICD v0.5 §3.1 (osnutek): **#1 G2G** in **#2 G2P** sta normativna na
 | Shramba revizijskih sledi | delno (dnevniki v datotekah) | nespremenljiva hramba, 2 leti ali več (6.5, 8.5.4) |
 | Nadzor delovanja in SIEM | izven obsega RI | metrike, alarmi, SOC (8.4, 8.5.4) |
 | Okolje TCT za eFTI Platform | ne | R2; decentraliziran TCT (9.7) |
+
+## D.3a Storitve OpenAPI (C2-API)
+
+![C2 API](../../architecture/diagrams/structurizr-C2-API.png)
+
+Storitve OpenAPI so v modelu vsebniki z oznako API (šesterokotnik) in lastnostjo `openapi`, ki kaže na specifikacijo. Pregled operacij je v Prilogi E, zahteve v pogl. 7.9.
+
+| Element | Storitev | Specifikacija | Izdaja |
+|---|---|---|---|
+| `vrata.caApi` | eFTI Gate AAP API (#3) | `interfaces/openapi/efti-gate-aap-api.yaml` | R1 |
+| `vrata.adminApi` | eFTI Gate Administration API | `interfaces/openapi/efti-gate-admin-api.yaml` | R1 |
+| `vrata.auditApi` | eFTI Gate Audit and Statistics API | `interfaces/openapi/efti-gate-audit-api.yaml` | R1 |
+| `vrata.arApi` | eFTI Authorisation Registry API | `interfaces/openapi/efti-authorisation-registry-api.yaml` | R2, pogojno |
 
 ## D.4 Komponente eFTI Gate Service (C3)
 

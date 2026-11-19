@@ -1,0 +1,386 @@
+openapi: 3.1.0
+info:
+  title: eFTI Gate AAP API
+  version: 1.0.0-draft.1
+  summary: "Interface #3 (G2A) between the Slovenian eFTI Gate and Authority Access Points (AAP)."
+  description: |
+    Draft contract for the national interface #3 (eFTI Gate ↔ AAP), which IU 2024/1942 and ICD v0.5 §3.1 leave
+    to the Member State. Part of the technical specification (TS M3), chapter 7.5 and 7.9.
+
+    * Paths follow the eFTI4EU/eFTI4LIVE reference implementation (`/v1/aap/control/...`) so that a
+      contractor can build on it (ADR-0002).
+    * Processing is asynchronous: a request returns a `requestId`; the result is retrieved with GET
+      (polling). Legal time limits (IU 2024/1942, Art. 3(3)(d), 6(2)(f)): "no response" after 60 s from the
+      acknowledgement of receipt.
+    * Status values map to the ICD status model (CL-060/CL-068, draft): COMPLETE=C, PENDING=P, ERROR=E,
+      UNAUTHORISED=U, TIMEOUT=T; NO_DATA implements Art. 3(3)(c).
+    * Errors are returned as RFC 9457 Problem Details.
+    * eFTI terms are kept in English (TS Annex B).
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://{host}/v1
+    description: Slovenian eFTI Gate (environment set per TS 9.2)
+    variables:
+      host:
+        default: efti-gate.example.si
+security:
+  - mutualTLS: []
+    clientCredentials: [efti.aap]
+tags:
+  - name: UIL
+    description: eFTI data request by UIL (TS PU-CA-1, IU Art. 3(2)(a))
+  - name: Identifiers
+    description: Search in the Registry of Identifiers of all eFTI Gates (TS PU-CA-2/3, IU Art. 8)
+  - name: Follow-up
+    description: Follow-up communication (TS PU-CA-4, IU Art. 3(4)–(5))
+paths:
+  /aap/control/uil:
+    post:
+      tags: [UIL]
+      operationId: submitUilRequest
+      summary: Submit an eFTI data request by UIL
+      description: |
+        The AAP submits an approved eFTI data request (IU Art. 4(2)(d)). The eFTI Gate routes it to the
+        eFTI Platform directly or via the eFTI Gate identified in the UIL (Art. 6(2)(b)).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/UilRequest'}
+      responses:
+        '202':
+          description: Accepted for asynchronous processing.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/RequestAccepted'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
+    get:
+      tags: [UIL]
+      operationId: getUilResult
+      summary: Get the result of an eFTI data request
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      responses:
+        '200':
+          description: Current status and, when COMPLETE, the eFTI dataset.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/UilResult'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /aap/control/identifiers:
+    post:
+      tags: [Identifiers]
+      operationId: submitIdentifiersSearch
+      summary: Submit a search in the Registry of Identifiers
+      description: |
+        The eFTI Gate searches its own Registry of Identifiers and forwards the search to the other eFTI
+        Gates (all, or the countries in `eftiGateIndicator` for a scoped search, TGD §6.2).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/IdentifiersSearchRequest'}
+      responses:
+        '202':
+          description: Accepted for asynchronous processing.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/RequestAccepted'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
+    get:
+      tags: [Identifiers]
+      operationId: getIdentifiersResult
+      summary: Get (partial or consolidated) search results
+      description: |
+        Returns the results received so far with the status of each eFTI Gate (TGD §6.3). The search is
+        complete when no gate is PENDING.
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      responses:
+        '200':
+          description: Search results per eFTI Gate.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/IdentifiersResult'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /aap/control/uil/follow-up:
+    post:
+      tags: [Follow-up]
+      operationId: submitFollowUp
+      summary: Submit a follow-up communication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/FollowUpRequest'}
+      responses:
+        '202':
+          description: Accepted; the eFTI Platform acknowledgement is retrieved with GET.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/RequestAccepted'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    get:
+      tags: [Follow-up]
+      operationId: getFollowUpResult
+      summary: Get the processing status of a follow-up communication
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      responses:
+        '200':
+          description: Status and eFTI Platform acknowledgement.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/FollowUpResult'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+components:
+  securitySchemes:
+    mutualTLS:
+      type: mutualTLS
+      description: Client certificate of the AAP, registered in the eFTI Gate AAP registry (IU Art. 6(3)(d)).
+    clientCredentials:
+      type: oauth2
+      description: OAuth 2.0 client credentials; JWT bound to the AAP client certificate.
+      flows:
+        clientCredentials:
+          tokenUrl: https://efti-gate.example.si/auth/token
+          scopes:
+            efti.aap: Submit and retrieve eFTI data requests, searches and follow-up communications.
+  parameters:
+    requestId:
+      name: requestId
+      in: query
+      required: true
+      description: Identifier returned by the POST operation.
+      schema: {type: string, format: uuid}
+  responses:
+    BadRequest:
+      description: The request does not conform to this contract.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    Unauthorized:
+      description: Missing or invalid client authentication.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    Forbidden:
+      description: The AAP is not registered or the officer has no active access rights (IU Art. 4(2)(b)).
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    NotFound:
+      description: Unknown requestId.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    TooManyRequests:
+      description: Rate limit for the AAP exceeded (TS SI-GATE-NFR-072).
+      headers:
+        Retry-After:
+          schema: {type: integer}
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+  schemas:
+    Status:
+      type: string
+      description: |
+        COMPLETE (C), PENDING (P), ERROR (E), UNAUTHORISED (U), TIMEOUT (T, "no response" after 60 s),
+        NO_DATA (Art. 3(3)(c): no active UIL found).
+      enum: [COMPLETE, PENDING, ERROR, UNAUTHORISED, TIMEOUT, NO_DATA]
+    Uil:
+      type: object
+      description: Unique electronic Identifying Link (IU Art. 11(2)).
+      required: [gateId, platformId, datasetId]
+      properties:
+        gateId: {type: string, maxLength: 17, pattern: '^[A-Z0-9-]+$', examples: [EU-SI1]}
+        platformId: {type: string, maxLength: 17, pattern: '^[A-Z0-9-]+$', examples: [SI-TRN]}
+        datasetId: {type: string, format: uuid}
+    Authority:
+      type: object
+      description: Competent authority on whose behalf the request is made.
+      required: [country, nationalUniqueIdentifier, name, isEmergencyService]
+      properties:
+        country: {type: string, pattern: '^[A-Z]{2}$', examples: [SI]}
+        nationalUniqueIdentifier: {type: string}
+        name: {type: string}
+        isEmergencyService: {type: boolean}
+    OfficerContext:
+      type: object
+      description: |
+        Information the AAP attaches to an approved request (IU Art. 3(2)(b)–(c), 4(2)(c)–(d)).
+        The officer reference is pseudonymised (TS SI-GATE-NFR-054).
+      required: [aapRequestId, officerReference, accessRights, processingRights]
+      properties:
+        aapRequestId:
+          type: string
+          description: Unique identification number issued by the AAP (Art. 3(2)(c)).
+        officerReference:
+          type: string
+          description: Pseudonymised identification reference of the officer (Art. 4(2)(c)(i)).
+        accessRights:
+          type: array
+          description: eFTI data subset identifiers the officer may access (Art. 5(b); DU 2024/2024).
+          items: {type: string, examples: [EU01, EU05a]}
+          minItems: 1
+        processingRights:
+          type: array
+          description: Coded processing rights (Art. 5(c)).
+          items: {type: string}
+    UilRequest:
+      type: object
+      required: [uil, authority, officer]
+      properties:
+        uil: {$ref: '#/components/schemas/Uil'}
+        subsetIds:
+          type: array
+          description: Requested eFTI data subsets; must be within `officer.accessRights`.
+          items: {type: string}
+        datasetVersion:
+          type: string
+          description: Requested eFTI dataset version (ICD v0.5 §13, P-06; draft).
+        authority: {$ref: '#/components/schemas/Authority'}
+        officer: {$ref: '#/components/schemas/OfficerContext'}
+    IdentifiersSearchRequest:
+      type: object
+      required: [identifier, authority, officer]
+      properties:
+        identifier:
+          type: string
+          description: Value searched, e.g. a licence plate.
+        identifierType:
+          type: array
+          description: Search fields (TGD §6.4); complex fields require all their identifiers.
+          items:
+            type: string
+            enum: [means, equipment, carried]
+        modeCode:
+          type: string
+          description: Mode of transport (eFTI581, UNECE Rec. 19).
+        registrationCountryCode: {type: string, pattern: '^[A-Z]{2}$'}
+        dangerousGoodsIndicator: {type: boolean}
+        eftiGateIndicator:
+          type: array
+          description: Scoped search – limit to these countries (TGD §6.2). Empty = all eFTI Gates.
+          items: {type: string, pattern: '^[A-Z]{2}$'}
+        authority: {$ref: '#/components/schemas/Authority'}
+        officer: {$ref: '#/components/schemas/OfficerContext'}
+    FollowUpRequest:
+      type: object
+      required: [requestId, message, officer]
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          description: requestId of the original eFTI data request (Art. 3(5)(b)).
+        message:
+          type: string
+          maxLength: 10000
+        attachments:
+          type: array
+          description: Attached documents (Art. 3(5)(a)).
+          items: {$ref: '#/components/schemas/Attachment'}
+        officer: {$ref: '#/components/schemas/OfficerContext'}
+    Attachment:
+      type: object
+      required: [fileName, mediaType, content]
+      properties:
+        fileName: {type: string}
+        mediaType: {type: string, examples: [application/pdf]}
+        content: {type: string, contentEncoding: base64}
+    RequestAccepted:
+      type: object
+      required: [requestId, status, acceptedAt]
+      properties:
+        requestId: {type: string, format: uuid}
+        status:
+          allOf: [{$ref: '#/components/schemas/Status'}]
+          examples: [PENDING]
+        acceptedAt: {type: string, format: date-time}
+    UilResult:
+      type: object
+      required: [requestId, status]
+      properties:
+        requestId: {type: string, format: uuid}
+        status: {$ref: '#/components/schemas/Status'}
+        errorCode: {type: string}
+        errorDescription: {type: string}
+        respondingGateId: {type: string}
+        platformId: {type: string}
+        receivedAt: {type: string, format: date-time}
+        dataset:
+          type: object
+          description: eFTI dataset restricted to the authorised eFTI data subsets.
+          properties:
+            format:
+              type: string
+              description: Message type and XSD version of the payload.
+              examples: [eFTI XML 1.0]
+            content:
+              type: string
+              contentEncoding: base64
+    IdentifiersResult:
+      type: object
+      required: [requestId, status, gates]
+      properties:
+        requestId: {type: string, format: uuid}
+        status: {$ref: '#/components/schemas/Status'}
+        gates:
+          type: array
+          description: One entry per eFTI Gate searched (TGD §6.3).
+          items:
+            type: object
+            required: [gateId, status]
+            properties:
+              gateId: {type: string}
+              status: {$ref: '#/components/schemas/Status'}
+              results:
+                type: array
+                items:
+                  type: object
+                  required: [uil]
+                  properties:
+                    uil: {$ref: '#/components/schemas/Uil'}
+                    identifiers:
+                      type: object
+                      description: RoI record (identifiers per IU Art. 11(3) and TGD Table 4).
+                      additionalProperties: true
+    FollowUpResult:
+      type: object
+      required: [requestId, status]
+      properties:
+        requestId: {type: string, format: uuid}
+        status: {$ref: '#/components/schemas/Status'}
+        acknowledgedAt:
+          type: string
+          format: date-time
+          description: Time of the eFTI Platform acknowledgement (TGD §3.3.4).
+        errorCode: {type: string}
+        errorDescription: {type: string}
+    Problem:
+      type: object
+      description: RFC 9457 Problem Details.
+      properties:
+        type: {type: string, format: uri}
+        title: {type: string}
+        status: {type: integer}
+        detail: {type: string}
+        instance: {type: string}
+        errorCode:
+          type: string
+          description: eFTI error code (ICD v0.5 §11, draft).

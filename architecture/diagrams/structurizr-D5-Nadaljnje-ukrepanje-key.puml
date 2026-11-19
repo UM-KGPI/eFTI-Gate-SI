@@ -23,22 +23,29 @@ skinparam rectangle<<1>> {
 }
 rectangle "==Container" <<1>>
 
-skinparam rectangle<<2>> {
+skinparam hexagon<<2>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+hexagon "==Container, API" <<2>>
+
+skinparam rectangle<<3>> {
   BackgroundColor #e67e22
   FontColor #ffffff
   BorderColor #a15817
 }
-rectangle "==Software System, Odprto" <<2>>
+rectangle "==Software System, Odprto" <<3>>
 
-skinparam rectangle<<3>> {
+skinparam rectangle<<4>> {
   BackgroundColor #8a8a8a
   FontColor #ffffff
   BorderColor #606060
 }
-rectangle "==Software System, Zunanji" <<3>>
+rectangle "==Software System, Zunanji" <<4>>
 
-rectangle "." <<_transparent>> as 4
-4 .[#707070,thickness=2].> 4 : "<color:#707070>Relationship"
+rectangle "." <<_transparent>> as 5
+5 .[#707070,thickness=2].> 5 : "<color:#707070>Relationship"
 
 
 @enduml

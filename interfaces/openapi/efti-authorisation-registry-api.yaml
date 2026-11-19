@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: eFTI Authorisation Registry API
+  version: 0.1.0-draft.1
+  summary: Maintenance of officers' access and processing rights (release R2, conditional on M2).
+  description: |
+    Draft contract for maintaining the Authorisation Registry (IU 2024/1942 Art. 5; TS SI-GATE-FR-233, R2).
+    Applies only if the Authorisation Registry is part of this procurement (variant chosen in M2, Art. 4(4)).
+    Intended for synchronisation with the personnel systems of competent authorities.
+
+    * Rights are expressed as eFTI data subset identifiers (DU 2024/2024) and coded processing rights.
+    * Every change is kept in the change history (Art. 5(d)).
+    * Officer references are pseudonymised (TS SI-GATE-NFR-054).
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://{host}/authorisation/v1
+    variables:
+      host:
+        default: efti-gate.example.si
+security:
+  - mutualTLS: []
+    clientCredentials: [efti.authorisation.write]
+tags:
+  - name: Officers
+    description: Access and processing rights of officers
+paths:
+  /officers/{officerReference}:
+    parameters:
+      - $ref: '#/components/parameters/officerReference'
+    get:
+      tags: [Officers]
+      operationId: getOfficerRights
+      summary: Get the current rights of an officer
+      responses:
+        '200':
+          description: Current rights.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/OfficerRights'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    put:
+      tags: [Officers]
+      operationId: setOfficerRights
+      summary: Create or replace the rights of an officer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/OfficerRights'}
+      responses:
+        '200':
+          description: Stored.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/OfficerRights'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    delete:
+      tags: [Officers]
+      operationId: revokeOfficerRights
+      summary: Revoke all rights of an officer
+      responses:
+        '204': {description: Revoked.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /officers/{officerReference}/history:
+    parameters:
+      - $ref: '#/components/parameters/officerReference'
+    get:
+      tags: [Officers]
+      operationId: getOfficerRightsHistory
+      summary: Change history of an officer's rights (Art. 5(d))
+      responses:
+        '200':
+          description: Changes, newest first.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    changedAt: {type: string, format: date-time}
+                    changedBy: {type: string}
+                    before: {$ref: '#/components/schemas/OfficerRights'}
+                    after: {$ref: '#/components/schemas/OfficerRights'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+components:
+  securitySchemes:
+    mutualTLS:
+      type: mutualTLS
+    clientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://efti-gate.example.si/auth/token
+          scopes:
+            efti.authorisation.write: Maintain officers' rights (personnel systems of competent authorities).
+  parameters:
+    officerReference:
+      name: officerReference
+      in: path
+      required: true
+      description: Pseudonymised unique identification reference of the officer (Art. 5(a)).
+      schema: {type: string}
+  responses:
+    BadRequest:
+      description: Invalid input.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    Unauthorized:
+      description: Not authenticated or not authorised.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    NotFound:
+      description: Not found.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+  schemas:
+    OfficerRights:
+      type: object
+      required: [officerReference, authority, accessRights, processingRights]
+      properties:
+        officerReference: {type: string}
+        authority: {type: string, description: Competent authority of the officer.}
+        legalActs:
+          type: array
+          description: References to EU and national legal acts within the officer's competence (Art. 5(b)).
+          items: {type: string}
+        accessRights:
+          type: array
+          description: eFTI data subset identifiers (DU 2024/2024, Annex sections 3 and 4).
+          items: {type: string}
+        processingRights:
+          type: array
+          description: Coded processing operations per eFTI data subset (Art. 5(c)).
+          items:
+            type: object
+            required: [subsetId, operations]
+            properties:
+              subsetId: {type: string}
+              operations:
+                type: array
+                items: {type: string}
+        validFrom: {type: string, format: date}
+        validTo: {type: string, format: date}
+    Problem:
+      type: object
+      description: RFC 9457 Problem Details.
+      properties:
+        type: {type: string, format: uri}
+        title: {type: string}
+        status: {type: integer}
+        detail: {type: string}
+        instance: {type: string}

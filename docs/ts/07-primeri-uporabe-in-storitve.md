@@ -124,7 +124,7 @@ Uradnik pripravi sporočilo z UIL → AAP preveri pravico → eFTI Gate dostavi 
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
-| SI-GATE-FR-250 | eFTI Gate mora pristojnim organom zagotoviti programski vmesnik (#3) za PU-CA-1 do PU-CA-4 z javno, različicam podvrženo specifikacijo (npr. OpenAPI). | čl. 6(3)(b); ICD v0.5 §3.1 | M | EG (`vrata.caApi`) | P, T |
+| SI-GATE-FR-250 | eFTI Gate mora pristojnim organom zagotoviti programski vmesnik (#3) za PU-CA-1 do PU-CA-4 po specifikaciji eFTI Gate AAP API (SI-GATE-FR-300). | čl. 6(3)(b); ICD v0.5 §3.1 | M | EG (`vrata.caApi`) | P, T |
 | SI-GATE-FR-251 | Vmesnik #3 mora podpirati asinhrono obdelavo: AAP ob zahtevi prejme identifikator in pozneje pridobi odgovor (poizvedovanje ali potisno obvestilo). Ali se dodatno zahteva sinhroni način, je odprto (7.8). | TGD §6.3; RI (REST API za organe) | M | EG | T |
 | SI-GATE-FR-252 | Vmesnik #3 mora za podatke uporabljati standardne tipe sporočil eFTI (XSD), kjer je to mogoče. (osnutek) | ICD v0.5 P-01 | P | EG | P |
 | SI-GATE-FR-253 | Vmesnik #3 mora omogočiti zahtevo za določeno različico eFTI dataset, ki se prenese v kontekstu sporočila. (osnutek) | ICD v0.5 §13, P-06 | P | EG | T |
@@ -149,6 +149,33 @@ Uradnik pripravi sporočilo z UIL → AAP preveri pravico → eFTI Gate dostavi 
 | SI-GATE-FR-292 | Identifikatorji strank in končnih točk morajo slediti dogovorjenim pravilom poimenovanja (ICD v0.5 P-22; cutoff eDelivery 31. 10. 2026). (osnutek) | ICD v0.5 §6.1 | M | ED, OP | P |
 | SI-GATE-FR-293 | Povezovalnik mora preslikati korelacijske identifikatorje v glavo AS4 (MessageId, ConversationId, RefToMessageId). (osnutek) | ICD v0.5 §8.4 | M | EG, ED | T |
 | SI-GATE-FR-294 | eFTI Gate mora podpirati nadgradnjo eDelivery Access Point (npr. na Domibus 2.x) brez spremembe vmesnikov #1 in #2. | Praga, Q&A DG MOVE (vpr. 14) | M | ED, OP | A |
+
+## 7.9 Storitve OpenAPI
+
+TS določa programske vmesnike REST eFTI Gate kot **pogodbe OpenAPI 3.1** (»contract-first«): specifikacije so del TS v mapi `interfaces/openapi/`, pregled operacij je v Prilogi E, umestitev v arhitekturo pa v pogledu C2-API (Priloga D). Izvajalec specifikacije dopolni in uskladi z ICD in XSD; spremembe pogodbe potrdi MZIE.
+
+| Storitev | Vmesnik | Odjemalci | Element C4 | Izdaja | Specifikacija |
+|---|---|---|---|---|---|
+| eFTI Gate AAP API | #3 G2A | AAP pristojnih organov | `vrata.caApi` | R1 | `efti-gate-aap-api.yaml` |
+| eFTI Gate Administration API | upravljanje | upravljavska aplikacija, avtomatizacija MZIE | `vrata.adminApi` | R1 (sinhronizacija statusov R2) | `efti-gate-admin-api.yaml` |
+| eFTI Gate Audit and Statistics API | revizija, poročanje | upravljavska aplikacija, poročanje MZIE | `vrata.auditApi` | R1 | `efti-gate-audit-api.yaml` |
+| eFTI Authorisation Registry API | Authorisation Registry | kadrovski sistemi pristojnih organov | `vrata.arApi` | R2, pogojno (M2) | `efti-authorisation-registry-api.yaml` |
+| eFTI Gate Platform REST API | #2 (nacionalna možnost) | eFTI Platform | — | odprto | ni specificirana (čl. 9(4); osnova RI `schema/api-schemas`, ICD v0.5 §9) |
+
+Vmesnika #1 in #2 (eDelivery, AS4) nista storitvi OpenAPI; določata ju TGD Annex 1 in ICD (7.7).
+
+| Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
+|---|---|---|---|---|---|
+| SI-GATE-FR-300 | eFTI Gate mora zagotavljati eFTI Gate AAP API po specifikaciji `interfaces/openapi/efti-gate-aap-api.yaml` (asinhrona obdelava, statusi po ICD, napake po RFC 9457); odstopanja od specifikacije mora potrditi MZIE. | čl. 6(3)(b); RI (`/v1/aap/control/...`); ICD v0.5 §3.1 | M | EG | T |
+| SI-GATE-FR-301 | Vse storitve OpenAPI morajo biti opisane s specifikacijo OpenAPI 3.1, ki je vir resnice (contract-first); implementacija se ob vsaki izdaji samodejno preveri proti specifikaciji (pogodbeni testi). | [predlog] | M | EG | T, P |
+| SI-GATE-FR-302 | Storitve morajo imeti različico v poti (`/v1`) in semantično različico specifikacije; nezdružljive spremembe so dovoljene le v novi glavni različici, prejšnja glavna različica pa mora delovati vsaj 6 mesecev po objavi nove [predlog]. | SI-GATE-NFR-014; [predlog] | M | EG | P |
+| SI-GATE-FR-303 | eFTI Gate mora zagotavljati eFTI Gate Administration API po specifikaciji `efti-gate-admin-api.yaml` za register eFTI Gate drugih DČ, register AAP, Registry of eFTI Platforms (tudi čl. 6(4)), začasni odklop eFTI Platform in skupne šifrante; upravljavska aplikacija ga uporablja kot edini dostop do teh podatkov. | čl. 6(3)(d)–(g), 6(4); SI-GATE-FR-270–275 | M | EG, UP | T |
+| SI-GATE-FR-304 | eFTI Gate mora zagotavljati eFTI Gate Audit and Statistics API po specifikaciji `efti-gate-audit-api.yaml` za iskanje po revizijski sledi, izvoze za pristojne organe in letno statistiko. | čl. 6(2)(c), (g), (h); SI-GATE-NFR-084, NFR-142 | M | EG | T |
+| SI-GATE-FR-305 | Če je Authorisation Registry v obsegu JN, mora biti na voljo eFTI Authorisation Registry API po specifikaciji `efti-authorisation-registry-api.yaml` (izdaja R2). | čl. 5; SI-GATE-FR-233 | P | AR | T |
+| SI-GATE-FR-306 | Če MZIE odloči za profil REST na vmesniku #2 (čl. 9(4)), mora izvajalec pripraviti in javno objaviti specifikacijo OpenAPI, usklajeno z ICD (`eFTI_G2P_REST_v1.yaml`) in RI, preden se nanjo priključi prva eFTI Platform. | čl. 9(4); ICD v0.5 §9, P-02; SI-GATE-FR-134 | P | EG | P |
+| SI-GATE-FR-307 | Vse storitve OpenAPI morajo uporabljati medsebojno avtentikacijo TLS; strojni odjemalci OAuth 2.0 (client credentials) z žetonom, vezanim na certifikat, uporabniki OpenID Connect z MFA; dostop brez avtentikacije je dovoljen le za preverjanje delovanja (health). | čl. 6(3)(b), (d); SI-GATE-NFR-060, NFR-070 | M | EG | T |
+| SI-GATE-FR-308 | Napake vseh storitev OpenAPI morajo biti v obliki RFC 9457 (Problem Details) z dodatno kodo napake eFTI, kjer obstaja. | ICD v0.5 §11 (osnutek); [predlog] | M | EG | T |
+| SI-GATE-FR-309 | eFTI Gate mora avtenticiranim odjemalcem objaviti veljavno specifikacijo OpenAPI vsake storitve (npr. `/openapi.json`) in dokumentacijo za razvijalce, usklajeno z različico v produkciji. | SI-GATE-NFR-014 | M | EG | D |
 
 ## 7.8 Odprta vprašanja
 

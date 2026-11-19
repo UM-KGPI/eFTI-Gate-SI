@@ -15,12 +15,6 @@ skinparam {
 
 hide stereotype
 
-skinparam rectangle<<eFTIGate.APIzapristojneorgane3>> {
-  BackgroundColor #438dd5
-  FontColor #ffffff
-  BorderColor #2e6295
-  shadowing false
-}
 skinparam database<<eFTIGate.PodatkovnabazaeFTIGate>> {
   BackgroundColor #438dd5
   FontColor #ffffff
@@ -45,6 +39,12 @@ skinparam rectangle<<eFTIGate.eDeliveryAccessPoint>> {
   BorderColor #2e6295
   shadowing false
 }
+skinparam hexagon<<eFTIGate.eFTIGateAAPAPI3>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
 skinparam rectangle<<eFTIGate.eFTIGateService>> {
   BackgroundColor #438dd5
   FontColor #ffffff
@@ -64,7 +64,7 @@ skinparam rectangle<<eFTIGate>> {
 }
 
 rectangle "eFTI Gate\n<size:10>[Software System]</size>" <<eFTIGate>> {
-  rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<eFTIGate.APIzapristojneorgane3>> as eFTIGate.APIzapristojneorgane3
+  hexagon "==eFTI Gate AAP API (#3)\n<size:10>[Container: REST/JSON, mTLS, OAuth 2.0]</size>\n\nOpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." <<eFTIGate.eFTIGateAAPAPI3>> as eFTIGate.eFTIGateAAPAPI3
   queue "==Sporočilni posrednik\n<size:10>[Container: RabbitMQ]</size>\n\nTrajna vrsta asinhronih zahtev." <<eFTIGate.Sporočilniposrednik>> as eFTIGate.Sporočilniposrednik
   database "==Podatkovna baza eFTI Gate\n<size:10>[Container: PostgreSQL]</size>\n\nRegistry of Identifiers, registri povezav, stanje zahtev." <<eFTIGate.PodatkovnabazaeFTIGate>> as eFTIGate.PodatkovnabazaeFTIGate
   rectangle "==eDelivery Access Point\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.eDeliveryAccessPoint>> as eFTIGate.eDeliveryAccessPoint
@@ -74,13 +74,13 @@ rectangle "eFTI Gate\n<size:10>[Software System]</size>" <<eFTIGate>> {
 rectangle "==Sistemi pristojnih organov (AAP, Authorisation Registry, UAP)\n<size:10>[Software System]</size>\n\nAAP (čl. 4), Authorisation Registry (čl. 5) in UAP (čl. 7) Policije, FURS, IRSI in drugih organov. V eFTI Gate ali pri organih: odloči M2 (čl. 4(4))." <<SistemipristojnihorganovAAPAuthorisationRegistryUAP>> as SistemipristojnihorganovAAPAuthorisationRegistryUAP
 rectangle "==eFTI Platform (SI)\n<size:10>[Software System]</size>\n\neFTI Platform, certificirane v Sloveniji ali priključene po čl. 6(4)." <<eFTIPlatformSI>> as eFTIPlatformSI
 
-SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.APIzapristojneorgane3 : "<color:#707070>1. Zahteva z UIL in pravicami obdelave\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
-eFTIGate.APIzapristojneorgane3 .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>2. Predaja (ID zahteve vrnjen organu)"
+SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.eFTIGateAAPAPI3 : "<color:#707070>1. Zahteva z UIL in pravicami obdelave\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+eFTIGate.eFTIGateAAPAPI3 .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>2. Predaja (ID zahteve vrnjen organu)"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.Sporočilniposrednik : "<color:#707070>3. Asinhrona obdelava\n<color:#707070><size:8>[AMQP]</size>"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.eDeliveryAccessPoint : "<color:#707070>4. Zahteva za eFTI dataset\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIPlatformSI : "<color:#707070>5. #2 G2P (eFTI Platform odgovori v 50 s)\n<color:#707070><size:8>[AS4]</size>"
 eFTIPlatformSI .[#707070,thickness=2].> eFTIGate.eDeliveryAccessPoint : "<color:#707070>6. Odgovor s podsklopi po pravicah\n<color:#707070><size:8>[AS4]</size>"
 eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>7. Dostava odgovora\n<color:#707070><size:8>[JMS/WS]</size>"
 eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>8. Shrani odgovor\n<color:#707070><size:8>[JDBC]</size>"
-SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.APIzapristojneorgane3 : "<color:#707070>9. Pridobi odgovor (≤ 60 s ali »ni odgovora«)\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+SistemipristojnihorganovAAPAuthorisationRegistryUAP .[#707070,thickness=2].> eFTIGate.eFTIGateAAPAPI3 : "<color:#707070>9. Pridobi odgovor (≤ 60 s ali »ni odgovora«)\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
 @enduml

@@ -15,12 +15,6 @@ skinparam {
 
 hide stereotype
 
-skinparam rectangle<<eFTIGate.APIzapristojneorgane3>> {
-  BackgroundColor #438dd5
-  FontColor #ffffff
-  BorderColor #2e6295
-  shadowing false
-}
 skinparam rectangle<<eFTIGate.eFTIGateService.JedroGateCore>> {
   BackgroundColor #85bbf0
   FontColor #000000
@@ -69,6 +63,12 @@ skinparam rectangle<<eFTIGate.eDeliveryAccessPoint>> {
   BorderColor #2e6295
   shadowing false
 }
+skinparam hexagon<<eFTIGate.eFTIGateAAPAPI3>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
 skinparam rectangle<<eFTIGate.eFTIGateService>> {
   BorderColor #2e6295
   FontColor #2e6295
@@ -84,11 +84,11 @@ rectangle "eFTI Gate Service\n<size:10>[Container: Java 21+, Spring Boot]</size>
   rectangle "==Registri povezav\n<size:10>[Component: Java]</size>\n\nRegister eFTI Gate drugih DČ (ID, certifikati), register AAP (ID, certifikati), Registry of eFTI Platforms (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." <<eFTIGate.eFTIGateService.Registripovezav>> as eFTIGate.eFTIGateService.Registripovezav
 }
 
-rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<eFTIGate.APIzapristojneorgane3>> as eFTIGate.APIzapristojneorgane3
+hexagon "==eFTI Gate AAP API (#3)\n<size:10>[Container: REST/JSON, mTLS, OAuth 2.0]</size>\n\nOpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." <<eFTIGate.eFTIGateAAPAPI3>> as eFTIGate.eFTIGateAAPAPI3
 database "==Podatkovna baza eFTI Gate\n<size:10>[Container: PostgreSQL]</size>\n\nRegistry of Identifiers, registri povezav, stanje zahtev." <<eFTIGate.PodatkovnabazaeFTIGate>> as eFTIGate.PodatkovnabazaeFTIGate
 rectangle "==eDelivery Access Point\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.eDeliveryAccessPoint>> as eFTIGate.eDeliveryAccessPoint
 
-eFTIGate.APIzapristojneorgane3 .[#707070,thickness=2].> eFTIGate.eFTIGateService.JedroGateCore : "<color:#707070>1. Iskanje (npr. registrska oznaka)"
+eFTIGate.eFTIGateAAPAPI3 .[#707070,thickness=2].> eFTIGate.eFTIGateService.JedroGateCore : "<color:#707070>1. Iskanje (npr. registrska oznaka)"
 eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Searchmechanism : "<color:#707070>2. Išči"
 eFTIGate.eFTIGateService.Searchmechanism .[#707070,thickness=2].> eFTIGate.eFTIGateService.RegistryofIdentifiers : "<color:#707070>3. Lokalni zadetki"
 eFTIGate.eFTIGateService.Searchmechanism .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>4. Seznam eFTI Gate"
