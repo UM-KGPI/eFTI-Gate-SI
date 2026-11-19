@@ -71,7 +71,7 @@ def widths(table_lines, chars=100):
     return "|" + "|".join("-" * d for d in dashes) + "|"
 
 
-def prep(text, landscape=False):
+def prep(text, landscape=False, chars=None):
     lines = text.split("\n")
     out, i = [], 0
     while i < len(lines):
@@ -80,7 +80,7 @@ def prep(text, landscape=False):
             while j < len(lines) and lines[j].startswith("|"):
                 j += 1
             block = lines[i:j]
-            block[1] = widths(block, chars=150 if landscape else 100)
+            block[1] = widths(block, chars=chars or (150 if landscape else 100))
             out += (["", "\\lsbegin", ""] + block + ["", "\\lsend", ""]) if landscape else block
             i = j
         else:
@@ -139,7 +139,11 @@ def main():
             t = mermaid(t, tmpd, f.stem)
             if svg:
                 t = re.sub(r"(architecture/diagrams/structurizr-[\w-]+)\.png\)", r"\1.svg)", t)
-            (tmpd / f.name).write_text(prep(t, landscape=f.name == "priloga-c-sledljivost.md"))
+            if f.name == "priloga-e-openapi.md":  # cela priloga ležeče (več tabel)
+                t = "\n\\lsbegin\n\n" + prep(t, chars=150) + "\n\n\\lsend\n"
+            else:
+                t = prep(t, landscape=f.name == "priloga-c-sledljivost.md")
+            (tmpd / f.name).write_text(t)
             srcs.append(str(tmpd / f.name))
         (pathlib.Path(tmp) / "header.tex").write_text(HEADER)
         OUT.parent.mkdir(exist_ok=True)

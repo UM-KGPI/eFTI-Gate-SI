@@ -56,7 +56,11 @@
 | G2G, G2P, P2G, G2A | eFTI Gate–eFTI Gate, eFTI Gate–eFTI Platform, eFTI Platform–eFTI Gate, eFTI Gate–AAP |
 | ICD | Interface Control Document (eFTI4LIVE TG1.6, CTG Data Model & Interfaces) |
 | IU | izvedbena uredba (EU) 2024/1942 |
+| mTLS | medsebojna avtentikacija TLS (odjemalec in strežnik s certifikatom) |
 | MZIE | Ministrstvo za infrastrukturo in energetiko |
+| OAuth 2.0 / OIDC | standarda za avtorizacijo (strojni odjemalci) in prijavo uporabnikov (OpenID Connect) |
+| OpenAPI | standard za opis vmesnikov REST (različica 3.1); specifikacije v `interfaces/openapi/` |
+| RFC 9457 | standardna oblika sporočil o napakah v vmesnikih HTTP (Problem Details) |
 | RI | referenčna implementacija eFTI Gate (eFTI4EU, eFTI4LIVE TG2.2) |
 | SML / SMP | Service Metadata Locator / Publisher (eDelivery) |
 | XSD | shema XML za sporočila eFTI |

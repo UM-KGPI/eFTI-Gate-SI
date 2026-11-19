@@ -1,0 +1,244 @@
+openapi: 3.1.0
+info:
+  title: eFTI Gate Audit and Statistics API
+  version: 1.0.0-draft.1
+  summary: Read access to the audit trail and statistics of the Slovenian eFTI Gate.
+  description: |
+    Draft contract (TS 7.6, 7.9, 8.5.4, 8.9).
+
+    * Audit trail of eFTI data requests, follow-up communications and responses with the mandatory
+      information of IU 2024/1942 Art. 6(2)(c) and (g) (TGD §9.2, Table 6).
+    * Human-readable exports for competent authorities, provided outside the eFTI Gate–AAP–UAP chain
+      (TGD §9.4; TS SI-GATE-NFR-084).
+    * Annual statistics for reporting under Art. 17 of Regulation (EU) 2020/1056 (TS SI-GATE-NFR-142).
+    * Only identified, authenticated and authorised users; every access is itself logged (TS SI-GATE-NFR-083).
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://{host}/audit/v1
+    variables:
+      host:
+        default: efti-gate.example.si
+security:
+  - mutualTLS: []
+    oidc: [efti.audit]
+tags:
+  - name: Audit
+    description: Audit trail queries
+  - name: Exports
+    description: Human-readable exports for competent authorities
+  - name: Statistics
+    description: Statistics for monitoring and reporting
+paths:
+  /requests:
+    get:
+      tags: [Audit]
+      operationId: searchAuditRecords
+      summary: Search audit records
+      parameters:
+        - {name: requestId, in: query, schema: {type: string}}
+        - {name: datasetId, in: query, description: UUID part of the UIL., schema: {type: string, format: uuid}}
+        - {name: platformId, in: query, schema: {type: string}}
+        - {name: gateId, in: query, schema: {type: string}}
+        - {name: aapId, in: query, schema: {type: string}}
+        - {name: from, in: query, schema: {type: string, format: date-time}}
+        - {name: to, in: query, schema: {type: string, format: date-time}}
+        - {name: page, in: query, schema: {type: integer, minimum: 0, default: 0}}
+        - {name: size, in: query, schema: {type: integer, minimum: 1, maximum: 500, default: 100}}
+      responses:
+        '200':
+          description: Matching audit records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: {type: integer}
+                  items:
+                    type: array
+                    items: {$ref: '#/components/schemas/AuditRecord'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /requests/{requestId}:
+    parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema: {type: string}
+    get:
+      tags: [Audit]
+      operationId: getAuditTrail
+      summary: Full audit trail of one request (request, forwarding, responses, timeouts)
+      responses:
+        '200':
+          description: Ordered events of the request.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/AuditRecord'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /exports:
+    post:
+      tags: [Exports]
+      operationId: createExport
+      summary: Create a human-readable export for a competent authority
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [requestedBy, legalBasis, criteria, format]
+              properties:
+                requestedBy: {type: string, description: Requesting competent authority.}
+                legalBasis: {type: string, description: Reference of the authority's request.}
+                criteria:
+                  type: object
+                  properties:
+                    datasetId: {type: string, format: uuid}
+                    from: {type: string, format: date-time}
+                    to: {type: string, format: date-time}
+                format: {type: string, enum: [PDF, CSV]}
+      responses:
+        '202':
+          description: Export is being generated.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Export'}
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /exports/{exportId}:
+    parameters:
+      - name: exportId
+        in: path
+        required: true
+        schema: {type: string}
+    get:
+      tags: [Exports]
+      operationId: getExport
+      summary: Get the status and download link of an export
+      responses:
+        '200':
+          description: Export.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Export'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /statistics/annual/{year}:
+    parameters:
+      - name: year
+        in: path
+        required: true
+        schema: {type: integer, minimum: 2027}
+    get:
+      tags: [Statistics]
+      operationId: getAnnualStatistics
+      summary: Annual number of eFTI data requests (Art. 17 of Regulation (EU) 2020/1056)
+      responses:
+        '200':
+          description: Counts for the year.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/AnnualStatistics'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+components:
+  securitySchemes:
+    mutualTLS:
+      type: mutualTLS
+    oidc:
+      type: openIdConnect
+      description: Operators and MZIE reporting users with MFA; role efti.audit.
+      openIdConnectUrl: https://efti-gate.example.si/auth/.well-known/openid-configuration
+  responses:
+    BadRequest:
+      description: Invalid input.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    Unauthorized:
+      description: Not authenticated or not authorised.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+    NotFound:
+      description: Not found.
+      content:
+        application/problem+json:
+          schema: {$ref: '#/components/schemas/Problem'}
+  schemas:
+    AuditRecord:
+      type: object
+      description: |
+        Mandatory fields per IU 2024/1942 Art. 6(2)(c) (requests, follow-up communications) and 6(2)(g)
+        (responses); optional fields per TGD §9.2 and TGD Annex 1.
+      required: [eventType, timestamp]
+      properties:
+        eventType:
+          type: string
+          enum: [UIL_REQUEST, IDENTIFIERS_SEARCH, FOLLOW_UP, RESPONSE, NO_RESPONSE, ERROR, FOLLOW_UP_ACK]
+        timestamp:
+          type: string
+          format: date-time
+          description: Millisecond precision with time zone (TGD §9.3).
+        senderTimestamp: {type: string, format: date-time}
+        requestId: {type: string, description: Unique identification number of the request or follow-up communication.}
+        senderId: {type: string, description: Identifier of the AAP or requesting eFTI Gate.}
+        uil:
+          type: object
+          properties:
+            gateId: {type: string}
+            platformId: {type: string}
+            datasetId: {type: string, format: uuid}
+        responderId: {type: string, description: eFTI Platform or receiving eFTI Gate the response came from.}
+        noResponse: {type: boolean, description: Set when no response was received.}
+        messageId: {type: string}
+        conversationId: {type: string}
+    Export:
+      type: object
+      properties:
+        exportId: {type: string}
+        status: {type: string, enum: [RUNNING, READY, FAILED]}
+        createdAt: {type: string, format: date-time}
+        downloadUrl: {type: string, format: uri}
+        expiresAt: {type: string, format: date-time}
+    AnnualStatistics:
+      type: object
+      required: [year, totals]
+      properties:
+        year: {type: integer}
+        totals:
+          type: object
+          properties:
+            uilRequests: {type: integer}
+            identifierSearches: {type: integer}
+            followUps: {type: integer}
+            noResponse: {type: integer}
+            errors: {type: integer}
+        byAuthority:
+          type: array
+          items:
+            type: object
+            properties:
+              authority: {type: string}
+              uilRequests: {type: integer}
+              identifierSearches: {type: integer}
+        byInterface:
+          type: object
+          additionalProperties: {type: integer}
+          description: "Requests per interface (#1, #2, #3)."
+        byDataSubset:
+          type: object
+          additionalProperties: {type: integer}
+          description: Requests per eFTI data subset, where known.
+    Problem:
+      type: object
+      description: RFC 9457 Problem Details.
+      properties:
+        type: {type: string, format: uri}
+        title: {type: string}
+        status: {type: integer}
+        detail: {type: string}
+        instance: {type: string}

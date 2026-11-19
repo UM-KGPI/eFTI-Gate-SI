@@ -89,8 +89,9 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                     }
                 }
 
-                caApi = container "API za pristojne organe (#3)" "REST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." "REST/JSON, mTLS, OIDC" "RI" {
+                caApi = container "eFTI Gate AAP API (#3)" "OpenAPI: zahteve prek UIL, iskanja po identifikatorjih, follow-up communication; asinhrono (requestId). Pot /v1/aap/control/..." "REST/JSON, mTLS, OAuth 2.0" "API,RI" {
                     properties {
+                        "openapi" "interfaces/openapi/efti-gate-aap-api.yaml"
                         "komp" "EG"
                     }
                 }
@@ -122,6 +123,24 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
                 admin = container "Upravljavska aplikacija" "Registri povezav, priklop eFTI Platform (tudi čl. 6(4)), certifikati, šifranti, pregled revizijskih sledi, statistika." "Spletna aplikacija" "Dodatek SI" {
                     properties {
                         "komp" "UP"
+                    }
+                }
+                adminApi = container "eFTI Gate Administration API" "OpenAPI: registri eFTI Gate, AAP in Registry of eFTI Platforms, priklop (čl. 6(4)), začasni odklop, šifranti, sinhronizacija statusov (R2)." "REST/JSON, mTLS, OIDC" "API,Dodatek SI" {
+                    properties {
+                        "komp" "UP"
+                        "openapi" "interfaces/openapi/efti-gate-admin-api.yaml"
+                    }
+                }
+                auditApi = container "eFTI Gate Audit and Statistics API" "OpenAPI: iskanje po revizijski sledi, izvozi za pristojne organe, letna statistika (čl. 17 Uredbe 2020/1056)." "REST/JSON, mTLS, OIDC" "API,Dodatek SI" {
+                    properties {
+                        "komp" "EG"
+                        "openapi" "interfaces/openapi/efti-gate-audit-api.yaml"
+                    }
+                }
+                arApi = container "eFTI Authorisation Registry API" "OpenAPI: pravice dostopa in obdelave uradnikov, zgodovina sprememb (čl. 5). Pogojno po M2." "REST/JSON, mTLS, OAuth 2.0" "API,Dodatek SI,Odprto,R2" {
+                    properties {
+                        "komp" "AR"
+                        "openapi" "interfaces/openapi/efti-authorisation-registry-api.yaml"
                     }
                 }
                 logStore = container "Shramba revizijskih sledi" "Nespremenljiva hramba (npr. WORM ali veriženje zgoščenih vrednosti), 2 leti ali več (čl. 6(2)(h))." "" "Dodatek SI,Database" {
@@ -209,9 +228,16 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
         vrata.gateService.logger -> vrata.logStore "Zapisi revizijske sledi"
         vrata.gateService.logger -> vrata.monitoring "Tehnični in varnostni dogodki"
         vrata.gateService.statistika -> vrata.monitoring "Metrike"
-        vrata.admin -> vrata.gateService.registri "Upravljanje registrov in politike priklopa"
-        vrata.admin -> vrata.gateService.statistika "Letna statistika"
-        vrata.admin -> vrata.logStore "Pregled revizijskih sledi"
+        vrata.admin -> vrata.adminApi "Upravljanje registrov, priklopa in šifrantov" "HTTPS/JSON"
+        vrata.adminApi -> vrata.gateService.registri "Branje in pisanje registrov"
+        vrata.adminApi -> vrata.idp "Preverjanje žetonov"
+        vrata.admin -> vrata.auditApi "Revizijska sled, izvozi, statistika" "HTTPS/JSON"
+        vrata.auditApi -> vrata.gateService.statistika "Letna statistika"
+        vrata.auditApi -> vrata.idp "Preverjanje žetonov"
+        vrata.auditApi -> vrata.logStore "Branje revizijskih sledi"
+        operater -> vrata.auditApi "Poročanje MZIE (čl. 17)" "HTTPS/JSON"
+        organi -> vrata.arApi "Sinhronizacija pravic uradnikov (R2)" "REST/JSON, mTLS"
+        vrata.arApi -> vrata.db "Pravice uradnikov" "JDBC"
         vrata.admin -> vrata.idp "Prijava upravljavcev (MFA)"
         vrata.tct -> vrata.gateService.registri "Rezultat TCT za priklop"
     }
@@ -229,6 +255,12 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
         systemContext vrata "C1-Kontekst" "Raven 1: kontekst eFTI Gate" {
             include *
             include uradnik gospodarskiSubjekt tujePlatforme
+            autoLayout lr
+        }
+
+        container vrata "C2-API" "Storitve OpenAPI eFTI Gate in njihovi odjemalci (Priloga E)" {
+            include vrata.caApi vrata.adminApi vrata.auditApi vrata.arApi
+            include organi operater vrata.admin vrata.gateService vrata.idp vrata.logStore vrata.db
             autoLayout lr
         }
 
@@ -331,6 +363,9 @@ workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
             }
             element "Database" {
                 shape Cylinder
+            }
+            element "API" {
+                shape Hexagon
             }
             element "Queue" {
                 shape Pipe
