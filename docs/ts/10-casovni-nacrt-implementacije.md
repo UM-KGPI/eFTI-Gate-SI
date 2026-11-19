@@ -71,7 +71,7 @@ Faze gradnje so označene G0–G3; prevzemne faze F1–F5 so opredeljene v 9.6 (
 gantt
     title eFTI Gate (osnovni scenarij)
     dateFormat  YYYY-MM-DD
-    axisFormat  %b %Y
+    axisFormat  %m. %Y
     section Priprava (MZIE)
     M3 in potrditev               :m3, 2026-11-24, 2027-01-18
     Javno naročilo                :jn, 2027-01-25, 2027-04-06

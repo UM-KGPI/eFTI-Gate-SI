@@ -5,7 +5,8 @@ Pripravi začasno kopijo poglavij, v kateri so širine stolpcev tabel nastavljen
 po povprečni dolžini vsebine (pandoc sicer vse stolpce razdeli enakomerno),
 nato zažene pandoc. Izhod: build/TS_eFTI-Gate_SI.pdf
 Uporaba: scripts/build-pdf.py [--status "Osnutek v0.2"]
-Potrebno: pandoc, xelatex, pisavi Arial in Menlo.
+Potrebno: pandoc, xelatex, pisavi Arial in Menlo; za bloke ```mermaid še mmdc
+(@mermaid-js/mermaid-cli) – brez njega ostanejo bloki kot koda.
 """
 import datetime
 import pathlib
@@ -88,12 +89,46 @@ def prep(text, landscape=False):
     return "\n".join(out)
 
 
+MMDC_CFG = pathlib.Path.home() / ".config" / "mermaid" / "puppeteer-config.json"
+
+
+def mermaid(text, outdir, stem):
+    """Bloke ```mermaid upodobi v vektorski PDF (mmdc) in jih nadomesti s sliko.
+    (SVG iz mermaid ima besedilo v foreignObject, ki ga rsvg-convert izpusti.)"""
+    if not shutil.which("mmdc"):
+        return text
+    n = 0
+
+    def render(m):
+        nonlocal n
+        n += 1
+        src = outdir / f"{stem}-mermaid-{n}.mmd"
+        png = outdir / f"{stem}-mermaid-{n}.pdf"
+        src.write_text(m.group(1))
+        cmd = ["mmdc", "-i", str(src), "-o", str(png)]
+        if MMDC_CFG.exists():
+            cmd += ["-p", str(MMDC_CFG)]
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        if r.returncode != 0 or not png.exists():
+            print("mmdc ni uspel:", r.stderr[-500:], file=sys.stderr)
+            return m.group(0)
+        return f"![]({png.name})"
+
+    return re.sub(r"```mermaid\n(.*?)\n```", render, text, flags=re.S)
+
+
 def main():
     files = [TS / "README.md"] + sorted(TS.glob("[01][0-9]-*.md")) + sorted(TS.glob("priloga-*.md"))
     with tempfile.TemporaryDirectory() as tmp:
         tmpd = pathlib.Path(tmp) / "docs" / "ts"
         tmpd.mkdir(parents=True)
         shutil.copytree(ROOT / "architecture", pathlib.Path(tmp) / "architecture")
+        # diagrami C4 kot SVG (vektorsko, manjše); pandoc jih z rsvg-convert pretvori v PDF
+        svg = bool(shutil.which("plantuml") and shutil.which("rsvg-convert"))
+        if svg:
+            dd = pathlib.Path(tmp) / "architecture" / "diagrams"
+            r = subprocess.run(["plantuml", "-tsvg", *map(str, dd.glob("*.puml"))], capture_output=True, text=True)
+            svg = r.returncode == 0
         srcs = []
         for f in files:
             t = f.read_text()
@@ -101,6 +136,9 @@ def main():
                 t = re.sub(r"^# .*\n", "", t, count=1)          # naslov gre na naslovnico
                 t = re.sub(r"\n## Kazalo\n.*", "\n", t, flags=re.S)  # kazalo ustvari LaTeX
             t = re.sub(r"(?<![\w`])(SI-GATE-(?:FR|NFR)-\d{3})(?![\w`])", r"\\mbox{\1}", t)  # oznake se ne lomijo
+            t = mermaid(t, tmpd, f.stem)
+            if svg:
+                t = re.sub(r"(architecture/diagrams/structurizr-[\w-]+)\.png\)", r"\1.svg)", t)
             (tmpd / f.name).write_text(prep(t, landscape=f.name == "priloga-c-sledljivost.md"))
             srcs.append(str(tmpd / f.name))
         (pathlib.Path(tmp) / "header.tex").write_text(HEADER)
