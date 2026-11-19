@@ -17,13 +17,14 @@ DSL = ROOT / "architecture" / "workspace.dsl"
 C4 = {
     "PE": "vrata.gateService",
     "IM": "vrata.gateService.iskalnik",
-    "RI": "vrata.gateService.roi",
+    "RID": "vrata.gateService.roi",
     "ED": "vrata.ap",
     "AAP": "organi",
     "RD": "organi",
     "UA": "organi",
     "UP": "vrata.admin",
-    "OP": "vrata.monitoring",
+    "OP": None,  # obratovanje in organizacija: ni elementa modela
+    "TCT": "vrata.tct",
 }
 ROW = re.compile(r"^\|\s*(SI-GATE-(?:FR|NFR)-\d{3})\s*\|(.*)\|\s*$")
 REF = re.compile(r"SI-GATE-(?:FR|NFR)-\d{3}")
@@ -57,6 +58,8 @@ def main():
 
     dsl = DSL.read_text()
     for code, ident in C4.items():
+        if ident is None:
+            continue
         leaf = ident.split(".")[-1]
         if not re.search(rf"^\s*{re.escape(leaf)}\s*=", dsl, re.M):
             errors.append(f"element {ident} (koda {code}) ne obstaja v {DSL.name}")
@@ -81,22 +84,30 @@ def main():
         kind, num = rid.split("-")[2:]
         return (kind, int(num))
 
+    r2 = set()
+    for md in TS.glob("10-*.md"):
+        for line in md.read_text().splitlines():
+            if line.startswith("| **R2** |"):
+                r2 = set(REF.findall(line))
+    for rid in r2 - set(reqs):
+        errors.append(f"R2 v pogl. 10.5 navaja neobstoječo oznako {rid}")
+
     lines = [
         "# Priloga C: Matrika sledljivosti zahtev (oznaka zahteve, vir, preverjanje)",
         "",
         "> **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.",
         ">",
-        f"> Število zahtev: {len(reqs)}. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D).",
+        f"> Število zahtev: {len(reqs)}. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D). Izdaja po pogl. 10.5.",
         "",
-        "| Oznaka | Kratek opis | Vir | P | Komp. | Element C4 | Preverjanje | Pogl. |",
-        "|---|---|---|---|---|---|---|---|",
+        "| Oznaka | Kratek opis | Vir | P | Izdaja | Komp. | Element C4 | Preverjanje | Pogl. |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for rid in sorted(reqs, key=key):
         r = reqs[rid]
         codes = [c for c in re.split(r"[,\s]+", re.sub(r"\([^)]*\)", "", r["komp"])) if c]
-        elems = sorted({C4[c] for c in codes if c in C4}) if "vse" not in codes else ["vrata", "organi"]
-        c4 = ", ".join(f"`{e}`" for e in elems)
-        lines.append(f"| {rid} | {short(r['opis'])} | {r['vir']} | {r['p']} | {r['komp']} | {c4} | {r['prev']} | {r['pogl']} |")
+        elems = sorted({C4[c] for c in codes if C4.get(c)}) if "vse" not in codes else ["vrata", "organi"]
+        c4 = ", ".join(f"`{e}`" for e in elems) or "—"
+        lines.append(f"| {rid} | {short(r['opis'])} | {r['vir']} | {r['p']} | {'R2' if rid in r2 else 'R1'} | {r['komp']} | {c4} | {r['prev']} | {r['pogl']} |")
     OUT.write_text("\n".join(lines) + "\n")
     print(f"zapisano: {OUT.relative_to(ROOT)}", file=sys.stderr)
     return 1 if errors else 0

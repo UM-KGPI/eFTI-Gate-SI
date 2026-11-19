@@ -9,8 +9,8 @@
  *   "R2"          (vijolična) predvideno v izdaji R2 (pogl. 10.5); brez oznake = R1 (zagon 9. 7. 2027)
  *
  * Lastnost "komp" je oznaka komponente iz stolpca Komp. v pogl. 6–10 in Prilogi C
- * (PE, IM, RI, ED, AAP, RD, UA, UP, OP); scripts/build-traceability.py iz nje doda stolpec »Element C4«.
- * Številke vmesnikov #1–#7 sledijo ICD v0.5 §3.1 (osnutek).
+ * (PE, IM, RID, ED, AAP, RD, UA, UP, OP, TCT); scripts/build-traceability.py iz nje doda stolpec »Element C4«.
+ * Številke vmesnikov sledijo ICD v0.5 §3.1 (osnutek); v modelu so uporabljeni #1–#3.
  */
 workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
 
@@ -49,7 +49,7 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
                     }
                     roi = component "Register identifikatorjev" "Nalaganje, zamenjava, aktivacija, deaktivacija in izbris UIL z identifikatorji; nastavljiv nabor identifikatorjev (čl. 11; TGD §6.1, 6.4)." "Java" "RI" {
                         properties {
-                            "komp" "RI"
+                            "komp" "RID"
                         }
                     }
                     registri = component "Registri povezav" "Register prehodov (ID, certifikati), register AAP (ID, certifikati), register platform (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." "Java" "Dodatek SI" {
@@ -101,7 +101,7 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
                 }
                 db = container "Podatkovna baza prehoda" "Register identifikatorjev, registri povezav, stanje zahtev." "PostgreSQL" "RI,Database" {
                     properties {
-                        "komp" "RI"
+                        "komp" "RID"
                     }
                 }
                 ap = container "Dostopna točka eDelivery" "AS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." "Domibus (EK), AS4" "RI" {
@@ -136,7 +136,7 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
                 }
                 tct = container "Okolje TCT za platforme" "Usklajeni testni scenariji TCT za vmesnik #2 pred priklopom platforme (decentraliziran model M2.3)." "" "Dodatek SI,Odprto,R2" {
                     properties {
-                        "komp" "OP"
+                        "komp" "TCT"
                     }
                 }
             }

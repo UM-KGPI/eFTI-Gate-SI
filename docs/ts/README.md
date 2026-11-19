@@ -2,7 +2,7 @@
 
 Projektna naloga za implementacijo Uredbe eFTI v Sloveniji (mejnik M3)
 
-*Delovni osnutek v0.1, 26. 10. 2026: struktura dokumenta, brez vsebine*
+*Delovni osnutek v0.2, 19. 11. 2026: vsebina pogl. 6–10 ter prilog B–D; pogl. 1–5 in 11–13 v pripravi*
 
 |  |  |
 |----|----|

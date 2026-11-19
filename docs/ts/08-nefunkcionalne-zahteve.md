@@ -15,16 +15,16 @@ Oznake so `SI-GATE-NFR-NNN`; stolpci P, Komp. in Preverjanje imajo pomen iz 6.0.
 
 Razdelki 8.1–8.7 sledijo strukturi iz osnutka v0.1; 8.8–8.10 so dodani po zgledu NL PvE (8.8–8.10), ker jih javno naročilo potrebuje (zmogljivost, poročanje, lastništvo kode).
 
-**Izhodišče varnosti.** TGD1 §8 obravnava predvsem varnost prehodov; varnost AAP in uporabniških aplikacij v celoti prepušča državam članicam, za prehode pa ni predvidene certifikacije skladnosti (TGD §8.2). CTG Security ta področja navaja kot vrzeli prve prioritete. Zato so v 8.5 nacionalne zahteve podrobnejše od EU.
+**Izhodišče varnosti.** TGD v1.0.1 §8 obravnava predvsem varnost prehodov; varnost AAP in uporabniških aplikacij v celoti prepušča državam članicam, za prehode pa ni predvidene certifikacije skladnosti (TGD §8.2). CTG Security ta področja navaja kot vrzeli prve prioritete. Zato so v 8.5 nacionalne zahteve podrobnejše od EU.
 
 ## 8.1 Razpoložljivost
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
 | SI-GATE-NFR-001 | Prehod eFTI mora delovati neprekinjeno (24/7/365), ker nadzor prevozov poteka ves čas. | NL PvE NF-1; čl. 3(3)(d) | M | PE, ED | A, T |
-| SI-GATE-NFR-002 | Mesečna razpoložljivost storitev prehoda (vmesniki #1, #2, #3) mora znašati vsaj **99,5 %** [predlog], brez vnaprej napovedanih vzdrževalnih oken. Ciljna vrednost EU še ni določena (TG1.3: 99,9 % ocenjeno kot nerealno). | TG1.3 (Praga); [predlog] | M | PE, OP | A |
+| SI-GATE-NFR-002 | Mesečna razpoložljivost storitev prehoda (vmesniki #1, #2, #3) mora znašati vsaj **99,5 %** [predlog]; vnaprej napovedana vzdrževalna okna (SI-GATE-NFR-003) se ne štejejo v nerazpoložljivost, če skupaj ne presežejo **4 ur** mesečno [predlog]. Ciljna vrednost EU še ni določena (TG1.3: 99,9 % ocenjeno kot nerealno). | TG1.3 (Praga); [predlog] | M | PE, OP | A |
 | SI-GATE-NFR-003 | Načrtovano vzdrževanje mora biti napovedano vsaj en delovni dan vnaprej uporabnikom in drugim prehodom po dogovorjenih kanalih mreže za operativno podporo. | TG1.3 (Praga) | M | OP | P |
-| SI-GATE-NFR-004 | Register platform (preverjanje certifikata in certifikacijskega statusa) mora odgovoriti na poizvedbo prehoda v največ 2 s in imeti razpoložljivost, primerno za neprekinjeno delovanje (TGD predlaga 99,9 %). | TGD §8.3 | M | PE, UP | T |
+| SI-GATE-NFR-004 | Register platform (preverjanje certifikata in certifikacijskega statusa) mora odgovoriti na poizvedbo prehoda v največ 2 s in imeti mesečno razpoložljivost vsaj 99,9 % (vrednost iz TGD §8.3). | TGD §8.3 | M | PE, UP | T |
 | SI-GATE-NFR-005 | Rešitev mora imeti načrt neprekinjenega poslovanja in obnove po katastrofi s ciljnim časom obnove (RTO) **4 ure** in ciljno točko obnove (RPO) **15 minut** [predlog] za register identifikatorjev in revizijske sledi. | NL PvE NF-15; [predlog] | M | OP | P, D |
 
 ## 8.2 Interoperabilnost
@@ -111,7 +111,7 @@ Velja za uporabniške vmesnike v obsegu JN (upravljavska aplikacija; uporabnišk
 | SI-GATE-NFR-090 | Pred prevzemom in nato vsaj enkrat letno mora neodvisni izvajalec opraviti penetracijski test; ugotovitve kritične in visoke stopnje morajo biti odpravljene pred prevzemom. | NL PvE NF-36; CTG Security (Testfest Security) | M | OP | P |
 | SI-GATE-NFR-091 | Izvajalec mora imeti postopek upravljanja ranljivosti s spremljanjem odvisnosti (tudi referenčne implementacije, Domibus) in rokom za varnostne popravke kritičnih ranljivosti **7 dni** [predlog]. | NL PvE NF-37, NF-50–51; [predlog] | M | OP | P |
 | SI-GATE-NFR-092 | Izvajalec mora varnostni incident, ki vpliva na razpoložljivost, zaupnost ali celovitost, sporočiti MZIE nemudoma, najpozneje v 24 urah, ter podpreti MZIE pri prijavi po ZInfV-1. | NL PvE NF-41; ZInfV-1 | M | OP | P |
-| SI-GATE-NFR-093 | Izvajalec mora imeti načrt odzivanja na incidente z razvrstitvijo, analizo vzrokov in usklajen z incidentnim procesom mreže služb za pomoč (TG1.3). | NL PvE NF-42; TG1.3 (Praga) | M | OP | P |
+| SI-GATE-NFR-093 | Izvajalec mora imeti načrt odzivanja na incidente z razvrstitvijo in analizo vzrokov, usklajen z incidentnim procesom mreže služb za pomoč (TG1.3). | NL PvE NF-42; TG1.3 (Praga) | M | OP | P |
 
 ## 8.6 Vzdrževanje
 
@@ -139,7 +139,7 @@ Velja za uporabniške vmesnike v obsegu JN (upravljavska aplikacija; uporabnišk
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
 | SI-GATE-NFR-130 | Prehod mora ob 60-sekundni zakonski meji dodati k času odgovora platforme ali drugega prehoda največ **1 s** pri 95 % zahtev [predlog] (lastni čas obdelave, brez omrežne zakasnitve do partnerjev). | čl. 3(3)(d), 6(2)(f); ICD v0.5 §10; [predlog] | M | PE | T |
-| SI-GATE-NFR-131 | Lokalno iskanje v registru identifikatorjev mora vrniti rezultat v največ **1 s** pri 95 % iskanj [predlog]. | [predlog] | M | RI | T |
+| SI-GATE-NFR-131 | Lokalno iskanje v registru identifikatorjev mora vrniti rezultat v največ **1 s** pri 95 % iskanj [predlog]. | [predlog] | M | RID | T |
 | SI-GATE-NFR-132 | Rešitev mora biti horizontalno razširljiva brez prekinitve storitve in dimenzionirana na obremenitev iz modela obremenitev v M2, z rezervo vsaj **2-kratne** pričakovane konice [predlog]; zmogljivost se dokaže z obremenilnim testom. | CTG Security (risk #6, Performance track); [predlog] | M | PE, OP | T |
 | SI-GATE-NFR-133 | Prehod mora prenesti konice zahtev ob terenskih nadzorih (sočasna iskanja po identifikatorjih, ki se posredujejo vsem prehodom) brez preseganja SI-GATE-NFR-130; obremenitveni profil se uskladi s testnimi scenariji Testfest (Performance). | CTG Security (Testfest Performance) | M | PE | T |
 
@@ -158,13 +158,13 @@ Velja za uporabniške vmesnike v obsegu JN (upravljavska aplikacija; uporabnišk
 | SI-GATE-NFR-150 | MZIE postane lastnik izvorne kode, konfiguracije in dokumentacije rešitve ob predaji; uporabljene odprtokodne komponente (tudi referenčna implementacija, Apache-2.0) morajo imeti licenco, združljivo s tem. | NL PvE NF-84; ADR-0002 | M | OP | P |
 | SI-GATE-NFR-151 | Ob prenehanju pogodbe mora izvajalec brezplačno predati vso izvorno kodo in podatke v izvirnih, trajnih formatih ter po potrditvi predaje uničiti podatke v svojih sistemih in to pisno potrditi. | NL PvE NF-83 | M | OP | P |
 | SI-GATE-NFR-152 | Rešitev mora biti nameščljiva v standardnih vsebnikih (npr. OCI) in prenosljiva med okolji gostovanja brez spremembe kode (model gostovanja izbere M2). | NL PvE NF-81; RI (Docker) | M | PE, OP | D |
-| SI-GATE-NFR-153 | Rešitev mora biti predana v produkcijo in v upravljanje MZIE najpozneje do 9. 7. 2027 (časovni načrt v pogl. 10). | NL PvE NF-85; čl. 5(1) Uredbe (EU) 2020/1056 [preveriti datum v aktu] | M | OP | P |
+| SI-GATE-NFR-153 | Rešitev mora biti predana v produkcijo in v upravljanje MZIE najpozneje do 9. 7. 2027 (časovni načrt v pogl. 10). | NL PvE NF-85; čl. 5(1) Uredbe (EU) 2020/1056 (datum izpeljan v 10.1) | M | OP | P |
 
 ## 8.11 Vrednosti za odločitev MZIE
 
 | Zahteva | Predlagana vrednost | Utemeljitev |
 |---|---|---|
-| NFR-002 razpoložljivost | 99,5 % mesečno | EU vrednosti ni; TG1.3 ocenjuje 99,9 % kot nerealno; ena izpadla ura na dan bi onemogočila nadzore |
+| NFR-002 razpoložljivost | 99,5 % mesečno; napovedana vzdrževalna okna do 4 h mesečno izvzeta | EU vrednosti ni; TG1.3 ocenjuje 99,9 % kot nerealno; ena izpadla ura na dan bi onemogočila nadzore |
 | NFR-005 RTO / RPO | 4 h / 15 min | register identifikatorjev mora biti ob obnovi ažuren (aktivni prevozi) |
 | NFR-012 sočasne različice XSD | 2 | ICD §13 predvideva prehodna obdobja; število ni določeno |
 | NFR-013 rok za uvedbo sprememb EU | 3 mesece | XSD 1.0 → 1.1 po načrtu v ~6 mesecih (Praga) |
@@ -173,4 +173,4 @@ Velja za uporabniške vmesnike v obsegu JN (upravljavska aplikacija; uporabnišk
 | NFR-130, 131 lastni čas obdelave | ≤ 1 s (p95) | 60 s je meja za celotno verigo |
 | NFR-132 rezerva zmogljivosti | 2× konica iz M2 | CTG Security opozarja na stroške horizontalnega skaliranja |
 
-**Preveriti pred oddajo:** veljavne podzakonske akte ZInfV-1 za organe državne uprave; veljavni predpis o dostopnosti spletišč; datum iz čl. 5(1) Uredbe (EU) 2020/1056 v povezavi z IU 2025/2243 (Praga: »9. 7. 2027 fiksno«).
+**Preveriti pred oddajo:** veljavne podzakonske akte ZInfV-1 za organe državne uprave; veljavni predpis o dostopnosti spletišč.

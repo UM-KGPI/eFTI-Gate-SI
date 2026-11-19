@@ -22,7 +22,6 @@ Pogodba C2430-26-100042 (MZIE – UM FGPA), mejnik **M3, rok 24. 12. 2026**. Odv
 scripts/render-diagrams.sh     # validacija modela + diagrami (structurizr-cli, plantuml)
 scripts/build-traceability.py  # Priloga C iz tabel zahtev (+ preverjanje oznak)
 scripts/build-docx.sh          # delovna verzija TS v build/ (pandoc)
-scripts/build-docx.sh --final  # končna verzija za naročnika
 ```
 
 Pravila:

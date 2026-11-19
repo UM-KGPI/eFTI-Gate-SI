@@ -10,7 +10,7 @@
 
 Vsak primer uporabe (PU) navaja akterje, predpogoje, glavni potek, izjeme in zahteve. Zahteve v tem poglavju (`SI-GATE-FR-2NN`) podrobneje določajo zahteve iz pogl. 6 na podlagi tehničnih smernic in ICD; vir je naveden pri vsaki zahtevi. Stolpci P, Komp. in Preverjanje imajo pomen iz 6.0.
 
-**Stabilnost virov.** TGD v1.0.1 je v pregledu, ICD v0.5 je osnutek (dokumenta v0.5 še nimamo, le povzetek s predstavitve v Pragi), shema XSD je v različici 1.0.0 Beta (izdaja 1.0 napovedana za pomlad 2027). Zahteve, ki se sklicujejo na te vire, so označene z **(osnutek)** in jih je treba pred oddajo M3 preveriti glede na takrat veljavne verzije.
+**Stabilnost virov.** TGD v1.0.1 je v pregledu, ICD v0.5 je osnutek (zahteve se sklicujejo na povzetek, predstavljen na konzorcijskem sestanku 19. 11. 2026), shema XSD je v različici 1.0.0 Beta (izdaja 1.0 napovedana za pomlad 2027). Zahteve, ki se sklicujejo na te vire, so označene z **(osnutek)** in jih je treba pred oddajo M3 preveriti glede na takrat veljavne verzije.
 
 **Vloge prehoda.** V vsakem PU je slovenski prehod eFTI lahko *prehod, ki zahteva dostop* (zahteva slovenskega organa) ali *prehod, ki prejme zahtevo* (zahteva tujega prehoda za podatke na slovenski platformi). Obe vlogi sta obvezni.
 
@@ -66,13 +66,13 @@ Vsak primer uporabe (PU) navaja akterje, predpogoje, glavni potek, izjeme in zah
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
-| SI-GATE-FR-210 | Prehod mora nabor identifikatorjev sprejeti le, če obstajajo vsi obvezni identifikatorji in so tip ter format skladni s skupnim naborom podatkov eFTI; sicer mora zavrniti celoten nabor in vrniti napako. | TGD §6.1 | M | RI | T |
-| SI-GATE-FR-211 | Pri nalaganju za UIL, ki že obstaja, mora prehod nov nabor identifikatorjev zamenjati s starim (ne združiti); stari se ne hranijo, UIL se ne spremeni. | TGD §6.1 | M | RI | T |
-| SI-GATE-FR-212 | Prehod mora zapis deaktivirati in izbrisati tudi ob posodobitvi identifikatorja eFTI596 (dejanski datum razkladanja), razen pri cestnem prevozu (SI-GATE-FR-155). (osnutek: TGD presega besedilo čl. 11(4)) | TGD §6.1 | P | RI | T |
-| SI-GATE-FR-213 | Nabor identifikatorjev registra mora biti nastavljiv brez spremembe programske kode, da se lahko uvede razširjeni seznam iz TGD v1.0.1, tabela 4 (npr. eFTI617, eFTI450, eFTI146, eFTI583, eFTI908, eFTI162, eFTI596, eFTI917, eFTI1855), ko bo sprejeta sprememba IU 2024/1942. | TGD §6.4, tab. 4 | M | RI | D, T |
-| SI-GATE-FR-214 | Prehod mora nalaganje identifikatorjev sprejeti le od platform z veljavnim certifikacijskim statusom v registru platform. | čl. 6(3)(f), 11(1) | M | RI, PE | T |
+| SI-GATE-FR-210 | Prehod mora nabor identifikatorjev sprejeti le, če obstajajo vsi obvezni identifikatorji in so tip ter format skladni s skupnim naborom podatkov eFTI; sicer mora zavrniti celoten nabor in vrniti napako. | TGD §6.1 | M | RID | T |
+| SI-GATE-FR-211 | Pri nalaganju za UIL, ki že obstaja, mora prehod nov nabor identifikatorjev zamenjati s starim (ne združiti); stari se ne hranijo, UIL se ne spremeni. | TGD §6.1 | M | RID | T |
+| SI-GATE-FR-212 | Prehod mora zapis deaktivirati in izbrisati tudi ob posodobitvi identifikatorja eFTI596 (dejanski datum razkladanja), razen pri cestnem prevozu (SI-GATE-FR-155). (osnutek: TGD presega besedilo čl. 11(4)) | TGD §6.1 | P | RID | T |
+| SI-GATE-FR-213 | Nabor identifikatorjev registra mora biti nastavljiv brez spremembe programske kode, da se lahko uvede razširjeni seznam iz TGD v1.0.1, tabela 4 (npr. eFTI617, eFTI450, eFTI146, eFTI583, eFTI908, eFTI162, eFTI596, eFTI917, eFTI1855), ko bo sprejeta sprememba IU 2024/1942. | TGD §6.4, tab. 4 | M | RID | D, T |
+| SI-GATE-FR-214 | Prehod mora nalaganje identifikatorjev sprejeti le od platform z veljavnim certifikacijskim statusom v registru platform. | čl. 6(3)(f), 11(1) | M | RID, PE | T |
 | SI-GATE-FR-215 | Prehod mora platformi posredovati pravice dostopa uradnika, tako da platforma lahko vrne le podsklope, za katere ima uradnik pravice. | čl. 4(2)(d)(iii); TGD §3.3.1 | M | PE | T |
-| SI-GATE-FR-216 | Prehod mora pri zahtevi platformi upoštevati, da mora platforma odgovoriti v 50 s, tako da prehod izpolni 60 s; prehod, ki zahteva dostop, mora čakati 65 s. (osnutek) | ICD v0.5 §10 | M | PE | T |
+| SI-GATE-FR-216 | Časovniki se merijo od trenutka potrditve prejema zahteve: platforma mora odgovoriti v 50 s; prehod, ki prejme zahtevo, pošlje »ni odgovora« po 60 s (SI-GATE-FR-085); prehod, ki zahteva dostop, čaka 65 s od potrditve prejema s strani prehoda, ki prejme zahtevo, da lahko prejme njegovo sporočilo »ni odgovora«, nato sam izda »ni odgovora«. (osnutek) | ICD v0.5 §10 | M | PE | T |
 | SI-GATE-FR-217 | Prehod ne sme zavrniti sklopa podatkov zaradi manjkajočih podatkov; o popolnosti odloči uradnik. Prehod preverja le skladnost ovojnice in glave sporočila s shemo. (osnutek) | ICD v0.5 §12 | M | PE | T |
 | SI-GATE-FR-218 | Prehod mora od platforme sprejeti potrdilo o prejemu sporočila o nadaljnjem ukrepanju in ga posredovati AAP. | TGD §3.3.4 | M | PE | T |
 
@@ -89,7 +89,7 @@ Vsak primer uporabe (PU) navaja akterje, predpogoje, glavni potek, izjeme in zah
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
-| SI-GATE-FR-230 | AAP mora za identifikacijo uradnikov uporabljati nacionalne gradnike e-identitete (SI-PASS, SI-CAS, SIGEN-CA ali njihove naslednike); izbira se določi v pogl. 5.4. | čl. 4(3)(a); SI implementacijski načrt (20. 5. 2026) | P | AAP | P, T |
+| SI-GATE-FR-230 | AAP mora za identifikacijo uradnikov uporabljati nacionalne gradnike e-identitete (SI-PASS, SI-CAS, SIGEN-CA ali njihove naslednike); izbira je odprta (odloči se v pogl. 5.4, v pripravi). | čl. 4(3)(a); SI implementacijski načrt (20. 5. 2026) | P | AAP | P, T |
 | SI-GATE-FR-231 | Med AAP in prehodom mora potekati medsebojna avtentikacija s certifikati (mTLS ali enakovredno) in preverjanje pravic pri vsaki zahtevi. | čl. 6(2)(a)(i), 6(3)(d) | M | PE, AAP | T |
 | SI-GATE-FR-232 | Avtorizacijski žeton ali sporočilo, ki ga AAP posreduje prehodu, mora vsebovati sklice na pravice obdelave uradnika; prehod jih ne sme spreminjati. | čl. 4(2)(d)(iii) | M | AAP, PE | T |
 | SI-GATE-FR-233 | Register dovoljenj mora biti mogoče vzdrževati prek programskega vmesnika (sinhronizacija s kadrovskimi evidencami pristojnih organov). | NL PvE §4.4 | P | RD | D |
@@ -100,8 +100,8 @@ Zahteve za register so v 6.10 in 7.2; ta razdelek določa pravila iskanja.
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
-| SI-GATE-FR-240 | Pri sestavljenih iskalnih poljih (uporabljeno prevozno sredstvo, uporabljena ali prevažana prevozna oprema) mora iskanje zahtevati vse identifikatorje entitete skupaj (npr. eFTI617, eFTI618, eFTI620). | TGD §6.4 | M | IM | T |
-| SI-GATE-FR-241 | Iskanje mora vrniti seznam celotnih zapisov (UIL in identifikatorji) aktivnih sklopov podatkov; register vrača le UIL, dostop do podatkov poteka kot v PU-G2P-1. | TGD §6 | M | IM, RI | T |
+| SI-GATE-FR-240 | Pri sestavljenih iskalnih poljih (uporabljeno prevozno sredstvo, uporabljena ali prevažana prevozna oprema) mora iskanje zahtevati vse identifikatorje entitete skupaj (npr. uporabljena prevozna oprema: eFTI378, eFTI374, eFTI578, eFTI987 iz čl. 11(3)). | TGD §6.4 | M | IM | T |
+| SI-GATE-FR-241 | Iskanje mora vrniti seznam celotnih zapisov (UIL in identifikatorji) aktivnih sklopov podatkov; register vrača le UIL, dostop do podatkov poteka kot v PU-G2P-1. | TGD §6 | M | IM, RID | T |
 | SI-GATE-FR-242 | Iskanje mora biti enako pri iskanju slovenskega organa in pri iskanju, prejetem od drugega prehoda (enaka pravila uporabe iskalnih meril). | TGD §6.4 | M | IM | T |
 
 ## 7.5 Dostop pristojnih organov (vmesnik #3, CA2Gate in Gate2CA)

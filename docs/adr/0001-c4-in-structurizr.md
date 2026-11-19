@@ -17,7 +17,7 @@ TS (mejnik M3) mora opisati nacionalno arhitekturo eFTI okolja (TS JN točka 2.4
 
 ## Obravnavane možnosti
 
-1. Structurizr DSL (izbrano): en model, več pogledov, izvoz v PlantUML/Mermaid.
+1. Structurizr DSL (izbrano): en model, več pogledov, izvoz v PlantUML z legendami (izvoznik Structurizr).
 2. Mermaid C4 neposredno v Markdownu: GitHub ga prikaže, a je funkcija eksperimentalna, vsak diagram je ločen in se lahko razide z drugimi.
 3. Diagrami v Visio/draw.io: ni sledljivosti sprememb, težko pregledovanje.
 

@@ -4,8 +4,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 OUT=architecture/diagrams
-rm -rf "$OUT" && mkdir -p "$OUT"
 structurizr-cli validate -workspace architecture/workspace.dsl
+rm -rf "$OUT" && mkdir -p "$OUT"
 structurizr-cli export -workspace architecture/workspace.dsl -format plantuml/structurizr -output "$OUT"
 plantuml -tpng "$OUT"/*.puml
 echo "Diagrami v $OUT"

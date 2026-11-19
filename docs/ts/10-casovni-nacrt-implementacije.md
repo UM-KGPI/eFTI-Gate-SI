@@ -65,20 +65,22 @@ Implementacijski načrt Slovenije (20. 5. 2026) predvideva objavo naročila za g
 
 ## 10.5 Faze in izdaje
 
+Faze gradnje so označene G0–G3; prevzemne faze F1–F5 so opredeljene v 9.6 (G1 se konča s F1, G2 s F2 in F3, G3 s F4).
+
 ```mermaid
 gantt
     title Slovenski prehod eFTI (osnovni scenarij)
     dateFormat  YYYY-MM-DD
     axisFormat  %b %Y
     section Priprava (MZIE)
-    M3 in potrditev               :done, m3, 2026-11-24, 2027-01-18
+    M3 in potrditev               :m3, 2026-11-24, 2027-01-18
     Javno naročilo                :jn, 2027-01-25, 2027-04-06
     Priprava identitet, certifikatov, prijave v omrežje :prep, 2026-12-01, 2027-03-31
     section Gradnja (izvajalec)
-    F0 Osnova na RI, testno okolje, priklop v omrežje :f0, 2027-04-06, 3w
-    F1 Vmesniki #1 #2 #3, register identifikatorjev, XSD 1.0 :f1, after f0, 6w
-    F2 UAT z organi, platforma, zmogljivost, penetracijski test :f2, after f1, 3w
-    F3 Operativni prevzem in zagon :crit, f3, after f2, 1w
+    G0 Osnova na RI, testno okolje, priklop v omrežje :f0, 2027-04-06, 3w
+    G1 Vmesniki #1 #2 #3, register identifikatorjev, XSD 1.0 :f1, after f0, 6w
+    G2 UAT z organi, platforma, zmogljivost, penetracijski test :f2, after f1, 3w
+    G3 Operativni prevzem in zagon :crit, f3, after f2, 1w
     Zagon eFTI                    :milestone, crit, 2027-07-09, 0d
     section Po zagonu
     F5 Poskusno obratovanje        :f5, 2027-07-09, 30d
@@ -88,9 +90,9 @@ gantt
 | Izdaja | Obseg | Rok |
 |---|---|---|
 | **R1 (zagon)** | vse zahteve iz pogl. 6 (pravne obveznosti), zahteve pogl. 7 za vmesnike #1, #2 in #3, register identifikatorjev, preverjanje certifikacijskega statusa (vsaj ročno vodeni register platform), dnevniki in revizijska sled, varnost (8.5), služba za pomoč (čl. 12), prevzemne faze F1–F4 | 9. 7. 2027 |
-| **R2** | SI-GATE-FR-213 (razširjeni identifikatorji, ko bo sprejeta sprememba IU), SI-GATE-FR-233 (API registra dovoljenj), SI-GATE-FR-271 v samodejni obliki (sinhronizacija z Unijskim referenčnim seznamom), SI-GATE-NFR-281 (okolje TCT pri prehodu), SI-GATE-NFR-282 (politika PRA, če jo MZIE sprejme), SI-GATE-FR-253 (izbira različice sklopa podatkov) | 6 mesecev po zagonu [predlog] |
+| **R2** | SI-GATE-FR-233 (API registra dovoljenj), SI-GATE-FR-253 (izbira različice sklopa podatkov), SI-GATE-FR-271 (samodejna sinhronizacija z Unijskim referenčnim seznamom; v R1 se status vodi v registru platform), SI-GATE-NFR-281 (okolje TCT pri prehodu) | 6 mesecev po zagonu [predlog] |
 
-Razdelitev med R1 in R2 je predlog; dokončno jo določi MZIE skupaj z izbiro variante v M2. Zahteve, ki niso navedene pri R2, sodijo v R1.
+Razdelitev med R1 in R2 je predlog; dokončno jo določi MZIE skupaj z izbiro variante v M2. Zahteve, ki niso navedene pri R2, sodijo v R1; Priloga C ima stolpec »Izdaja«. Nastavljivost nabora identifikatorjev (SI-GATE-FR-213) in politike priklopa (SI-GATE-NFR-282) sta v R1, ker je po zagonu treba le spremeniti vsebino; ali Slovenija uporabi PRA, odloči MZIE (9.8).
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|

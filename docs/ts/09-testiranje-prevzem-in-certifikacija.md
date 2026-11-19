@@ -48,8 +48,8 @@ Zahteve v tem poglavju so `SI-GATE-NFR-2NN` (stolpci kot v 6.0). Poglavje določ
 |---|---|---|---|---|---|
 | SI-GATE-NFR-220 | Prehod mora pred vstopom v integracijsko mrežo prehodov uspešno izvesti vse testne scenarije proti RI kot sidru skladnosti za vmesnik #1 (vse vrste sporočil, obe vlogi) in #2; napake se odpravijo pred priklopom drugih vozlišč. | TG2.2 (Praga, »hub-and-spoke«); SI-GATE-NFR-010 | M | PE, ED | T |
 | SI-GATE-NFR-221 | Prehod mora opraviti TCT in varnostne teste v Launchpadu (ali enakovrednem okolju, ki ga določi EK) in predložiti podpisano poročilo; po vsaki večji izdaji (nova različica XSD, sprememba vmesnikov) se testi ponovijo. | TG2.2 Launchpad (stalno zagotavljanje); SI-GATE-NFR-011 | M | PE | T |
-| SI-GATE-NFR-222 | Prehod mora sodelovati na Testfestu, ki ga organizira projekt (Testfest 4 je načrtovan za marec 2027), če je takrat tehnično pripravljen, sicer na prvem naslednjem skupnem testiranju. | TG2.3 (Praga, časovnica integracije vrat) | M | OP | P |
-| SI-GATE-NFR-223 | Prehod mora pred produkcijo uspešno izmenjati realna sporočila (zahteve in odgovori, vključno z eDelivery) z vsaj tremi [predlog] drugimi prehodi v integracijskem omrežju, med njimi z vsaj enim sosednjim (AT, IT, HR ali HU) [predlog], za vse vrste sporočil #1. | AG #8; [predlog] | M | PE, ED | T |
+| SI-GATE-NFR-222 | Izvajalec mora prehod prijaviti na prvo skupno testiranje (Testfest) integracijskega omrežja, ki se začne po zaključku faze F1, in na njem izvesti vse scenarije #1 in #2; udeležba in rezultati se dokumentirajo. | TG2.3 (Praga, časovnica integracije vrat) | M | OP | P |
+| SI-GATE-NFR-223 | Prehod mora pred produkcijo uspešno izmenjati realna sporočila (zahteve in odgovori, vključno z eDelivery) za vse vrste sporočil #1 z referenčnim prehodom (RI) in vsaj enim drugim prehodom DČ; cilj so vsaj trije prehodi, med njimi sosednji (AT, IT, HR ali HU) [predlog]. Če drugi prehodi do 15. 6. 2027 niso na voljo, lahko MZIE pisno odobri prevzem samo z RI. | AG #8; [predlog] | M | PE, ED | T |
 | SI-GATE-NFR-224 | Testni scenariji morajo pokrivati teme delovne skupine za testiranje: vmesnike, odkrivanje in usmerjanje, pridobivanje podatkov in odgovore, dnevnike in sledljivost, napake, zanesljivost in obnovo. | Praga, AG #8 (16 podtem funkcionalnih testov) | M | OP | P |
 
 ## 9.4 Zmogljivostni in varnostni testi
@@ -78,7 +78,7 @@ Prevzem poteka v fazah. Prehod v naslednjo fazo je mogoč le, ko so izpolnjena m
 
 | Faza | Vstopni pogoj | Izstopno merilo |
 |---|---|---|
-| F1 Sistemski prevzem | testni načrt potrjen | vse zahteve M z načinom T/D uspešne v testnem okolju; brez odprtih napak kritične ali visoke stopnje |
+| F1 Sistemski prevzem | testni načrt potrjen | vse zahteve M izdaje R1 (pogl. 10.5) z načinom T/D uspešne v testnem okolju; brez odprtih napak kritične ali visoke stopnje |
 | F2 Skladnost in interoperabilnost | F1 | SI-GATE-NFR-220, 221, 223 izpolnjene |
 | F3 Uporabniški prevzem | F2 | SI-GATE-NFR-250, 251 izpolnjene; zapisniki organov |
 | F4 Operativni prevzem | F3, penetracijski test brez odprtih kritičnih ugotovitev | preizkus obnove, nadzor in alarmi delujejo, služba za pomoč deluje, dokumentacija predana |
@@ -89,21 +89,21 @@ Prevzem poteka v fazah. Prehod v naslednjo fazo je mogoč le, ko so izpolnjena m
 |---|---|---|---|---|---|
 | SI-GATE-NFR-260 | Prevzem mora potekati po fazah F1–F5 in končnem prevzemu iz 9.6; vsaka faza se zaključi s pisnim zapisnikom, ki ga potrdi MZIE. | [predlog] | M | OP | P |
 | SI-GATE-NFR-261 | Napake se razvrščajo v kritične, visoke, srednje in nizke [predlog]; za prehod v naslednjo fazo ne sme biti odprtih kritičnih ali visokih napak, srednje morajo imeti dogovorjen rok odprave. | NL PvE NF-64; [predlog] | M | OP | P |
-| SI-GATE-NFR-262 | Produkcijski zagon (konec F4) mora biti pred 9. 7. 2027; časovnica faz se uskladi z integracijskim omrežjem (zaključek tehničnih specifikacij 31. 12. 2026, operativnih 31. 3. 2027) v pogl. 10. | TG2.3 (Praga); SI-GATE-NFR-153 | M | OP | P |
+| SI-GATE-NFR-262 | Produkcijski zagon (konec F4) mora biti najpozneje 9. 7. 2027; časovnica faz se uskladi z integracijskim omrežjem (zaključek tehničnih specifikacij 31. 12. 2026, operativnih 31. 3. 2027) v pogl. 10. | TG2.3 (Praga); SI-GATE-NFR-153 | M | OP | P |
 | SI-GATE-NFR-263 | Ob prevzemu mora izvajalec predati: izvorno kodo, namestitvene artefakte, konfiguracijo, arhitekturni opis (C4), navodila za upravljanje in uporabo, testna poročila, poročilo o penetracijskem testu in poročilo TCT. | NL PvE NF-45, NF-83; SI-GATE-NFR-150 | M | OP | P |
 
 ## 9.7 Priklop platform, certificiranje in akreditacija
 
 **Pravni okvir.** Certificirajo se platforme in ponudniki storitev eFTI (čl. 11–12 Uredbe (EU) 2020/1056); organe za ugotavljanje skladnosti akreditira nacionalni akreditacijski organ (v Sloveniji Slovenska akreditacija), certifikacijske zahteve pa določa delegirani akt (osnutek objavljen 21. 10. 2026). Prehod sam ni certificiran (TGD §8.2), mora pa pred vsako izmenjavo s platformo preveriti njen certifikacijski status (čl. 6(2)(d)(i)).
 
-**Časovni okvir.** Po M2.3 je sprejetje delegiranega akta pričakovati konec 2026 ali v začetku 2027, akreditacijo prvih organov okoli leto pozneje in prve certifikate še pol leta pozneje (Praga: »ne pred sredino 2028«). Ob zagonu 9. 7. 2027 zato verjetno ne bo nobene certificirane platforme.
+**Časovni okvir.** Po M2.3 je sprejetje delegiranega akta pričakovati konec 2026 ali v začetku 2027, akreditacijo prvih organov približno leto pozneje in prve certifikate še pol leta pozneje (Praga: »ne pred sredino 2028«). Ob zagonu 9. 7. 2027 zato verjetno ne bo nobene certificirane platforme.
 
 **Vmesna rešitev PRA.** eFTI4LIVE predlaga Platform Readiness Assessment (PRA): priklop platforme na podlagi poročila TCT (in samoizjave) do formalne certifikacije. Države članice so glede PRA razdeljene (pravna podlaga, odgovornost); odločitev je nacionalna. Model M2.3 predvideva, da vsaka DČ izvaja TCT **pri svojem prehodu** (decentraliziran model), z enotnimi scenariji, ki jih pripravi TG2.5 in pregleda EK.
 
 | Oznaka | Zahteva | Vir | P | Komp. | Preverjanje |
 |---|---|---|---|---|---|
 | SI-GATE-NFR-280 | Prehod mora imeti postopek priklopa platforme (onboarding): vloga upravljavca platforme, preverjanje identitete in certifikacijskega statusa, izmenjava certifikatov, test povezave, vpis v register platform (SI-GATE-FR-093, FR-270). | čl. 6(3)(f); TGD §8.3 | M | UP, OP | D |
-| SI-GATE-NFR-281 | Prehod mora zagotoviti okolje, v katerem platforma pred priklopom izvede usklajene testne scenarije TCT za vmesnik #2 in pridobi poročilo TCT, ko bodo specifikacije TCT EK/eDANOS na voljo; do takrat najmanj test povezave s scenariji PU-P2G in PU-G2P. | M2.3 (decentraliziran TCT); osnutek DU o certificiranju | M | PE, OP | D |
+| SI-GATE-NFR-281 | Prehod mora zagotoviti okolje, v katerem platforma pred priklopom izvede usklajene testne scenarije TCT za vmesnik #2 in pridobi poročilo TCT, ko bodo specifikacije TCT EK/eDANOS na voljo; do takrat najmanj test povezave s scenariji PU-P2G in PU-G2P. | M2.3 (decentraliziran TCT); osnutek DU o certificiranju | M | PE, TCT | D |
 | SI-GATE-NFR-282 | Prehod mora tehnično podpirati priklop platform glede na status v registru platform: »certificirana« in, če MZIE tako odloči, »PRA« (poročilo TCT brez certifikata); politika priklopa mora biti nastavljiva brez spremembe kode. | M2.3; Praga (pismo EK, stališča DČ) | M | PE, UP | D |
 | SI-GATE-NFR-283 | Prehod mora spremljati delež napak v izmenjavi s posamezno platformo (format, obvezna polja, protokol) in ob preseženem pragu obvestiti upravljavca ter omogočiti začasni odklop platforme. | M2.3 (spremljanje v produkciji) | M | PE, UP | T |
 | SI-GATE-NFR-284 | Register platform mora podpirati postopek iz čl. 6(4) za platforme, certificirane v drugih DČ (SI-GATE-FR-095, FR-272). | čl. 6(4) | M | UP | D |
@@ -113,5 +113,5 @@ Prevzem poteka v fazah. Prehod v naslednjo fazo je mogoč le, ko so izpolnjena m
 1. **PRA:** ali bo Slovenija pred formalno certifikacijo priklopila platforme na podlagi poročila TCT.
 2. **Izvajanje TCT pri prehodu:** kdo upravlja okolje TCT (izvajalec prehoda, MZIE ali tretja oseba) in ali je del tega JN.
 3. **Obseg UAT:** kateri pristojni organi sodelujejo v uporabniškem prevzemu in s katerimi aplikacijami (odvisno od M2: AAP v prehodu ali pri organih).
-4. **Val priklopa v integracijsko omrežje:** ob podpisu pogodbe za gradnjo v februarju 2027 bo Slovenija verjetno v drugem valu priklopa (TG2.3: paket za drugi val držav aprila 2027; prvi val, 10+ DČ, decembra 2026), za Testfest 4 (marec 2027) pa verjetno še ne bo pripravljena. To je tveganje za rok 9. 7. 2027 (pogl. 10).
+4. **Val priklopa v integracijsko omrežje:** ob podpisu pogodbe za gradnjo aprila 2027 (osnovni scenarij, pogl. 10.3) bo Slovenija verjetno v drugem valu priklopa (TG2.3: paket za drugi val držav aprila 2027; prvi val, 10+ DČ, decembra 2026), za Testfest 4 (marec 2027) pa verjetno še ne bo pripravljena. To je tveganje za rok 9. 7. 2027 (pogl. 10).
 5. **Vloga Slovenske akreditacije** in imenovanega organa za nacionalni seznam certificiranih platform po sprejetju delegiranega akta.

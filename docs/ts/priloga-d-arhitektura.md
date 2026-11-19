@@ -25,11 +25,12 @@ Element ima lahko več oznak; barva ustreza zadnji (npr. okolje TCT: Dodatek SI,
 |---|---|
 | PE | `vrata.gateService` (storitev prehoda) |
 | IM | `vrata.gateService.iskalnik` |
-| RI | `vrata.gateService.roi` |
+| RID | `vrata.gateService.roi` |
 | ED | `vrata.ap` (dostopna točka eDelivery) |
 | AAP, RD, UA | `organi` (do odločitve M2 en sistem) |
 | UP | `vrata.admin` |
-| OP | `vrata.monitoring` (obratovanje in nadzor) |
+| OP | — (obratovanje in organizacija; ni elementa modela) |
+| TCT | `vrata.tct` (okolje TCT za platforme) |
 
 ## D.1 Pokrajina (C0)
 
