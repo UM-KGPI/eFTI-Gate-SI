@@ -4,6 +4,7 @@ Izvirni dokumenti **niso v repozitoriju**. Javni viri imajo povezavo; interni do
 
 | Oznaka | Dokument | Verzija / datum | Dostop | Raba v TS |
 |---|---|---|---|---|
+| IU-1942 | Izvedbena uredba Komisije (EU) 2024/1942 (SL, EN) | UL L 20. 12. 2024; popravek 32024R1942R(01) z dne 27. 4. 2026 velja le za BG | javno: publications.europa.eu/resource/celex/32024R1942 | pogl. 6 |
 | TGD | Technical Guidance Document (TGD1 + TGD2 + Annex, združen izvoz) | v1.0.1 (v pregledu), 9. 9. 2026 | eFTI4LIVE (interno) | pogl. 5–9; arhitektura, primeri uporabe, varnost, dnevniki, helpdesk |
 | TGD1 | TGD1 za pristojne organe | v1.0.5, okt. 2025 | eFTI4LIVE (interno) | primerjava z v1.0.1 |
 | TGD2 | TGD2 za gospodarske subjekte | v1.0.6, okt. 2025 | eFTI4LIVE (interno) | vmesnik #2, platforme |
