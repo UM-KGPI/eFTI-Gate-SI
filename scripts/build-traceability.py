@@ -12,6 +12,19 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TS = ROOT / "docs" / "ts"
 OUT = TS / "priloga-c-sledljivost.md"
+DSL = ROOT / "architecture" / "workspace.dsl"
+# oznaka komponente (stolpec Komp.) -> element modela C4 (architecture/workspace.dsl)
+C4 = {
+    "PE": "vrata.gateService",
+    "IM": "vrata.gateService.iskalnik",
+    "RI": "vrata.gateService.roi",
+    "ED": "vrata.ap",
+    "AAP": "organi",
+    "RD": "organi",
+    "UA": "organi",
+    "UP": "vrata.admin",
+    "OP": "vrata.monitoring",
+}
 ROW = re.compile(r"^\|\s*(SI-GATE-(?:FR|NFR)-\d{3})\s*\|(.*)\|\s*$")
 REF = re.compile(r"SI-GATE-(?:FR|NFR)-\d{3}")
 
@@ -42,6 +55,15 @@ def main():
         if r not in reqs:
             errors.append(f"{f}:{n}: sklic na neobstoječo oznako {r}")
 
+    dsl = DSL.read_text()
+    for code, ident in C4.items():
+        leaf = ident.split(".")[-1]
+        if not re.search(rf"^\s*{re.escape(leaf)}\s*=", dsl, re.M):
+            errors.append(f"element {ident} (koda {code}) ne obstaja v {DSL.name}")
+    for rid, r in reqs.items():
+        for code in re.split(r"[,\s]+", re.sub(r"\([^)]*\)", "", r["komp"])):
+            if code and code not in C4 and code != "vse":
+                errors.append(f"{rid}: neznana oznaka komponente '{code}'")
     for e in errors:
         print("NAPAKA:", e, file=sys.stderr)
     stats = {}
@@ -64,14 +86,17 @@ def main():
         "",
         "> **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.",
         ">",
-        f"> Število zahtev: {len(reqs)}. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0.",
+        f"> Število zahtev: {len(reqs)}. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D).",
         "",
-        "| Oznaka | Kratek opis | Vir | P | Komp. | Preverjanje | Pogl. |",
-        "|---|---|---|---|---|---|---|",
+        "| Oznaka | Kratek opis | Vir | P | Komp. | Element C4 | Preverjanje | Pogl. |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     for rid in sorted(reqs, key=key):
         r = reqs[rid]
-        lines.append(f"| {rid} | {short(r['opis'])} | {r['vir']} | {r['p']} | {r['komp']} | {r['prev']} | {r['pogl']} |")
+        codes = [c for c in re.split(r"[,\s]+", re.sub(r"\([^)]*\)", "", r["komp"])) if c]
+        elems = sorted({C4[c] for c in codes if c in C4}) if "vse" not in codes else ["vrata", "organi"]
+        c4 = ", ".join(f"`{e}`" for e in elems)
+        lines.append(f"| {rid} | {short(r['opis'])} | {r['vir']} | {r['p']} | {r['komp']} | {c4} | {r['prev']} | {r['pogl']} |")
     OUT.write_text("\n".join(lines) + "\n")
     print(f"zapisano: {OUT.relative_to(ROOT)}", file=sys.stderr)
     return 1 if errors else 0

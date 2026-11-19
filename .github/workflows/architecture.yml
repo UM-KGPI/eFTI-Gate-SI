@@ -35,10 +35,8 @@ jobs:
           unzip -q cli.zip -d cli
       - name: Validate model
         run: ./cli/structurizr.sh validate -workspace architecture/workspace.dsl
-      - name: Export views (PlantUML, Mermaid)
-        run: |
-          ./cli/structurizr.sh export -workspace architecture/workspace.dsl -format plantuml/c4plantuml -output out
-          ./cli/structurizr.sh export -workspace architecture/workspace.dsl -format mermaid -output out
+      - name: Export views (PlantUML, Structurizr styles)
+        run: ./cli/structurizr.sh export -workspace architecture/workspace.dsl -format plantuml/structurizr -output out
       - uses: actions/upload-artifact@v4
         with:
           name: c4-views

@@ -1,0 +1,72 @@
+@startuml
+set separator none
+
+skinparam {
+  shadowing false
+  arrowFontSize 15
+  defaultTextAlignment center
+  wrapWidth 100
+  maxMessageSize 100
+}
+hide stereotype
+
+skinparam rectangle<<_transparent>> {
+  BorderColor transparent
+  BackgroundColor transparent
+  FontColor transparent
+}
+
+skinparam person<<1>> {
+  BackgroundColor #08427b
+  FontColor #ffffff
+  BorderColor #052e56
+}
+person "==Person" <<1>>
+
+skinparam person<<2>> {
+  BackgroundColor #8a8a8a
+  FontColor #ffffff
+  BorderColor #606060
+}
+person "==Person, Zunanji" <<2>>
+
+skinparam rectangle<<3>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+}
+rectangle "==Software System" <<3>>
+
+skinparam rectangle<<4>> {
+  BackgroundColor #e67e22
+  FontColor #ffffff
+  BorderColor #a15817
+}
+rectangle "==Software System, Odprto" <<4>>
+
+skinparam rectangle<<5>> {
+  BackgroundColor #8a8a8a
+  FontColor #ffffff
+  BorderColor #606060
+}
+rectangle "==Software System, Zunanji" <<5>>
+
+skinparam rectangle<<6>> {
+  BackgroundColor #e67e22
+  FontColor #ffffff
+  BorderColor #a15817
+}
+rectangle "==Software System, Zunanji, Odprto" <<6>>
+
+skinparam rectangle<<7>> {
+  BackgroundColor #b8860b
+  FontColor #ffffff
+  BorderColor #805d07
+}
+rectangle "==Software System, Zunanji, Test" <<7>>
+
+rectangle "." <<_transparent>> as 8
+8 .[#707070,thickness=2].> 8 : "<color:#707070>Relationship"
+
+
+@enduml
