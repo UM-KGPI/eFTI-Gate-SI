@@ -132,7 +132,7 @@ FTE = povprečni delež polnega delovnega časa v obdobju; OM = osebni meseci. T
 
 Skupaj za R1, R2 in prvo leto obratovanja: približno **127,3 OM** [predlog]. Gradnja R1 zahteva **12,8 FTE** sočasno; pri pospešenem scenariju (R1 4,3 meseca, pogl. 10.3) je potrebna sočasnost manjša pri enakem obsegu dela. Gradnja na referenčni implementaciji (ADR-0002) je pogoj za ta obseg.
 
-**Finančna ocena** je odprta: OM iz te tabele je treba pomnožiti s cenami dela in dodati stroške infrastrukture, licenc, HSM, penetracijskih testov in gostovanja (odvisno od variante v M2); rezultat primerjati s TIS Annex 7 in modelom stroškov eFTI4ALL.
+**Finančna ocena** je odprta: OM iz te tabele je treba pomnožiti s cenami dela in dodati stroške infrastrukture po pogl. 5.5 (viri po okoljih, strojna oprema za varianto H2, co-location ali DRO), licenc, HSM, penetracijskih testov in gostovanja (odvisno od variante v M2); rezultat primerjati s TIS Annex 7 in modelom stroškov eFTI4ALL.
 
 ## 11.7 Zahteve za kadre izvajalca
 

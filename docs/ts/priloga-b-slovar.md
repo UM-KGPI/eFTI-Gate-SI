@@ -53,19 +53,27 @@
 | CMDS | consignment movement dataset |
 | DA / DU | delegirani akt / delegirana uredba |
 | DČ | država članica |
+| DMZ | omrežna cona med internetom in notranjim omrežjem (pogl. 5.5.2) |
+| DRO | Državni računalniški oblak (upravlja MNZJU) |
 | DS | delovni sklop (pogl. 11.1) |
 | FTE | ekvivalent polnega delovnega časa (full-time equivalent) |
+| HSM | strojni varnostni modul za hrambo zasebnih ključev |
 | G2G, G2P, P2G, G2A | eFTI Gate–eFTI Gate, eFTI Gate–eFTI Platform, eFTI Platform–eFTI Gate, eFTI Gate–AAP |
 | ICD | Interface Control Document (eFTI4LIVE TG1.6, CTG Data Model & Interfaces) |
 | IU | izvedbena uredba (EU) 2024/1942 |
 | mTLS | medsebojna avtentikacija TLS (odjemalec in strežnik s certifikatom) |
 | MZIE | Ministrstvo za infrastrukturo in energetiko |
+| MNZJU | Ministrstvo za notranje zadeve in javno upravo |
 | OM | osebni mesec (obseg dela ene osebe v enem mesecu) |
 | OAuth 2.0 / OIDC | standarda za avtorizacijo (strojni odjemalci) in prijavo uporabnikov (OpenID Connect) |
 | OpenAPI | standard za opis vmesnikov REST (različica 3.1); specifikacije v `interfaces/openapi/` |
+| RTO / RPO | ciljni čas obnove / ciljna točka obnove (največja dopustna izguba podatkov) |
 | RFC 9457 | standardna oblika sporočil o napakah v vmesnikih HTTP (Problem Details) |
 | RI | referenčna implementacija eFTI Gate (eFTI4EU, eFTI4LIVE TG2.2) |
 | SML / SMP | Service Metadata Locator / Publisher (eDelivery) |
+| VM, vCPU | virtualni strežnik, virtualni procesor |
+| WAF | požarni zid spletnih aplikacij |
+| WORM | hramba »write once, read many«, ki onemogoča spremembo ali izbris zapisov |
 | XSD | shema XML za sporočila eFTI |
 
 ## B.4 Kode komponent (stolpec Komp.)

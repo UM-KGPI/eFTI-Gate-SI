@@ -2,7 +2,7 @@
 
 > **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.
 >
-> Število zahtev: 244. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D). Izdaja po pogl. 10.5.
+> Število zahtev: 253. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D). Izdaja po pogl. 10.5.
 
 | Oznaka | Kratek opis | Vir | P | Izdaja | Komp. | Element C4 | Preverjanje | Pogl. |
 |---|---|---|---|---|---|---|---|---|
@@ -250,3 +250,12 @@
 | SI-GATE-NFR-404 | Izvajalec mora pred zagonom izvesti usposabljanje za upravljavce eFTI Gate in službo za pomoč (vsaj 16 ur) … | 8.6, 13; NL PvE | M | R1 | OP | — | D | 11 |
 | SI-GATE-NFR-405 | Arhitekt rešitve ali vodilni razvijalec izvajalca mora sodelovati na sestankih TG2.2 eFTI4LIVE in v … | ADR-0002; pogl. 10 | M | R1 | OP | — | P | 11 |
 | SI-GATE-NFR-406 | Ob koncu pogodbe ali zamenjavi izvajalca mora izvajalec izvesti prenos znanja novemu izvajalcu ali MZIE v … | SI-GATE-NFR-151 | M | R1 | OP | — | P | 11 |
+| SI-GATE-NFR-500 | Produkcijsko okolje mora delovati na dveh geografsko ločenih lokacijah v Sloveniji (primarna in rezervna) z … | SI-GATE-NFR-005; 5.5.2 | M | R1 | OP | — | D, P | 5 |
+| SI-GATE-NFR-501 | Izvajalec mora za vsa okolja zagotoviti računalniške vire najmanj v obsegu iz 5.5.4 in 5.5.5 oziroma v … | 5.5.3–5.5.5; SI-GATE-NFR-132 | M | R1 | OP | — | P, T | 5 |
+| SI-GATE-NFR-502 | Komponente morajo biti nameščene kot vsebniki OCI v virtualiziranem okolju ali gruči vsebnikov; namestitev … | SI-GATE-NFR-152; 5.5.2 | M | R1 | OP | — | D | 5 |
+| SI-GATE-NFR-503 | Omrežje mora biti razdeljeno na cone iz 5.5.2; promet med conami mora biti omejen z izrecnimi pravili … | SI-GATE-NFR-073, NFR-074 | M | R1 | OP | — | P, T | 5 |
+| SI-GATE-NFR-504 | Zasebni ključi eFTI Gate morajo biti v HSM z visoko razpoložljivostjo na vsaki produkcijski lokaciji … | čl. 10(2); SI-GATE-NFR-063 | M | R1 | ED | `vrata.ap` | P | 5 |
+| SI-GATE-NFR-505 | Shramba revizijskih sledi mora omogočati nespremenljivo hrambo vsaj 2 leti z replikacijo na rezervno lokacijo. | čl. 6(2)(h); SI-GATE-NFR-082 | M | R1 | OP | — | D | 5 |
+| SI-GATE-NFR-506 | Pri varianti H2 mora podatkovni center izpolnjevati zahteve iz 5.5.7; pri H1 in H3 mora upravljavec … | 5.5.7 | P | R1 | OP | — | P | 5 |
+| SI-GATE-NFR-507 | Izvajalec mora pri varianti H2 dobaviti, namestiti in vzdrževati strojno opremo iz 5.5.6 (ali zmogljivejšo) … | 5.5.6 | P | R1 | OP | — | P | 5 |
+| SI-GATE-NFR-508 | Izvajalec mora vsako leto pripraviti oceno kapacitet (obremenitev, rast revizijske sledi in Registry of … | SI-GATE-NFR-132 | M | R1 | OP | — | P | 5 |

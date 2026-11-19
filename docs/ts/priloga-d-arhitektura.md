@@ -75,6 +75,14 @@ Storitve OpenAPI so v modelu vsebniki z oznako API (šesterokotnik) in lastnostj
 | `vrata.auditApi` | eFTI Gate Audit and Statistics API | `interfaces/openapi/efti-gate-audit-api.yaml` | R1 |
 | `vrata.arApi` | eFTI Authorisation Registry API | `interfaces/openapi/efti-authorisation-registry-api.yaml` | R2, pogojno |
 
+## D.3b Namestitev produkcijskega okolja
+
+Pregled obeh lokacij (cone, HSM, replikacija) in podrobna namestitev ene lokacije; rezervna lokacija je enaka. Viri in lastnosti so v pogl. 5.5; varianta gostovanja (H1 DRO, H2 co-location, H3 IaaS) se izbere ob M2.
+
+![Namestitev – pregled](../../architecture/diagrams/structurizr-C4-Namestitev-Pregled.png)
+
+![Namestitev – lokacija](../../architecture/diagrams/structurizr-C4-Namestitev-Lokacija.png)
+
 ## D.4 Komponente eFTI Gate Service (C3)
 
 ![C3 Komponente](../../architecture/diagrams/structurizr-C3-Komponente.png)
@@ -106,6 +114,6 @@ Storitve OpenAPI so v modelu vsebniki z oznako API (šesterokotnik) in lastnostj
 ## D.6 Odprto (po M2)
 
 - Razdelitev sistema `organi` na AAP, Authorisation Registry in UAP ter njihova umestitev (v eFTI Gate ali pri organih, čl. 4(4)).
-- Pogled namestitve (deployment): gostovanje, okolja (pogl. 9.2), cone omrežja, HSM.
+- Pogled namestitve je osnutek (D.3b); dokončen po izbiri variante gostovanja v M2.
 - Preverjanje certifikacijskega statusa: lokalna kopija Unijskega referenčnega seznama ali SMP (TGD §8.3, možnost b) – odvisno od delegiranega akta.
 - Profil REST za #2 kot nacionalna možnost (čl. 9(4)).
