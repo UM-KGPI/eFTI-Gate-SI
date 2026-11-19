@@ -1,6 +1,7 @@
 name: architecture
 
 on:
+  workflow_dispatch:
   push:
     paths: ["architecture/**", "docs/ts/**", "scripts/**", ".github/workflows/architecture.yml"]
   pull_request:
