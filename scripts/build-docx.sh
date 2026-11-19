@@ -10,5 +10,5 @@ FILES+=(docs/ts/0[1-9]-*.md docs/ts/1[0-9]-*.md docs/ts/priloga-*.md)
 REF=()
 [[ -f templates/reference.docx ]] && REF=(--reference-doc templates/reference.docx)
 pandoc "${FILES[@]}" --from gfm --resource-path=docs/ts:. ${REF[@]+"${REF[@]}"} \
-  --toc --toc-depth=2 -o build/TS_eFTI-vrata_SI.docx
-echo "build/TS_eFTI-vrata_SI.docx"
+  --toc --toc-depth=2 -o build/TS_eFTI-Gate_SI.docx
+echo "build/TS_eFTI-Gate_SI.docx"

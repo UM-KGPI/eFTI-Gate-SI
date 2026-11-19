@@ -15,13 +15,13 @@ OUT = TS / "priloga-c-sledljivost.md"
 DSL = ROOT / "architecture" / "workspace.dsl"
 # oznaka komponente (stolpec Komp.) -> element modela C4 (architecture/workspace.dsl)
 C4 = {
-    "PE": "vrata.gateService",
-    "IM": "vrata.gateService.iskalnik",
-    "RID": "vrata.gateService.roi",
+    "EG": "vrata.gateService",
+    "SM": "vrata.gateService.iskalnik",
+    "RoI": "vrata.gateService.roi",
     "ED": "vrata.ap",
     "AAP": "organi",
-    "RD": "organi",
-    "UA": "organi",
+    "AR": "organi",
+    "UAP": "organi",
     "UP": "vrata.admin",
     "OP": None,  # obratovanje in organizacija: ni elementa modela
     "TCT": "vrata.tct",

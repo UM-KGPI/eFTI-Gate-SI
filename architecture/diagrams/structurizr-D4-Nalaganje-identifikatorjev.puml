@@ -15,18 +15,6 @@ skinparam {
 
 hide stereotype
 
-skinparam rectangle<<eFTIGate.DostopnatočkaeDelivery>> {
-  BackgroundColor #438dd5
-  FontColor #ffffff
-  BorderColor #2e6295
-  shadowing false
-}
-skinparam rectangle<<eFTIGate.eFTIGateService.Iskalnimehanizem>> {
-  BackgroundColor #85bbf0
-  FontColor #000000
-  BorderColor #5d82a8
-  shadowing false
-}
 skinparam rectangle<<eFTIGate.eFTIGateService.JedroGateCore>> {
   BackgroundColor #85bbf0
   FontColor #000000
@@ -51,16 +39,16 @@ skinparam rectangle<<eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatus
   BorderColor #a15817
   shadowing false
 }
-skinparam rectangle<<eFTIGate.eFTIGateService.Registeridentifikatorjev>> {
-  BackgroundColor #85bbf0
-  FontColor #000000
-  BorderColor #5d82a8
-  shadowing false
-}
 skinparam rectangle<<eFTIGate.eFTIGateService.Registripovezav>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
+  shadowing false
+}
+skinparam rectangle<<eFTIGate.eFTIGateService.RegistryofIdentifiers>> {
+  BackgroundColor #85bbf0
+  FontColor #000000
+  BorderColor #5d82a8
   shadowing false
 }
 skinparam rectangle<<eFTIGate.eFTIGateService.Revizijskasledindnevniki>> {
@@ -69,10 +57,22 @@ skinparam rectangle<<eFTIGate.eFTIGateService.Revizijskasledindnevniki>> {
   BorderColor #20613c
   shadowing false
 }
+skinparam rectangle<<eFTIGate.eFTIGateService.Searchmechanism>> {
+  BackgroundColor #85bbf0
+  FontColor #000000
+  BorderColor #5d82a8
+  shadowing false
+}
 skinparam rectangle<<eFTIGate.eFTIGateService.Skupnaknjižnica>> {
   BackgroundColor #85bbf0
   FontColor #000000
   BorderColor #5d82a8
+  shadowing false
+}
+skinparam rectangle<<eFTIGate.eDeliveryAccessPoint>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
   shadowing false
 }
 skinparam rectangle<<eFTIGate.eFTIGateService>> {
@@ -82,26 +82,26 @@ skinparam rectangle<<eFTIGate.eFTIGateService>> {
 }
 
 rectangle "eFTI Gate Service\n<size:10>[Container: Java 21+, Spring Boot]</size>" <<eFTIGate.eFTIGateService>> {
-  rectangle "==Preverjanje certifikacijskega statusa\n<size:10>[Component: Java]</size>\n\nPreveri ključ in certifikacijski status platforme pred izmenjavo (čl. 6(2)(d)(i)); dnevna sinhronizacija z Unijskim referenčnim seznamom je R2." <<eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa>> as eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa
+  rectangle "==Preverjanje certifikacijskega statusa\n<size:10>[Component: Java]</size>\n\nPreveri ključ in certifikacijski status eFTI Platform pred izmenjavo (čl. 6(2)(d)(i)); dnevna sinhronizacija z Unijskim referenčnim seznamom je R2." <<eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa>> as eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa
   rectangle "==Povezovalnik eDelivery\n<size:10>[Component: Java]</size>\n\nAbstrakcija komunikacije z dostopno točko AS4; preslikava korelacijskih identifikatorjev v glavo AS4." <<eFTIGate.eFTIGateService.PovezovalnikeDelivery>> as eFTIGate.eFTIGateService.PovezovalnikeDelivery
   rectangle "==Revizijska sled in dnevniki\n<size:10>[Component: Java, JSON]</size>\n\nObvezni zapisi po čl. 6(2)(c), (g) in TGD §9.2; časovni žigi v ms; zaščita pred spremembami (TGD §9.3)." <<eFTIGate.eFTIGateService.Revizijskasledindnevniki>> as eFTIGate.eFTIGateService.Revizijskasledindnevniki
   rectangle "==Skupna knjižnica\n<size:10>[Component: Java]</size>\n\nModeli sporočil po XSD, validacija ovojnice in glave, pretvorbe med različicami." <<eFTIGate.eFTIGateService.Skupnaknjižnica>> as eFTIGate.eFTIGateService.Skupnaknjižnica
-  rectangle "==Jedro (Gate Core)\n<size:10>[Component: Spring Boot]</size>\n\nObdelava zahtev prek UIL, iskanj po identifikatorjih in sporočil o nadaljnjem ukrepanju; vloga »prehod, ki zahteva dostop« in »prehod, ki prejme zahtevo«; časovna omejitev 60 s." <<eFTIGate.eFTIGateService.JedroGateCore>> as eFTIGate.eFTIGateService.JedroGateCore
-  rectangle "==Iskalni mehanizem\n<size:10>[Component: Java]</size>\n\nIz UIL razbere eFTI Gate in platformo, išče v registru identifikatorjev, posreduje iskanja drugim eFTI Gate, združi rezultate (čl. 8; TGD §6.2–6.3)." <<eFTIGate.eFTIGateService.Iskalnimehanizem>> as eFTIGate.eFTIGateService.Iskalnimehanizem
-  rectangle "==Register identifikatorjev\n<size:10>[Component: Java]</size>\n\nNalaganje, zamenjava, aktivacija, deaktivacija in izbris UIL z identifikatorji; nastavljiv nabor identifikatorjev (čl. 11; TGD §6.1, 6.4)." <<eFTIGate.eFTIGateService.Registeridentifikatorjev>> as eFTIGate.eFTIGateService.Registeridentifikatorjev
-  rectangle "==Registri povezav\n<size:10>[Component: Java]</size>\n\nRegister eFTI Gate drugih DČ (ID, certifikati), register AAP (ID, certifikati), register platform (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." <<eFTIGate.eFTIGateService.Registripovezav>> as eFTIGate.eFTIGateService.Registripovezav
+  rectangle "==Jedro (Gate Core)\n<size:10>[Component: Spring Boot]</size>\n\nObdelava zahtev prek UIL, iskanj po identifikatorjih in follow-up communication; vloga requesting eFTI Gate in receiving eFTI Gate; časovna omejitev 60 s." <<eFTIGate.eFTIGateService.JedroGateCore>> as eFTIGate.eFTIGateService.JedroGateCore
+  rectangle "==Search mechanism\n<size:10>[Component: Java]</size>\n\nIz UIL razbere eFTI Gate in eFTI Platform, išče v Registry of Identifiers, posreduje iskanja drugim eFTI Gate, združi rezultate (čl. 8; TGD §6.2–6.3)." <<eFTIGate.eFTIGateService.Searchmechanism>> as eFTIGate.eFTIGateService.Searchmechanism
+  rectangle "==Registry of Identifiers\n<size:10>[Component: Java]</size>\n\nNalaganje, zamenjava, aktivacija, deaktivacija in izbris UIL z identifikatorji; nastavljiv nabor identifikatorjev (čl. 11; TGD §6.1, 6.4)." <<eFTIGate.eFTIGateService.RegistryofIdentifiers>> as eFTIGate.eFTIGateService.RegistryofIdentifiers
+  rectangle "==Registri povezav\n<size:10>[Component: Java]</size>\n\nRegister eFTI Gate drugih DČ (ID, certifikati), register AAP (ID, certifikati), Registry of eFTI Platforms (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." <<eFTIGate.eFTIGateService.Registripovezav>> as eFTIGate.eFTIGateService.Registripovezav
 }
 
-database "==Podatkovna baza eFTI Gate\n<size:10>[Container: PostgreSQL]</size>\n\nRegister identifikatorjev, registri povezav, stanje zahtev." <<eFTIGate.PodatkovnabazaeFTIGate>> as eFTIGate.PodatkovnabazaeFTIGate
-rectangle "==Dostopna točka eDelivery\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.DostopnatočkaeDelivery>> as eFTIGate.DostopnatočkaeDelivery
+database "==Podatkovna baza eFTI Gate\n<size:10>[Container: PostgreSQL]</size>\n\nRegistry of Identifiers, registri povezav, stanje zahtev." <<eFTIGate.PodatkovnabazaeFTIGate>> as eFTIGate.PodatkovnabazaeFTIGate
+rectangle "==eDelivery Access Point\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.eDeliveryAccessPoint>> as eFTIGate.eDeliveryAccessPoint
 
-eFTIGate.DostopnatočkaeDelivery .[#707070,thickness=2].> eFTIGate.eFTIGateService.PovezovalnikeDelivery : "<color:#707070>1. #2 P2G nalaganje UIL in identifikatorjev\n<color:#707070><size:8>[JMS/WS]</size>"
+eFTIGate.eDeliveryAccessPoint .[#707070,thickness=2].> eFTIGate.eFTIGateService.PovezovalnikeDelivery : "<color:#707070>1. #2 P2G nalaganje UIL in identifikatorjev\n<color:#707070><size:8>[JMS/WS]</size>"
 eFTIGate.eFTIGateService.JedroGateCore <.[#707070,thickness=2]. eFTIGate.eFTIGateService.PovezovalnikeDelivery : "<color:#707070>2. Predaja"
-eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa : "<color:#707070>3. Platforma v registru, status veljaven?"
-eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>4. Register platform"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa : "<color:#707070>3. eFTI Platform v registru, status veljaven?"
+eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>4. Registry of eFTI Platforms"
 eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Skupnaknjižnica : "<color:#707070>5. Celoten nabor veljaven? (sicer zavrni vse)"
-eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Iskalnimehanizem : "<color:#707070>6. Shrani"
-eFTIGate.eFTIGateService.Iskalnimehanizem .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registeridentifikatorjev : "<color:#707070>7. Dodaj ali zamenjaj; ob eFTI188 deaktiviraj (cestni prevoz: po obdobju kabotaže)"
-eFTIGate.eFTIGateService.Registeridentifikatorjev .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>8. Zapis\n<color:#707070><size:8>[JDBC]</size>"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Searchmechanism : "<color:#707070>6. Shrani"
+eFTIGate.eFTIGateService.Searchmechanism .[#707070,thickness=2].> eFTIGate.eFTIGateService.RegistryofIdentifiers : "<color:#707070>7. Dodaj ali zamenjaj; ob eFTI188 deaktiviraj (cestni prevoz: po obdobju kabotaže)"
+eFTIGate.eFTIGateService.RegistryofIdentifiers .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>8. Zapis\n<color:#707070><size:8>[JDBC]</size>"
 eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Revizijskasledindnevniki : "<color:#707070>9. Revizijska sled"
 @enduml
