@@ -2,11 +2,23 @@ name: architecture
 
 on:
   push:
-    paths: ["architecture/**", ".github/workflows/architecture.yml"]
+    paths: ["architecture/**", "docs/ts/**", "scripts/**", ".github/workflows/architecture.yml"]
   pull_request:
-    paths: ["architecture/**"]
+    paths: ["architecture/**", "docs/ts/**", "scripts/**"]
 
 jobs:
+  requirements:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check requirement IDs and cross-references
+        run: python3 scripts/build-traceability.py --check
+      - name: Annex C is up to date
+        run: |
+          python3 scripts/build-traceability.py
+          git diff --exit-code docs/ts/priloga-c-sledljivost.md || (echo "Priloga C ni osvežena: zaženi scripts/build-traceability.py" && exit 1)
+
+
   validate-and-export:
     runs-on: ubuntu-latest
     env:
@@ -23,10 +35,8 @@ jobs:
           unzip -q cli.zip -d cli
       - name: Validate model
         run: ./cli/structurizr.sh validate -workspace architecture/workspace.dsl
-      - name: Export views (PlantUML, Mermaid)
-        run: |
-          ./cli/structurizr.sh export -workspace architecture/workspace.dsl -format plantuml/c4plantuml -output out
-          ./cli/structurizr.sh export -workspace architecture/workspace.dsl -format mermaid -output out
+      - name: Export views (PlantUML, Structurizr styles)
+        run: ./cli/structurizr.sh export -workspace architecture/workspace.dsl -format plantuml/structurizr -output out
       - uses: actions/upload-artifact@v4
         with:
           name: c4-views

@@ -1,0 +1,100 @@
+@startuml
+set separator none
+
+skinparam {
+  shadowing false
+  arrowFontSize 15
+  defaultTextAlignment center
+  wrapWidth 100
+  maxMessageSize 100
+}
+hide stereotype
+
+skinparam rectangle<<_transparent>> {
+  BorderColor transparent
+  BackgroundColor transparent
+  FontColor transparent
+}
+
+skinparam rectangle<<1>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+rectangle "==Container" <<1>>
+
+skinparam database<<2>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+database "==Container, Database" <<2>>
+
+skinparam rectangle<<3>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+rectangle "==Container, Dodatek SI" <<3>>
+
+skinparam database<<4>> {
+  BackgroundColor #2e8b57
+  FontColor #ffffff
+  BorderColor #20613c
+}
+database "==Container, Dodatek SI, Database" <<4>>
+
+skinparam rectangle<<5>> {
+  BackgroundColor #8e44ad
+  FontColor #ffffff
+  BorderColor #632f79
+}
+rectangle "==Container, Dodatek SI, Odprto, R2" <<5>>
+
+skinparam queue<<6>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+}
+queue "==Container, Queue" <<6>>
+
+skinparam person<<7>> {
+  BackgroundColor #08427b
+  FontColor #ffffff
+  BorderColor #052e56
+}
+person "==Person" <<7>>
+
+skinparam rectangle<<8>> {
+  BackgroundColor #e67e22
+  FontColor #ffffff
+  BorderColor #a15817
+}
+rectangle "==Software System, Odprto" <<8>>
+
+skinparam rectangle<<9>> {
+  BackgroundColor #8a8a8a
+  FontColor #ffffff
+  BorderColor #606060
+}
+rectangle "==Software System, Zunanji" <<9>>
+
+skinparam rectangle<<10>> {
+  BackgroundColor #e67e22
+  FontColor #ffffff
+  BorderColor #a15817
+}
+rectangle "==Software System, Zunanji, Odprto" <<10>>
+
+skinparam rectangle<<11>> {
+  BackgroundColor #b8860b
+  FontColor #ffffff
+  BorderColor #805d07
+}
+rectangle "==Software System, Zunanji, Test" <<11>>
+
+rectangle "." <<_transparent>> as 12
+12 .[#707070,thickness=2].> 12 : "<color:#707070>Relationship"
+
+
+@enduml

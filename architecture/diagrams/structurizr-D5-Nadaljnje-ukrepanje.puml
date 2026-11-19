@@ -1,0 +1,70 @@
+@startuml
+set separator none
+title Slovenski prehod eFTI - Dynamic
+
+left to right direction
+skinparam ranksep 60
+skinparam nodesep 30
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam rectangle<<SlovenskiprehodeFTI.APIzapristojneorgane3>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<SlovenskiprehodeFTI.DostopnatočkaeDelivery>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<PlatformeeFTISI>> {
+  BackgroundColor #8a8a8a
+  FontColor #ffffff
+  BorderColor #606060
+  shadowing false
+}
+skinparam rectangle<<SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija>> {
+  BackgroundColor #e67e22
+  FontColor #ffffff
+  BorderColor #a15817
+  shadowing false
+}
+skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<SlovenskiprehodeFTI>> {
+  BorderColor #0b4884
+  FontColor #0b4884
+  shadowing false
+}
+
+rectangle "Slovenski prehod eFTI\n<size:10>[Software System]</size>" <<SlovenskiprehodeFTI>> {
+  rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<SlovenskiprehodeFTI.APIzapristojneorgane3>> as SlovenskiprehodeFTI.APIzapristojneorgane3
+  rectangle "==Dostopna točka eDelivery\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<SlovenskiprehodeFTI.DostopnatočkaeDelivery>> as SlovenskiprehodeFTI.DostopnatočkaeDelivery
+  rectangle "==Storitev prehoda (Gate Service)\n<size:10>[Container: Java 21+, Spring Boot]</size>\n\nJedro prehoda: vmesniki, obdelava zahtev, usmerjanje, revizijska sled. V RI ena storitev iz knjižnic." <<SlovenskiprehodeFTI.StoritevprehodaGateService>> as SlovenskiprehodeFTI.StoritevprehodaGateService
+}
+
+rectangle "==Sistemi pristojnih organov (AAP, register dovoljenj, uporabniška aplikacija)\n<size:10>[Software System]</size>\n\nDostopovna točka organa (čl. 4), register dovoljenj (čl. 5) in uporabniška aplikacija (čl. 7) Policije, FURS, IRSI in drugih organov. V prehodu ali pri organih: odloči M2 (čl. 4(4))." <<SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija>> as SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija
+rectangle "==Platforme eFTI (SI)\n<size:10>[Software System]</size>\n\nPlatforme, certificirane v Sloveniji ali priključene po čl. 6(4)." <<PlatformeeFTISI>> as PlatformeeFTISI
+
+SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija .[#707070,thickness=2].> SlovenskiprehodeFTI.APIzapristojneorgane3 : "<color:#707070>1. Sporočilo z UIL in ID izvorne zahteve\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+SlovenskiprehodeFTI.APIzapristojneorgane3 .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService : "<color:#707070>2. Predaja"
+SlovenskiprehodeFTI.StoritevprehodaGateService .[#707070,thickness=2].> SlovenskiprehodeFTI.DostopnatočkaeDelivery : "<color:#707070>3. Posreduj\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
+SlovenskiprehodeFTI.DostopnatočkaeDelivery .[#707070,thickness=2].> PlatformeeFTISI : "<color:#707070>4. #2 G2P sporočilo o nadaljnjem ukrepanju\n<color:#707070><size:8>[AS4]</size>"
+PlatformeeFTISI .[#707070,thickness=2].> SlovenskiprehodeFTI.DostopnatočkaeDelivery : "<color:#707070>5. Potrdilo o prejemu in shranitvi\n<color:#707070><size:8>[AS4]</size>"
+SlovenskiprehodeFTI.DostopnatočkaeDelivery .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService : "<color:#707070>6. Dostava potrdila\n<color:#707070><size:8>[JMS/WS]</size>"
+SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija .[#707070,thickness=2].> SlovenskiprehodeFTI.APIzapristojneorgane3 : "<color:#707070>7. Pridobi potrdilo\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+@enduml

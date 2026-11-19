@@ -11,7 +11,7 @@ Pogodba C2430-26-100042 (MZIE – UM FGPA), mejnik **M3, rok 24. 12. 2026**. Odv
 |---|---|
 | [`docs/ts/`](docs/ts/README.md) | Besedilo TS po poglavjih (struktura iz delovnega osnutka v0.1, 26. 10. 2026) |
 | [`architecture/workspace.dsl`](architecture/workspace.dsl) | Model C4 (Structurizr DSL) – edini vir diagramov |
-| `architecture/diagrams/` | Generirani diagrami (PNG, PlantUML, Mermaid) |
+| `architecture/diagrams/` | Generirani diagrami (PNG, PlantUML) z legendami |
 | [`docs/adr/`](docs/adr/) | Arhitekturne odločitve |
 | [`sources/`](sources/README.md) | Seznam virov (izvirniki niso v repozitoriju) |
 | `scripts/` | Upodabljanje diagramov, sestava .docx |
@@ -20,8 +20,8 @@ Pogodba C2430-26-100042 (MZIE – UM FGPA), mejnik **M3, rok 24. 12. 2026**. Odv
 
 ```bash
 scripts/render-diagrams.sh     # validacija modela + diagrami (structurizr-cli, plantuml)
+scripts/build-traceability.py  # Priloga C iz tabel zahtev (+ preverjanje oznak)
 scripts/build-docx.sh          # delovna verzija TS v build/ (pandoc)
-scripts/build-docx.sh --final  # brez internega poglavja 0
 ```
 
 Pravila:

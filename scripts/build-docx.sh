@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Sestavi TS iz poglavij v docs/ts v en .docx (za oddajo M3 naročniku).
-# Uporaba: scripts/build-docx.sh [--final]   (--final izpusti interno poglavje 0)
+# Uporaba: scripts/build-docx.sh
 # Potrebno: pandoc. Diagrame predhodno osveži s scripts/render-diagrams.sh.
 set -euo pipefail
 cd "$(dirname "$0")/.."
