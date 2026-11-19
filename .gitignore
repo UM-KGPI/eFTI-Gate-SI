@@ -1,0 +1,9 @@
+build/
+.DS_Store
+~$*
+# izvirni dokumenti konzorcija ne sodijo v repozitorij
+sources/*.pdf
+sources/*.docx
+sources/*.pptx
+sources/*.xlsx
+sources/text/

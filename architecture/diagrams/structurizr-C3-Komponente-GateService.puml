@@ -1,0 +1,44 @@
+@startuml
+set separator none
+title Slovenska eFTI-vrata - Storitev eFTI-vrat (Gate Service) - Components
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+Container(SlovenskaeFTIvrata.APIzapristojneorgane, "API za pristojne organe", $techn="REST/JSON, OIDC", $descr="REST vmesnik za AAP (#3); asinhron: organ prejme ID zahteve in periodično preverja odgovor. V RI del Gate Service.", $tags="", $link="")
+ContainerQueue(SlovenskaeFTIvrata.Sporočilniposrednik, "Sporočilni posrednik", $techn="RabbitMQ", $descr="Vrsta asinhronih zahtev pristojnih organov.", $tags="", $link="")
+ContainerDb(SlovenskaeFTIvrata.Podatkovnabazavrat, "Podatkovna baza vrat", $techn="PostgreSQL", $descr="Register identifikatorjev (trajno) in stanje zahtev.", $tags="", $link="")
+Container(SlovenskaeFTIvrata.DostopnatočkaeDelivery, "Dostopna točka eDelivery", $techn="Domibus (EK), AS4", $descr="AS4 dostopna točka za #1 (vrata–vrata) in #2 (vrata–platforma); PMode po TGD Annex 1.", $tags="", $link="")
+Container(SlovenskaeFTIvrata.Nadzordelovanjainzbiranjednevnikov, "Nadzor delovanja in zbiranje dnevnikov", $techn="", $descr="Zbiranje dnevnikov, metrike, alarmi, varnostni dogodki (SIEM). Izven obsega RI.", $tags="", $link="")
+System(Unijskireferenčniseznamcertificiranihplatform, "Unijski referenčni seznam certificiranih platform", $descr="Seznam statusov certifikatov eFTI-platform; nacionalni vnosi pri imenovanem organu (DU o certificiranju, v sprejemanju).", $tags="", $link="")
+
+Container_Boundary("SlovenskaeFTIvrata.StoriteveFTIvratGateService_boundary", "Storitev eFTI-vrat (Gate Service)", $tags="") {
+  Component(SlovenskaeFTIvrata.StoriteveFTIvratGateService.DnevnikGateLogger, "Dnevnik (Gate Logger)", $techn="Java knjižnica", $descr="Tehnični dnevniki, revizijska sled, statistika v formatu JSON (TGD1 §9).", $tags="", $link="")
+  Component(SlovenskaeFTIvrata.StoriteveFTIvratGateService.Skupnaknjižnica, "Skupna knjižnica", $techn="Java knjižnica", $descr="Skupni modeli, pretvorbe XSD, pripomočki.", $tags="", $link="")
+  Component(SlovenskaeFTIvrata.StoriteveFTIvratGateService.Preverjanjecertifikacijeplatform, "Preverjanje certifikacije platform", $techn="", $descr="Lokalna kopija Unijskega referenčnega seznama, dnevna sinhronizacija; zavrne zahteve do neveljavnih platform (AG Union Registry, Level 1).", $tags="", $link="")
+  Component(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, "Jedro vrat (Gate Core)", $techn="Spring Boot", $descr="Vstopna točka za vse zunanje sisteme; poteki za dostop prek UIL, iskanje po identifikatorjih in nadaljnjo komunikacijo.", $tags="", $link="")
+  Component(SlovenskaeFTIvrata.StoriteveFTIvratGateService.RegisteridentifikatorjevRoI, "Register identifikatorjev (RoI)", $techn="Java knjižnica", $descr="Hrani identifikatorje, ki jih naložijo slovenske platforme, in odgovarja na iskanja (TGD1 §6).", $tags="", $link="")
+  Component(SlovenskaeFTIvrata.StoriteveFTIvratGateService.PovezovalnikeDelivery, "Povezovalnik eDelivery", $techn="Java knjižnica", $descr="Abstrakcija komunikacije z dostopno točko AS4.", $tags="", $link="")
+  Component(SlovenskaeFTIvrata.StoriteveFTIvratGateService.OdjemalecWSWSPlugin, "Odjemalec WS (WS Plugin)", $techn="Java knjižnica, SOAP", $descr="SOAP odjemalec za Domibus WS plugin.", $tags="", $link="")
+}
+
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.Preverjanjecertifikacijeplatform, Unijskireferenčniseznamcertificiranihplatform, "Dnevni prenos statusov certifikatov", $techn="HTTPS", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.APIzapristojneorgane, SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, "Predaja zahtev", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, SlovenskaeFTIvrata.Sporočilniposrednik, "Vpis in obdelava asinhronih zahtev", $techn="AMQP", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, SlovenskaeFTIvrata.StoriteveFTIvratGateService.RegisteridentifikatorjevRoI, "Lokalno iskanje identifikatorjev", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, SlovenskaeFTIvrata.StoriteveFTIvratGateService.Preverjanjecertifikacijeplatform, "Preveri status platforme", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, SlovenskaeFTIvrata.StoriteveFTIvratGateService.PovezovalnikeDelivery, "Pošiljanje in prejem sporočil", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, SlovenskaeFTIvrata.StoriteveFTIvratGateService.DnevnikGateLogger, "Revizijska sled", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, SlovenskaeFTIvrata.StoriteveFTIvratGateService.Skupnaknjižnica, "Uporablja", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.RegisteridentifikatorjevRoI, SlovenskaeFTIvrata.Podatkovnabazavrat, "Bere in piše identifikatorje", $techn="JDBC", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.JedrovratGateCore, SlovenskaeFTIvrata.Podatkovnabazavrat, "Stanje zahtev", $techn="JDBC", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.PovezovalnikeDelivery, SlovenskaeFTIvrata.StoriteveFTIvratGateService.OdjemalecWSWSPlugin, "Uporablja", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.OdjemalecWSWSPlugin, SlovenskaeFTIvrata.DostopnatočkaeDelivery, "Pošiljanje/prejem sporočil AS4", $techn="SOAP/HTTPS", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService.DnevnikGateLogger, SlovenskaeFTIvrata.Nadzordelovanjainzbiranjednevnikov, "Dnevniki JSON", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

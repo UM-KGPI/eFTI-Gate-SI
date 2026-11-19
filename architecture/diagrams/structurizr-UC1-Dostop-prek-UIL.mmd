@@ -1,0 +1,38 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["Slovenska eFTI-vrata - Dynamic"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    subgraph 4 ["Slovenska eFTI-vrata"]
+      style 4 fill:#ffffff,stroke:#0b4884,color:#0b4884
+
+      13["<div style='font-weight: bold'>API za pristojne organe</div><div style='font-size: 70%; margin-top: 0px'>[Container: REST/JSON, OIDC]</div><div style='font-size: 80%; margin-top:10px'>REST vmesnik za AAP (#3);<br />asinhron: organ prejme ID<br />zahteve in periodično<br />preverja odgovor. V RI del<br />Gate Service.</div>"]
+      style 13 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      14["<div style='font-weight: bold'>Sporočilni posrednik</div><div style='font-size: 70%; margin-top: 0px'>[Container: RabbitMQ]</div><div style='font-size: 80%; margin-top:10px'>Vrsta asinhronih zahtev<br />pristojnih organov.</div>"]
+      style 14 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      15[("<div style='font-weight: bold'>Podatkovna baza vrat</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Register identifikatorjev<br />(trajno) in stanje zahtev.</div>")]
+      style 15 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      16["<div style='font-weight: bold'>Dostopna točka eDelivery</div><div style='font-size: 70%; margin-top: 0px'>[Container: Domibus (EK), AS4]</div><div style='font-size: 80%; margin-top:10px'>AS4 dostopna točka za #1<br />(vrata–vrata) in #2<br />(vrata–platforma); PMode po<br />TGD Annex 1.</div>"]
+      style 16 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      18["<div style='font-weight: bold'>Strežnik identitet in avtorizacije</div><div style='font-size: 70%; margin-top: 0px'>[Container: OIDC (npr. Keycloak)]</div><div style='font-size: 80%; margin-top:10px'>OIDC/OAuth2; v RI le primer<br />(Keycloak). V SI federacija z<br />nacionalnimi gradniki in<br />Avtorizacijski register (TGD1<br />§5).</div>"]
+      style 18 fill:#438dd5,stroke:#c0392b,color:#ffffff
+      5["<div style='font-weight: bold'>Storitev eFTI-vrat (Gate Service)</div><div style='font-size: 70%; margin-top: 0px'>[Container: Java 21+, Spring Boot]</div><div style='font-size: 80%; margin-top:10px'>Jedro vrat: vmesniki,<br />avtentikacija, obdelava<br />zahtev, poteki, povezave na<br />zunanje sisteme. V RI ena<br />storitev, sestavljena iz<br />knjižnic.</div>"]
+      style 5 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    end
+
+    21["<div style='font-weight: bold'>Aplikacije pristojnih organov (AAP/UAP)</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Authority Access Point in<br />uporabniške aplikacije<br />Policije, FURS, IRSI in<br />drugih organov. Obseg<br />ločenega JN odprt (M2).</div>"]
+    style 21 fill:#1168bd,stroke:#0b4884,color:#ffffff
+    22["<div style='font-weight: bold'>Certificirane eFTI-platforme (SI)</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Platforme gospodarskih<br />subjektov, priključene na<br />slovenska vrata (npr. pilot<br />Trinet).</div>"]
+    style 22 fill:#999999,stroke:#6b6b6b,color:#ffffff
+
+    21-. "<div>1. Zahteva z UIL</div><div style='font-size: 70%'>[REST/JSON, nacionalna izbira]</div>" .->13
+    13-. "<div>2. Preveri žeton in pravice</div><div style='font-size: 70%'></div>" .->18
+    13-. "<div>3. Predaja zahteve</div><div style='font-size: 70%'></div>" .->5
+    5-. "<div>4. Asinhrona obdelava</div><div style='font-size: 70%'>[AMQP]</div>" .->14
+    5-. "<div>5. Zahteva za nabor (FTI)</div><div style='font-size: 70%'>[SOAP/HTTPS]</div>" .->16
+    16-. "<div>6. #2 G2P zahteva</div><div style='font-size: 70%'>[AS4 (+ REST kot nacionalna možnost)]</div>" .->22
+    22-. "<div>7. Odgovor z naborom (≤ 50 s)</div><div style='font-size: 70%'>[AS4]</div>" .->16
+    5-. "<div>8. Shrani odgovor</div><div style='font-size: 70%'>[JDBC]</div>" .->15
+    21-. "<div>9. Preverjanje odgovora<br />(polling)</div><div style='font-size: 70%'>[REST/JSON, nacionalna izbira]</div>" .->13
+  end

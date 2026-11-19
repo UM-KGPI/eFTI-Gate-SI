@@ -1,0 +1,54 @@
+@startuml
+set separator none
+title Slovenska eFTI-vrata - Containers
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+Person(UpravljaveceFTIvrat, "Upravljavec eFTI-vrat", $descr="Skrbnik sistema pri MZIE ali izvajalcu vzdrževanja; nacionalna podpora (raven 2).", $tags="", $link="")
+System(AplikacijepristojnihorganovAAPUAP, "Aplikacije pristojnih organov (AAP/UAP)", $descr="Authority Access Point in uporabniške aplikacije Policije, FURS, IRSI in drugih organov. Obseg ločenega JN odprt (M2).", $tags="", $link="")
+System(CertificiraneeFTIplatformeSI, "Certificirane eFTI-platforme (SI)", $descr="Platforme gospodarskih subjektov, priključene na slovenska vrata (npr. pilot Trinet).", $tags="", $link="")
+System(Nacionalnigradnikieidentitete, "Nacionalni gradniki e-identitete", $descr="SI-PASS, SI-CAS, SIGEN-CA (MJU/MDP).", $tags="", $link="")
+System(TujaeFTIvrata, "Tuja eFTI-vrata", $descr="eFTI-vrata drugih držav članic (mrežna topologija).", $tags="", $link="")
+System(Unijskireferenčniseznamcertificiranihplatform, "Unijski referenčni seznam certificiranih platform", $descr="Seznam statusov certifikatov eFTI-platform; nacionalni vnosi pri imenovanem organu (DU o certificiranju, v sprejemanju).", $tags="", $link="")
+System(eDeliverySMLSMP, "eDelivery SML/SMP", $descr="Dinamično odkrivanje udeležencev za #2 (vrata–platforma).", $tags="", $link="")
+System(ReferenčnavrataRIinLaunchpad, "Referenčna vrata (RI) in Launchpad", $descr="Referenčna implementacija kot sidro skladnosti v integracijskem omrežju; Launchpad: TCT in varnostni testi s podpisanim poročilom.", $tags="", $link="")
+
+System_Boundary("SlovenskaeFTIvrata_boundary", "Slovenska eFTI-vrata", $tags="") {
+  Container(SlovenskaeFTIvrata.APIzapristojneorgane, "API za pristojne organe", $techn="REST/JSON, OIDC", $descr="REST vmesnik za AAP (#3); asinhron: organ prejme ID zahteve in periodično preverja odgovor. V RI del Gate Service.", $tags="", $link="")
+  ContainerQueue(SlovenskaeFTIvrata.Sporočilniposrednik, "Sporočilni posrednik", $techn="RabbitMQ", $descr="Vrsta asinhronih zahtev pristojnih organov.", $tags="", $link="")
+  ContainerDb(SlovenskaeFTIvrata.Podatkovnabazavrat, "Podatkovna baza vrat", $techn="PostgreSQL", $descr="Register identifikatorjev (trajno) in stanje zahtev.", $tags="", $link="")
+  Container(SlovenskaeFTIvrata.DostopnatočkaeDelivery, "Dostopna točka eDelivery", $techn="Domibus (EK), AS4", $descr="AS4 dostopna točka za #1 (vrata–vrata) in #2 (vrata–platforma); PMode po TGD Annex 1.", $tags="", $link="")
+  ContainerDb(SlovenskaeFTIvrata.Bazadostopnetočke, "Baza dostopne točke", $techn="MariaDB", $descr="Sporočila in konfiguracija Domibus.", $tags="", $link="")
+  Container(SlovenskaeFTIvrata.Strežnikidentitetinavtorizacije, "Strežnik identitet in avtorizacije", $techn="OIDC (npr. Keycloak)", $descr="OIDC/OAuth2; v RI le primer (Keycloak). V SI federacija z nacionalnimi gradniki in Avtorizacijski register (TGD1 §5).", $tags="", $link="")
+  Container(SlovenskaeFTIvrata.Upravljavskaaplikacija, "Upravljavska aplikacija", $techn="Spletna aplikacija", $descr="Upravljanje priključenih platform, certifikatov, konfiguracije in pregled dnevnikov (TS 7.6).", $tags="", $link="")
+  Container(SlovenskaeFTIvrata.Nadzordelovanjainzbiranjednevnikov, "Nadzor delovanja in zbiranje dnevnikov", $techn="", $descr="Zbiranje dnevnikov, metrike, alarmi, varnostni dogodki (SIEM). Izven obsega RI.", $tags="", $link="")
+  Container(SlovenskaeFTIvrata.StoriteveFTIvratGateService, "Storitev eFTI-vrat (Gate Service)", $techn="Java 21+, Spring Boot", $descr="Jedro vrat: vmesniki, avtentikacija, obdelava zahtev, poteki, povezave na zunanje sisteme. V RI ena storitev, sestavljena iz knjižnic.", $tags="", $link="")
+}
+
+Rel(UpravljaveceFTIvrat, SlovenskaeFTIvrata.Upravljavskaaplikacija, "Upravlja vrata", $techn="", $tags="", $link="")
+Rel(AplikacijepristojnihorganovAAPUAP, SlovenskaeFTIvrata.APIzapristojneorgane, "#3 G2A: dostop prek UIL, iskanje po identifikatorjih, nadaljnja komunikacija", $techn="REST/JSON, nacionalna izbira", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.DostopnatočkaeDelivery, CertificiraneeFTIplatformeSI, "#2 G2P: zahteve za nabore podatkov", $techn="AS4 (+ REST kot nacionalna možnost)", $tags="", $link="")
+Rel(CertificiraneeFTIplatformeSI, SlovenskaeFTIvrata.DostopnatočkaeDelivery, "#2 P2G: nalaganje identifikatorjev, odgovori", $techn="AS4", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.DostopnatočkaeDelivery, TujaeFTIvrata, "#1 G2G: posredovanje zahtev in iskanj", $techn="AS4, statično odkrivanje", $tags="", $link="")
+Rel(TujaeFTIvrata, SlovenskaeFTIvrata.DostopnatočkaeDelivery, "#1 G2G: zahteve tujih organov", $techn="AS4", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.DostopnatočkaeDelivery, eDeliverySMLSMP, "Odkrivanje platform", $techn="SML/SMP", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService, Unijskireferenčniseznamcertificiranihplatform, "Dnevni prenos statusov certifikatov", $techn="HTTPS", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.Strežnikidentitetinavtorizacije, Nacionalnigradnikieidentitete, "Federacija identitet uradnih oseb", $techn="SAML/OIDC", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.DostopnatočkaeDelivery, ReferenčnavrataRIinLaunchpad, "Testi skladnosti pred vstopom v mrežo", $techn="AS4", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.APIzapristojneorgane, SlovenskaeFTIvrata.StoriteveFTIvratGateService, "Predaja zahtev", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.APIzapristojneorgane, SlovenskaeFTIvrata.Strežnikidentitetinavtorizacije, "Preverjanje žetonov in pravic", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService, SlovenskaeFTIvrata.Sporočilniposrednik, "Vpis in obdelava asinhronih zahtev", $techn="AMQP", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService, SlovenskaeFTIvrata.Podatkovnabazavrat, "Bere in piše identifikatorje", $techn="JDBC", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService, SlovenskaeFTIvrata.DostopnatočkaeDelivery, "Pošiljanje/prejem sporočil AS4", $techn="SOAP/HTTPS", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.DostopnatočkaeDelivery, SlovenskaeFTIvrata.Bazadostopnetočke, "Shranjuje sporočila", $techn="JDBC", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.StoriteveFTIvratGateService, SlovenskaeFTIvrata.Nadzordelovanjainzbiranjednevnikov, "Dnevniki JSON", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.Upravljavskaaplikacija, SlovenskaeFTIvrata.StoriteveFTIvratGateService, "Konfiguracija, priključene platforme", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.Upravljavskaaplikacija, SlovenskaeFTIvrata.Strežnikidentitetinavtorizacije, "Prijava upravljavcev", $techn="", $tags="", $link="")
+Rel(SlovenskaeFTIvrata.Nadzordelovanjainzbiranjednevnikov, UpravljaveceFTIvrat, "Alarmi", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

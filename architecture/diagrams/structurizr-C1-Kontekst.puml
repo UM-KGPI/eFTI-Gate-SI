@@ -1,0 +1,51 @@
+@startuml
+set separator none
+title Slovenska eFTI-vrata - System Context
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+
+AddBoundaryTag("EU eFTI okolje", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+Boundary(group_1, "EU eFTI okolje", $tags="EU eFTI okolje") {
+  System(TujaeFTIvrata, "Tuja eFTI-vrata", $descr="eFTI-vrata drugih držav članic (mrežna topologija).", $tags="", $link="")
+  System(Unijskireferenčniseznamcertificiranihplatform, "Unijski referenčni seznam certificiranih platform", $descr="Seznam statusov certifikatov eFTI-platform; nacionalni vnosi pri imenovanem organu (DU o certificiranju, v sprejemanju).", $tags="", $link="")
+  System(eDeliverySMLSMP, "eDelivery SML/SMP", $descr="Dinamično odkrivanje udeležencev za #2 (vrata–platforma).", $tags="", $link="")
+  System(eFTIplatformevdrugihDČ, "eFTI-platforme v drugih DČ", $descr="Platforme, priključene na tuja vrata.", $tags="", $link="")
+}
+
+AddBoundaryTag("Slovenija", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+Boundary(group_2, "Slovenija", $tags="Slovenija") {
+  System(AplikacijepristojnihorganovAAPUAP, "Aplikacije pristojnih organov (AAP/UAP)", $descr="Authority Access Point in uporabniške aplikacije Policije, FURS, IRSI in drugih organov. Obseg ločenega JN odprt (M2).", $tags="", $link="")
+  System(CertificiraneeFTIplatformeSI, "Certificirane eFTI-platforme (SI)", $descr="Platforme gospodarskih subjektov, priključene na slovenska vrata (npr. pilot Trinet).", $tags="", $link="")
+  System(Nacionalnigradnikieidentitete, "Nacionalni gradniki e-identitete", $descr="SI-PASS, SI-CAS, SIGEN-CA (MJU/MDP).", $tags="", $link="")
+  System(SlovenskaeFTIvrata, "Slovenska eFTI-vrata", $descr="Nacionalna eFTI-vrata: posredujejo zahteve pristojnih organov platformam in tujim vratom, vodijo register identifikatorjev (IU 2024/1942).", $tags="", $link="")
+}
+
+AddBoundaryTag("Testno okolje (eFTI4LIVE)", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+Boundary(group_3, "Testno okolje (eFTI4LIVE)", $tags="Testno okolje (eFTI4LIVE)") {
+  System(ReferenčnavrataRIinLaunchpad, "Referenčna vrata (RI) in Launchpad", $descr="Referenčna implementacija kot sidro skladnosti v integracijskem omrežju; Launchpad: TCT in varnostni testi s podpisanim poročilom.", $tags="", $link="")
+}
+
+Person(Uradnaosebapristojnegaorgana, "Uradna oseba pristojnega organa", $descr="Policist, inšpektor ali carinik, ki med nadzorom zahteva podatke eFTI.", $tags="", $link="")
+Person(UpravljaveceFTIvrat, "Upravljavec eFTI-vrat", $descr="Skrbnik sistema pri MZIE ali izvajalcu vzdrževanja; nacionalna podpora (raven 2).", $tags="", $link="")
+Person(Gospodarskisubjekt, "Gospodarski subjekt", $descr="Prevoznik, špediter, pošiljatelj ali prejemnik, ki podatke eFTI vodi na certificirani platformi.", $tags="", $link="")
+
+Rel(Uradnaosebapristojnegaorgana, AplikacijepristojnihorganovAAPUAP, "Zahteva podatke eFTI med nadzorom", $techn="", $tags="", $link="")
+Rel(Gospodarskisubjekt, CertificiraneeFTIplatformeSI, "Vodi podatke eFTI", $techn="", $tags="", $link="")
+Rel(UpravljaveceFTIvrat, SlovenskaeFTIvrata, "Upravlja vrata", $techn="", $tags="", $link="")
+Rel(AplikacijepristojnihorganovAAPUAP, SlovenskaeFTIvrata, "#3 G2A: dostop prek UIL, iskanje po identifikatorjih, nadaljnja komunikacija", $techn="REST/JSON, nacionalna izbira", $tags="", $link="")
+Rel(SlovenskaeFTIvrata, CertificiraneeFTIplatformeSI, "#2 G2P: zahteve za nabore podatkov", $techn="AS4 (+ REST kot nacionalna možnost)", $tags="", $link="")
+Rel(CertificiraneeFTIplatformeSI, SlovenskaeFTIvrata, "#2 P2G: nalaganje identifikatorjev, odgovori", $techn="AS4", $tags="", $link="")
+Rel(SlovenskaeFTIvrata, TujaeFTIvrata, "#1 G2G: posredovanje zahtev in iskanj", $techn="AS4, statično odkrivanje", $tags="", $link="")
+Rel(TujaeFTIvrata, SlovenskaeFTIvrata, "#1 G2G: zahteve tujih organov", $techn="AS4", $tags="", $link="")
+Rel(TujaeFTIvrata, eFTIplatformevdrugihDČ, "#2 G2P", $techn="AS4", $tags="", $link="")
+Rel(SlovenskaeFTIvrata, eDeliverySMLSMP, "Odkrivanje platform", $techn="SML/SMP", $tags="", $link="")
+Rel(SlovenskaeFTIvrata, Unijskireferenčniseznamcertificiranihplatform, "Dnevni prenos statusov certifikatov", $techn="HTTPS", $tags="", $link="")
+Rel(SlovenskaeFTIvrata, Nacionalnigradnikieidentitete, "Federacija identitet uradnih oseb", $techn="SAML/OIDC", $tags="", $link="")
+Rel(SlovenskaeFTIvrata, ReferenčnavrataRIinLaunchpad, "Testi skladnosti pred vstopom v mrežo", $techn="AS4", $tags="", $link="")
+Rel(SlovenskaeFTIvrata, UpravljaveceFTIvrat, "Alarmi", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml
