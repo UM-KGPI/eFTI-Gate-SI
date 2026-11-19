@@ -2,7 +2,7 @@
 
 > **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.
 >
-> Število zahtev: 237. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D). Izdaja po pogl. 10.5.
+> Število zahtev: 244. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0. Element C4 je identifikator v `architecture/workspace.dsl` (Priloga D). Izdaja po pogl. 10.5.
 
 | Oznaka | Kratek opis | Vir | P | Izdaja | Komp. | Element C4 | Preverjanje | Pogl. |
 |---|---|---|---|---|---|---|---|---|
@@ -243,3 +243,10 @@
 | SI-GATE-NFR-303 | Izdaja R2 mora biti v produkciji najpozneje 6 mesecev po zagonu [predlog]. | [predlog] | M | R1 | OP | — | P | 10 |
 | SI-GATE-NFR-304 | Po zagonu mora izvajalec spremembe uvajati v ciklu, usklajenem s 6-mesečnim ciklom izdaj EU (delegirani akt … | časovnica integracijskega omrežja (9. 11. 2026) | M | R1 | OP | — | P | 10 |
 | SI-GATE-NFR-305 | Izvajalec mora MZIE vsaka dva tedna poročati o napredku glede na kritično pot (10.3) in o odvisnostih od EU … | [predlog] | M | R1 | OP | — | P | 10 |
+| SI-GATE-NFR-400 | Ponudnik mora v ponudbi imenovati ključne kadre iz 11.4 in dokazati izpolnjevanje pogojev; menjava ključnega … | 11.4; [predlog] | M | R1 | OP | — | P | 11 |
+| SI-GATE-NFR-401 | Izvajalec mora s terminskim načrtom (SI-GATE-NFR-300) predložiti kadrovski načrt po vlogah iz 11.2, ki … | 11.6 | M | R1 | OP | — | P | 11 |
+| SI-GATE-NFR-402 | Komunikacija z MZIE in organi, uporabniška dokumentacija in služba za pomoč morajo biti v slovenskem jeziku; … | čl. 12; SI-GATE-NFR-020 | M | R1 | OP | — | P | 11 |
+| SI-GATE-NFR-403 | Osebe izvajalca z dostopom do produkcijskega okolja ali dnevnikov morajo podpisati izjavo o varovanju … | ZInfV-1; SI-GATE-NFR-054 | M | R1 | OP | — | P | 11 |
+| SI-GATE-NFR-404 | Izvajalec mora pred zagonom izvesti usposabljanje za upravljavce eFTI Gate in službo za pomoč (vsaj 16 ur) … | 8.6, 13; NL PvE | M | R1 | OP | — | D | 11 |
+| SI-GATE-NFR-405 | Arhitekt rešitve ali vodilni razvijalec izvajalca mora sodelovati na sestankih TG2.2 eFTI4LIVE in v … | ADR-0002; pogl. 10 | M | R1 | OP | — | P | 11 |
+| SI-GATE-NFR-406 | Ob koncu pogodbe ali zamenjavi izvajalca mora izvajalec izvesti prenos znanja novemu izvajalcu ali MZIE v … | SI-GATE-NFR-151 | M | R1 | OP | — | P | 11 |

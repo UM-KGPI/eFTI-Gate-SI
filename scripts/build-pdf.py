@@ -80,8 +80,11 @@ def prep(text, landscape=False, chars=None):
             while j < len(lines) and lines[j].startswith("|"):
                 j += 1
             block = lines[i:j]
-            block[1] = widths(block, chars=chars or (150 if landscape else 100))
-            out += (["", "\\lsbegin", ""] + block + ["", "\\lsend", ""]) if landscape else block
+            ncols = block[0].count("|") - 1
+            avg = sum(len(l) for l in block[2:]) / max(1, len(block) - 2)
+            wide = landscape or (chars is None and ncols >= 8 and avg > 200)  # široke tabele ležeče
+            block[1] = widths(block, chars=chars or (150 if wide else 100))
+            out += (["", "\\lsbegin", ""] + block + ["", "\\lsend", ""]) if wide else block
             i = j
         else:
             out.append(lines[i])
@@ -142,7 +145,7 @@ def main():
             if f.name == "priloga-e-openapi.md":  # cela priloga ležeče (več tabel)
                 t = "\n\\lsbegin\n\n" + prep(t, chars=150) + "\n\n\\lsend\n"
             else:
-                t = prep(t, landscape=f.name == "priloga-c-sledljivost.md")
+                t = prep(t)
             (tmpd / f.name).write_text(t)
             srcs.append(str(tmpd / f.name))
         (pathlib.Path(tmp) / "header.tex").write_text(HEADER)
