@@ -1,6 +1,6 @@
-# Slovenska eFTI-vrata – tehnične specifikacije (M3)
+# Slovenski eFTI Gate – tehnične specifikacije (M3)
 
-Projektna naloga / tehnične specifikacije za vzpostavitev slovenskih eFTI-vrat po Uredbi (EU) 2020/1056.
+Projektna naloga / tehnične specifikacije za vzpostavitev slovenskega eFTI Gate po Uredbi (EU) 2020/1056.
 Pogodba C2430-26-100042 (MZIE – UM FGPA), mejnik **M3, rok 24. 12. 2026**. Odvisno od M2 (izbira variante, 24. 11. 2026).
 
 *Technical specification (tender terms of reference) for the Slovenian eFTI Gate; written in Slovenian, architecture in C4.*

@@ -1,4 +1,4 @@
-# Tehnične specifikacije za vzpostavitev slovenskih eFTI-vrat
+# Tehnične specifikacije za vzpostavitev slovenskega eFTI Gate
 
 Projektna naloga za implementacijo Uredbe eFTI v Sloveniji (mejnik M3)
 
@@ -11,7 +11,7 @@ Projektna naloga za implementacijo Uredbe eFTI v Sloveniji (mejnik M3)
 | Pogodba | C2430-26-100042, Izvedba analize stanja in projektne naloge ter inženirsko svetovanje pri izvajanju projekta eFTI4LIVE |
 | Izvajalec | Univerza v Mariboru, FGPA |
 | Mejnik | M3, rok 24. 12. 2026 (4 mesece od podpisa pogodbe 24. 8. 2026, TS točka 3.2); potrditev naročnika v 15 delovnih dneh |
-| Namen | Formalno potrjena projektna naloga, ki služi kot tehnična specifikacija ločenega javnega naročila za vzpostavitev slovenskih eFTI-vrat (TS točka 2.4) |
+| Namen | Formalno potrjena projektna naloga, ki služi kot tehnična specifikacija ločenega javnega naročila za vzpostavitev slovenskega eFTI Gate (TS točka 2.4) |
 | Avtorstvo in konsolidacija | dr. Tibaut, dr. Letnik; vsebinski prispevki vseh strokovnjakov (projektni načrt v1.1) |
 | Odvisnost | Mejnik M2 (analiza stanja s predlogom variant, rok 24. 11. 2026) izbere varianto implementacije, na kateri temeljijo poglavja 4, 5 in 10 do 13 |
 
