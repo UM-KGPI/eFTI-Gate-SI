@@ -17,13 +17,15 @@ Arhitektura je opisana po modelu C4: pokrajina (C0), kontekst (C1), vsebniki (C2
 | siva | Zunanji | zunanji sistem ali oseba |
 | zlata | Test | testno okolje eFTI4LIVE |
 
+**Ime.** V diagramih se za prehod eFTI (izraz iz IU 2024/1942, ki ga uporablja besedilo TS) dosledno uporablja ime **eFTI Gate**; slovenski prehod je element `vrata`.
+
 Element ima lahko več oznak; barva ustreza zadnji (npr. okolje TCT: Dodatek SI, Odprto, R2 → vijolična). Vsak diagram ima ob sebi legendo, ki jo ustvari izvoznik (`*-key.png`).
 
 **Povezava z zahtevami.** Stolpec Komp. v pogl. 6–10 se preslika v elemente modela; Priloga C ima zato stolpec »Element C4«.
 
 | Komp. | Element v modelu |
 |---|---|
-| PE | `vrata.gateService` (storitev prehoda) |
+| PE | `vrata.gateService` (eFTI Gate Service) |
 | IM | `vrata.gateService.iskalnik` |
 | RID | `vrata.gateService.roi` |
 | ED | `vrata.ap` (dostopna točka eDelivery) |
@@ -48,7 +50,7 @@ Vmesniki po ICD v0.5 §3.1 (osnutek): **#1 G2G** in **#2 G2P** sta normativna na
 
 | Vsebnik | V RI | Kaj zahteva TS |
 |---|---|---|
-| Storitev prehoda (Spring Boot) | da, ena storitev iz knjižnic | horizontalno skaliranje, visoka razpoložljivost (8.1, 8.8) |
+| eFTI Gate Service (Spring Boot) | da, ena storitev iz knjižnic | horizontalno skaliranje, visoka razpoložljivost (8.1, 8.8) |
 | API za pristojne organe (#3) | da | specifikacija OpenAPI, mTLS (7.5, 8.2) |
 | Dostopna točka eDelivery (Domibus + MariaDB) | da | produkcijska PKI, ključi v HSM, SML/SMP (6.8, 6.9, 8.5.2) |
 | Podatkovna baza (PostgreSQL) | da | varnostne kopije, RTO/RPO (8.1) |
@@ -59,21 +61,21 @@ Vmesniki po ICD v0.5 §3.1 (osnutek): **#1 G2G** in **#2 G2P** sta normativna na
 | Nadzor delovanja in SIEM | izven obsega RI | metrike, alarmi, SOC (8.4, 8.5.4) |
 | Okolje TCT za platforme | ne | R2; decentraliziran TCT (9.7) |
 
-## D.4 Komponente storitve prehoda (C3)
+## D.4 Komponente eFTI Gate Service (C3)
 
 ![C3 Komponente](../../architecture/diagrams/structurizr-C3-Komponente.png)
 
 ## D.5 Dinamični pogledi
 
-### D1 Dostop prek UIL, platforma na slovenskem prehodu (PU-CA-1, PU-G2P-1)
+### D1 Dostop prek UIL, platforma na slovenskem eFTI Gate (PU-CA-1, PU-G2P-1)
 
 ![D1](../../architecture/diagrams/structurizr-D1-UIL-lokalna-platforma.png)
 
 Časovne omejitve (ICD v0.5 §10, osnutek): platforma odgovori v 50 s, odgovorni prehod v 60 s (zakonska meja, čl. 6(2)(f)), prehod, ki zahteva dostop, čaka 65 s.
 
-### D2 Dostop prek UIL, platforma na tujem prehodu (PU-CA-1, PU-G2G-1)
+### D2 Dostop prek UIL, platforma na tujem eFTI Gate (PU-CA-1, PU-G2G-1)
 
-![D2](../../architecture/diagrams/structurizr-D2-UIL-tuji-prehod.png)
+![D2](../../architecture/diagrams/structurizr-D2-UIL-tuji-eFTI-Gate.png)
 
 ### D3 Iskanje po identifikatorjih (PU-CA-2/3, PU-G2G-3)
 

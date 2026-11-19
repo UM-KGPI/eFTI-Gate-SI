@@ -1,6 +1,6 @@
 @startuml
 set separator none
-title Slovenski prehod eFTI - System Context
+title eFTI Gate - System Context
 
 left to right direction
 skinparam ranksep 60
@@ -39,13 +39,7 @@ skinparam rectangle<<PlatformeeFTIdrugihDČ>> {
   BorderColor #606060
   shadowing false
 }
-skinparam rectangle<<PrehodieFTIdrugihDČ>> {
-  BackgroundColor #8a8a8a
-  FontColor #ffffff
-  BorderColor #606060
-  shadowing false
-}
-skinparam rectangle<<ReferenčniprehodRIinLaunchpad>> {
+skinparam rectangle<<ReferenčnieFTIGateRIinLaunchpad>> {
   BackgroundColor #b8860b
   FontColor #ffffff
   BorderColor #805d07
@@ -57,19 +51,13 @@ skinparam rectangle<<SistemipristojnihorganovAAPregisterdovoljenjuporabniškaapl
   BorderColor #a15817
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI>> {
-  BackgroundColor #1168bd
-  FontColor #ffffff
-  BorderColor #0b4884
-  shadowing false
-}
 skinparam rectangle<<Unijskireferenčniseznam>> {
   BackgroundColor #e67e22
   FontColor #ffffff
   BorderColor #a15817
   shadowing false
 }
-skinparam person<<Upravljavecprehoda>> {
+skinparam person<<UpravljaveceFTIGate>> {
   BackgroundColor #08427b
   FontColor #ffffff
   BorderColor #052e56
@@ -87,16 +75,28 @@ skinparam rectangle<<eDeliverySMLSMP>> {
   BorderColor #606060
   shadowing false
 }
+skinparam rectangle<<eFTIGate>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+  shadowing false
+}
+skinparam rectangle<<eFTIGatedrugihDČ>> {
+  BackgroundColor #8a8a8a
+  FontColor #ffffff
+  BorderColor #606060
+  shadowing false
+}
 
 rectangle "EU eFTI okolje" <<group1>> as group1 {
   skinparam RectangleBorderColor<<group1>> #cccccc
   skinparam RectangleFontColor<<group1>> #cccccc
   skinparam RectangleBorderStyle<<group1>> dashed
 
-  rectangle "==Prehodi eFTI drugih DČ\n<size:10>[Software System]</size>\n\nMrežna topologija prehodov." <<PrehodieFTIdrugihDČ>> as PrehodieFTIdrugihDČ
+  rectangle "==eFTI Gate drugih DČ\n<size:10>[Software System]</size>\n\nMrežna topologija eFTI Gate." <<eFTIGatedrugihDČ>> as eFTIGatedrugihDČ
   rectangle "==Unijski referenčni seznam\n<size:10>[Software System]</size>\n\nStatusi certifikatov platform eFTI (DU o certificiranju, v sprejemanju)." <<Unijskireferenčniseznam>> as Unijskireferenčniseznam
   rectangle "==eDelivery SML/SMP\n<size:10>[Software System]</size>\n\nDinamično odkrivanje platform za #2." <<eDeliverySMLSMP>> as eDeliverySMLSMP
-  rectangle "==Platforme eFTI drugih DČ\n<size:10>[Software System]</size>\n\nPriključene na prehode drugih DČ." <<PlatformeeFTIdrugihDČ>> as PlatformeeFTIdrugihDČ
+  rectangle "==Platforme eFTI drugih DČ\n<size:10>[Software System]</size>\n\nPriključene na eFTI Gate drugih DČ." <<PlatformeeFTIdrugihDČ>> as PlatformeeFTIdrugihDČ
 }
 
 rectangle "Slovenija" <<group2>> as group2 {
@@ -104,10 +104,10 @@ rectangle "Slovenija" <<group2>> as group2 {
   skinparam RectangleFontColor<<group2>> #cccccc
   skinparam RectangleBorderStyle<<group2>> dashed
 
-  rectangle "==Sistemi pristojnih organov (AAP, register dovoljenj, uporabniška aplikacija)\n<size:10>[Software System]</size>\n\nDostopovna točka organa (čl. 4), register dovoljenj (čl. 5) in uporabniška aplikacija (čl. 7) Policije, FURS, IRSI in drugih organov. V prehodu ali pri organih: odloči M2 (čl. 4(4))." <<SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija>> as SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija
+  rectangle "==Sistemi pristojnih organov (AAP, register dovoljenj, uporabniška aplikacija)\n<size:10>[Software System]</size>\n\nDostopovna točka organa (čl. 4), register dovoljenj (čl. 5) in uporabniška aplikacija (čl. 7) Policije, FURS, IRSI in drugih organov. V eFTI Gate ali pri organih: odloči M2 (čl. 4(4))." <<SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija>> as SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija
   rectangle "==Platforme eFTI (SI)\n<size:10>[Software System]</size>\n\nPlatforme, certificirane v Sloveniji ali priključene po čl. 6(4)." <<PlatformeeFTISI>> as PlatformeeFTISI
   rectangle "==Nacionalni seznam certificiranih platform\n<size:10>[Software System]</size>\n\nImenovani organ in organi za ugotavljanje skladnosti (akreditira Slovenska akreditacija)." <<Nacionalniseznamcertificiranihplatform>> as Nacionalniseznamcertificiranihplatform
-  rectangle "==Slovenski prehod eFTI\n<size:10>[Software System]</size>\n\nPrehod eFTI (čl. 6 IU 2024/1942) z iskalnim mehanizmom (čl. 8) in registrom identifikatorjev (čl. 11)." <<SlovenskiprehodeFTI>> as SlovenskiprehodeFTI
+  rectangle "==eFTI Gate\n<size:10>[Software System]</size>\n\nSlovenski prehod eFTI (čl. 6 IU 2024/1942) z iskalnim mehanizmom (čl. 8) in registrom identifikatorjev (čl. 11)." <<eFTIGate>> as eFTIGate
 }
 
 rectangle "Testno okolje eFTI4LIVE" <<group3>> as group3 {
@@ -115,25 +115,25 @@ rectangle "Testno okolje eFTI4LIVE" <<group3>> as group3 {
   skinparam RectangleFontColor<<group3>> #cccccc
   skinparam RectangleBorderStyle<<group3>> dashed
 
-  rectangle "==Referenčni prehod (RI) in Launchpad\n<size:10>[Software System]</size>\n\nSidro skladnosti v integracijskem omrežju; TCT in varnostni testi s podpisanim poročilom." <<ReferenčniprehodRIinLaunchpad>> as ReferenčniprehodRIinLaunchpad
+  rectangle "==Referenčni eFTI Gate (RI) in Launchpad\n<size:10>[Software System]</size>\n\nSidro skladnosti v integracijskem omrežju; TCT in varnostni testi s podpisanim poročilom." <<ReferenčnieFTIGateRIinLaunchpad>> as ReferenčnieFTIGateRIinLaunchpad
 }
 
 person "==Uradnik pristojnega organa\n<size:10>[Person]</size>\n\nPolicist, inšpektor ali carinik, ki med nadzorom zahteva podatke eFTI (čl. 1(3) IU 2024/1942)." <<Uradnikpristojnegaorgana>> as Uradnikpristojnegaorgana
-person "==Upravljavec prehoda\n<size:10>[Person]</size>\n\nSkrbnik pri MZIE ali izvajalcu vzdrževanja; nacionalna služba za pomoč (raven 2)." <<Upravljavecprehoda>> as Upravljavecprehoda
+person "==Upravljavec eFTI Gate\n<size:10>[Person]</size>\n\nSkrbnik pri MZIE ali izvajalcu vzdrževanja; nacionalna služba za pomoč (raven 2)." <<UpravljaveceFTIGate>> as UpravljaveceFTIGate
 person "==Gospodarski subjekt\n<size:10>[Person]</size>\n\nPrevoznik, špediter, pošiljatelj ali prejemnik; podatke eFTI vodi na certificirani platformi." <<Gospodarskisubjekt>> as Gospodarskisubjekt
 
 Uradnikpristojnegaorgana .[#707070,thickness=2].> SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija : "<color:#707070>Vloži zahtevo za dostop ali sporočilo o nadaljnjem ukrepanju"
 Gospodarskisubjekt .[#707070,thickness=2].> PlatformeeFTISI : "<color:#707070>Vodi podatke eFTI"
-Upravljavecprehoda .[#707070,thickness=2].> SlovenskiprehodeFTI : "<color:#707070>Upravlja prehod"
-SlovenskiprehodeFTI .[#707070,thickness=2].> Upravljavecprehoda : "<color:#707070>Alarmi"
-SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija .[#707070,thickness=2].> SlovenskiprehodeFTI : "<color:#707070>#3 G2A: zahteve prek UIL, iskanja, sporočila o nadaljnjem ukrepanju\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
-SlovenskiprehodeFTI .[#707070,thickness=2].> PlatformeeFTISI : "<color:#707070>#2 G2P: zahteve za sklop podatkov, sporočila o nadaljnjem ukrepanju\n<color:#707070><size:8>[AS4]</size>"
-PlatformeeFTISI .[#707070,thickness=2].> SlovenskiprehodeFTI : "<color:#707070>#2 P2G: nalaganje identifikatorjev, odgovori\n<color:#707070><size:8>[AS4]</size>"
-SlovenskiprehodeFTI .[#707070,thickness=2].> PrehodieFTIdrugihDČ : "<color:#707070>#1 G2G: posredovanje zahtev in iskanj\n<color:#707070><size:8>[AS4, statično odkrivanje]</size>"
-PrehodieFTIdrugihDČ .[#707070,thickness=2].> SlovenskiprehodeFTI : "<color:#707070>#1 G2G: zahteve in iskanja drugih DČ, odgovori\n<color:#707070><size:8>[AS4]</size>"
-PrehodieFTIdrugihDČ .[#707070,thickness=2].> PlatformeeFTIdrugihDČ : "<color:#707070>#2 G2P\n<color:#707070><size:8>[AS4]</size>"
-SlovenskiprehodeFTI .[#707070,thickness=2].> eDeliverySMLSMP : "<color:#707070>Odkrivanje platform\n<color:#707070><size:8>[SML/SMP]</size>"
-SlovenskiprehodeFTI .[#707070,thickness=2].> Unijskireferenčniseznam : "<color:#707070>Sinhronizacija statusov certifikatov (R2)\n<color:#707070><size:8>[HTTPS]</size>"
-SlovenskiprehodeFTI .[#707070,thickness=2].> Nacionalniseznamcertificiranihplatform : "<color:#707070>Nacionalni vnosi certificiranih platform\n<color:#707070><size:8>[HTTPS ali ročno]</size>"
-SlovenskiprehodeFTI .[#707070,thickness=2].> ReferenčniprehodRIinLaunchpad : "<color:#707070>Testi skladnosti pred vstopom v mrežo\n<color:#707070><size:8>[AS4]</size>"
+UpravljaveceFTIGate .[#707070,thickness=2].> eFTIGate : "<color:#707070>Upravlja eFTI Gate"
+eFTIGate .[#707070,thickness=2].> UpravljaveceFTIGate : "<color:#707070>Alarmi"
+SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija .[#707070,thickness=2].> eFTIGate : "<color:#707070>#3 G2A: zahteve prek UIL, iskanja, sporočila o nadaljnjem ukrepanju\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+eFTIGate .[#707070,thickness=2].> PlatformeeFTISI : "<color:#707070>#2 G2P: zahteve za sklop podatkov, sporočila o nadaljnjem ukrepanju\n<color:#707070><size:8>[AS4]</size>"
+PlatformeeFTISI .[#707070,thickness=2].> eFTIGate : "<color:#707070>#2 P2G: nalaganje identifikatorjev, odgovori\n<color:#707070><size:8>[AS4]</size>"
+eFTIGate .[#707070,thickness=2].> eFTIGatedrugihDČ : "<color:#707070>#1 G2G: posredovanje zahtev in iskanj\n<color:#707070><size:8>[AS4, statično odkrivanje]</size>"
+eFTIGatedrugihDČ .[#707070,thickness=2].> eFTIGate : "<color:#707070>#1 G2G: zahteve in iskanja drugih DČ, odgovori\n<color:#707070><size:8>[AS4]</size>"
+eFTIGatedrugihDČ .[#707070,thickness=2].> PlatformeeFTIdrugihDČ : "<color:#707070>#2 G2P\n<color:#707070><size:8>[AS4]</size>"
+eFTIGate .[#707070,thickness=2].> eDeliverySMLSMP : "<color:#707070>Odkrivanje platform\n<color:#707070><size:8>[SML/SMP]</size>"
+eFTIGate .[#707070,thickness=2].> Unijskireferenčniseznam : "<color:#707070>Sinhronizacija statusov certifikatov (R2)\n<color:#707070><size:8>[HTTPS]</size>"
+eFTIGate .[#707070,thickness=2].> Nacionalniseznamcertificiranihplatform : "<color:#707070>Nacionalni vnosi certificiranih platform\n<color:#707070><size:8>[HTTPS ali ročno]</size>"
+eFTIGate .[#707070,thickness=2].> ReferenčnieFTIGateRIinLaunchpad : "<color:#707070>Testi skladnosti pred vstopom v mrežo\n<color:#707070><size:8>[AS4]</size>"
 @enduml
