@@ -2,7 +2,7 @@
 
 > **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.
 >
-> Število zahtev: 190. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0.
+> Število zahtev: 220. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0.
 
 | Oznaka | Kratek opis | Vir | P | Komp. | Preverjanje | Pogl. |
 |---|---|---|---|---|---|---|
@@ -196,3 +196,33 @@
 | SI-GATE-NFR-151 | Ob prenehanju pogodbe mora izvajalec brezplačno predati vso izvorno kodo in podatke v izvirnih, trajnih … | NL PvE NF-83 | M | OP | P | 8 |
 | SI-GATE-NFR-152 | Rešitev mora biti nameščljiva v standardnih vsebnikih (npr. OCI) in prenosljiva med okolji gostovanja brez … | NL PvE NF-81; RI (Docker) | M | PE, OP | D | 8 |
 | SI-GATE-NFR-153 | Rešitev mora biti predana v produkcijo in v upravljanje MZIE najpozneje do 9. 7. 2027 (časovni načrt v pogl. … | NL PvE NF-85; čl. 5(1) Uredbe (EU) 2020/1056 [preveriti datum v aktu] | M | OP | P | 8 |
+| SI-GATE-NFR-200 | Izvajalec mora v 30 dneh po podpisu pogodbe [predlog] predložiti testni načrt z ravnmi iz 9.1, testnimi … | AG #8; [predlog] | M | OP | P | 9 |
+| SI-GATE-NFR-201 | Vsaka zahteva z načinom preverjanja T ali D mora imeti vsaj en testni primer; poročilo o testiranju mora za … | Priloga C | M | OP | P | 9 |
+| SI-GATE-NFR-202 | Avtomatizirani testi skladnosti z XSD in vmesniki #1–#3 morajo biti del CI in se izvesti ob vsaki spremembi … | SI-GATE-NFR-100 | M | OP | D | 9 |
+| SI-GATE-NFR-203 | Izvajalec mora za teste uporabljati sintetične ali anonimizirane testne podatke; produkcijski podatki niso … | AG #8 (zbiranje nacionalnih testnih podatkov) | M | OP | P | 9 |
+| SI-GATE-NFR-210 | Izvajalec mora vzpostaviti ločena razvojno, testno, predprodukcijsko in produkcijsko okolje … | NL PvE NF-31, NF-48 | M | OP | P, D | 9 |
+| SI-GATE-NFR-211 | Testno ali predprodukcijsko okolje mora biti trajno povezano v integracijsko omrežje eFTI4LIVE (dostopna … | AG #5; TG2.3 (Praga) | M | ED, OP | D | 9 |
+| SI-GATE-NFR-212 | Okolje mora vsebovati simulatorje platform, tujih prehodov in AAP (npr. iz RI) za samostojne in … | RI platform-gate-simulator; NL PvE NF-49 | M | OP | D | 9 |
+| SI-GATE-NFR-213 | Izvajalec mora drugim prehodom in slovenskim platformam objaviti podatke za priklop testnega prehoda (URL … | AG #5 (pričakovani rezultati) | M | OP | P | 9 |
+| SI-GATE-NFR-220 | Prehod mora pred vstopom v integracijsko mrežo prehodov uspešno izvesti vse testne scenarije proti RI kot … | TG2.2 (Praga, »hub-and-spoke«); SI-GATE-NFR-010 | M | PE, ED | T | 9 |
+| SI-GATE-NFR-221 | Prehod mora opraviti TCT in varnostne teste v Launchpadu (ali enakovrednem okolju, ki ga določi EK) in … | TG2.2 Launchpad (stalno zagotavljanje); SI-GATE-NFR-011 | M | PE | T | 9 |
+| SI-GATE-NFR-222 | Prehod mora sodelovati na Testfestu, ki ga organizira projekt (Testfest 4 je načrtovan za marec 2027), če je … | TG2.3 (Praga, časovnica integracije vrat) | M | OP | P | 9 |
+| SI-GATE-NFR-223 | Prehod mora pred produkcijo uspešno izmenjati realna sporočila (zahteve in odgovori, vključno z eDelivery) z … | AG #8; [predlog] | M | PE, ED | T | 9 |
+| SI-GATE-NFR-224 | Testni scenariji morajo pokrivati teme delovne skupine za testiranje: vmesnike, odkrivanje in usmerjanje, … | Praga, AG #8 (16 podtem funkcionalnih testov) | M | OP | P | 9 |
+| SI-GATE-NFR-240 | Izvajalec mora pred prevzemom izvesti obremenitvene teste z vnaprej dogovorjenimi merili (odzivni časi, … | CTG Security (Performance track: »merimo, ne domnevamo«); SI-GATE-NFR-130–133 | M | PE | T | 9 |
+| SI-GATE-NFR-241 | Varnostni testi morajo pokrivati vsaj: identiteto, zaupanje in pravice dostopa; preverjanje certifikatov … | CTG Security (Testfest Security track; AG #8: 17 podtem) | M | PE, ED | T | 9 |
+| SI-GATE-NFR-242 | Vsako tveganje visoke ali kritične stopnje iz ocene tveganj (SI-GATE-NFR-052) mora imeti testni primer in … | CTG Security (»vsako kritično tveganje → testni primer«) | M | OP | P | 9 |
+| SI-GATE-NFR-243 | Penetracijski test pred prevzemom (SI-GATE-NFR-090) mora vključevati vse zunanje vmesnike (#1, #2, #3, … | NL PvE NF-36 | M | OP | P | 9 |
+| SI-GATE-NFR-250 | Izvajalec mora podpreti priklop vsaj ene slovenske platforme eFTI (npr. pilotna platforma eFTI4LIVE) v … | SI pilot (D2.1, dec. 2025) | M | PE, ED | T | 9 |
+| SI-GATE-NFR-251 | Izvajalec mora s pristojnimi organi izvesti uporabniški prevzemni test (UAT) PU-CA-1 do PU-CA-4 v … | SI implementacijski načrt (pristojni organi); [predlog] | M | PE, AAP, UA | T | 9 |
+| SI-GATE-NFR-252 | Izvajalec mora podpreti pilotne scenarije z več načini prevoza (cesta, železnica, multimodalno) iz … | SI pilot (D2.1) | P | PE | T | 9 |
+| SI-GATE-NFR-253 | Rezultati pilotov morajo biti pripravljeni tako, da jih MZIE lahko poroča v eFTI4LIVE (T2.4: kazalniki, npr. … | T2.4 (Praga, KPI) | M | OP | P | 9 |
+| SI-GATE-NFR-260 | Prevzem mora potekati po fazah F1–F5 in končnem prevzemu iz 9.6; vsaka faza se zaključi s pisnim zapisnikom, … | [predlog] | M | OP | P | 9 |
+| SI-GATE-NFR-261 | Napake se razvrščajo v kritične, visoke, srednje in nizke [predlog]; za prehod v naslednjo fazo ne sme biti … | NL PvE NF-64; [predlog] | M | OP | P | 9 |
+| SI-GATE-NFR-262 | Produkcijski zagon (konec F4) mora biti pred 9. 7. 2027; časovnica faz se uskladi z integracijskim omrežjem … | TG2.3 (Praga); SI-GATE-NFR-153 | M | OP | P | 9 |
+| SI-GATE-NFR-263 | Ob prevzemu mora izvajalec predati: izvorno kodo, namestitvene artefakte, konfiguracijo, arhitekturni opis … | NL PvE NF-45, NF-83; SI-GATE-NFR-150 | M | OP | P | 9 |
+| SI-GATE-NFR-280 | Prehod mora imeti postopek priklopa platforme (onboarding): vloga upravljavca platforme, preverjanje … | čl. 6(3)(f); TGD §8.3 | M | UP, OP | D | 9 |
+| SI-GATE-NFR-281 | Prehod mora zagotoviti okolje, v katerem platforma pred priklopom izvede usklajene testne scenarije TCT za … | M2.3 (decentraliziran TCT); osnutek DU o certificiranju | M | PE, OP | D | 9 |
+| SI-GATE-NFR-282 | Prehod mora tehnično podpirati priklop platform glede na status v registru platform: »certificirana« in, če … | M2.3; Praga (pismo EK, stališča DČ) | M | PE, UP | D | 9 |
+| SI-GATE-NFR-283 | Prehod mora spremljati delež napak v izmenjavi s posamezno platformo (format, obvezna polja, protokol) in ob … | M2.3 (spremljanje v produkciji) | M | PE, UP | T | 9 |
+| SI-GATE-NFR-284 | Register platform mora podpirati postopek iz čl. 6(4) za platforme, certificirane v drugih DČ … | čl. 6(4) | M | UP | D | 9 |
