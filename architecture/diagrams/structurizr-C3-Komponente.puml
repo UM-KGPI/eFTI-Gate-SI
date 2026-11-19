@@ -1,6 +1,6 @@
 @startuml
 set separator none
-title Slovenski prehod eFTI - Storitev prehoda (Gate Service) - Components
+title eFTI Gate - eFTI Gate Service - Components
 
 left to right direction
 skinparam ranksep 60
@@ -15,25 +15,25 @@ skinparam {
 
 hide stereotype
 
-skinparam rectangle<<SlovenskiprehodeFTI.APIzapristojneorgane3>> {
+skinparam rectangle<<eFTIGate.APIzapristojneorgane3>> {
   BackgroundColor #438dd5
   FontColor #ffffff
   BorderColor #2e6295
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.DostopnatočkaeDelivery>> {
+skinparam rectangle<<eFTIGate.DostopnatočkaeDelivery>> {
   BackgroundColor #438dd5
   FontColor #ffffff
   BorderColor #2e6295
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.Iskalnimehanizem>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.Iskalnimehanizem>> {
   BackgroundColor #85bbf0
   FontColor #000000
   BorderColor #5d82a8
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.JedroGateCore>> {
   BackgroundColor #85bbf0
   FontColor #000000
   BorderColor #5d82a8
@@ -45,79 +45,79 @@ skinparam rectangle<<Nacionalniseznamcertificiranihplatform>> {
   BorderColor #a15817
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.NadzordelovanjainSIEM>> {
+skinparam rectangle<<eFTIGate.NadzordelovanjainSIEM>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.OdjemalecWSWSPlugin>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.OdjemalecWSWSPlugin>> {
   BackgroundColor #85bbf0
   FontColor #000000
   BorderColor #5d82a8
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.OkoljeTCTzaplatforme>> {
+skinparam rectangle<<eFTIGate.OkoljeTCTzaplatforme>> {
   BackgroundColor #8e44ad
   FontColor #ffffff
   BorderColor #632f79
   shadowing false
 }
-skinparam database<<SlovenskiprehodeFTI.Podatkovnabazaprehoda>> {
+skinparam database<<eFTIGate.PodatkovnabazaeFTIGate>> {
   BackgroundColor #438dd5
   FontColor #ffffff
   BorderColor #2e6295
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.PovezovalnikeDelivery>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.PovezovalnikeDelivery>> {
   BackgroundColor #85bbf0
   FontColor #000000
   BorderColor #5d82a8
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.Preverjanjecertifikacijskegastatusa>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa>> {
   BackgroundColor #e67e22
   FontColor #ffffff
   BorderColor #a15817
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.Registeridentifikatorjev>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.Registeridentifikatorjev>> {
   BackgroundColor #85bbf0
   FontColor #000000
   BorderColor #5d82a8
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.Registripovezav>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.Revizijskasledindnevniki>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.Revizijskasledindnevniki>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
   shadowing false
 }
-skinparam database<<SlovenskiprehodeFTI.Shrambarevizijskihsledi>> {
+skinparam database<<eFTIGate.Shrambarevizijskihsledi>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.Skupnaknjižnica>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.Skupnaknjižnica>> {
   BackgroundColor #85bbf0
   FontColor #000000
   BorderColor #5d82a8
   shadowing false
 }
-skinparam queue<<SlovenskiprehodeFTI.Sporočilniposrednik>> {
+skinparam queue<<eFTIGate.Sporočilniposrednik>> {
   BackgroundColor #438dd5
   FontColor #ffffff
   BorderColor #2e6295
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService.Statistikainmetrike>> {
+skinparam rectangle<<eFTIGate.eFTIGateService.Statistikainmetrike>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
@@ -129,68 +129,68 @@ skinparam rectangle<<Unijskireferenčniseznam>> {
   BorderColor #a15817
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.Upravljavskaaplikacija>> {
+skinparam rectangle<<eFTIGate.Upravljavskaaplikacija>> {
   BackgroundColor #2e8b57
   FontColor #ffffff
   BorderColor #20613c
   shadowing false
 }
-skinparam rectangle<<SlovenskiprehodeFTI.StoritevprehodaGateService>> {
+skinparam rectangle<<eFTIGate.eFTIGateService>> {
   BorderColor #2e6295
   FontColor #2e6295
   shadowing false
 }
 
-rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<SlovenskiprehodeFTI.APIzapristojneorgane3>> as SlovenskiprehodeFTI.APIzapristojneorgane3
-queue "==Sporočilni posrednik\n<size:10>[Container: RabbitMQ]</size>\n\nTrajna vrsta asinhronih zahtev." <<SlovenskiprehodeFTI.Sporočilniposrednik>> as SlovenskiprehodeFTI.Sporočilniposrednik
-database "==Podatkovna baza prehoda\n<size:10>[Container: PostgreSQL]</size>\n\nRegister identifikatorjev, registri povezav, stanje zahtev." <<SlovenskiprehodeFTI.Podatkovnabazaprehoda>> as SlovenskiprehodeFTI.Podatkovnabazaprehoda
-rectangle "==Dostopna točka eDelivery\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<SlovenskiprehodeFTI.DostopnatočkaeDelivery>> as SlovenskiprehodeFTI.DostopnatočkaeDelivery
-rectangle "==Upravljavska aplikacija\n<size:10>[Container: Spletna aplikacija]</size>\n\nRegistri povezav, priklop platform (tudi čl. 6(4)), certifikati, šifranti, pregled revizijskih sledi, statistika." <<SlovenskiprehodeFTI.Upravljavskaaplikacija>> as SlovenskiprehodeFTI.Upravljavskaaplikacija
-database "==Shramba revizijskih sledi\n<size:10>[Container]</size>\n\nNespremenljiva hramba (npr. WORM ali veriženje zgoščenih vrednosti), 2 leti ali več (čl. 6(2)(h))." <<SlovenskiprehodeFTI.Shrambarevizijskihsledi>> as SlovenskiprehodeFTI.Shrambarevizijskihsledi
-rectangle "==Nadzor delovanja in SIEM\n<size:10>[Container]</size>\n\nMetrike, alarmi, varnostni dogodki; povezava s SOC." <<SlovenskiprehodeFTI.NadzordelovanjainSIEM>> as SlovenskiprehodeFTI.NadzordelovanjainSIEM
-rectangle "==Okolje TCT za platforme\n<size:10>[Container]</size>\n\nUsklajeni testni scenariji TCT za vmesnik #2 pred priklopom platforme (decentraliziran model M2.3)." <<SlovenskiprehodeFTI.OkoljeTCTzaplatforme>> as SlovenskiprehodeFTI.OkoljeTCTzaplatforme
+rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<eFTIGate.APIzapristojneorgane3>> as eFTIGate.APIzapristojneorgane3
+queue "==Sporočilni posrednik\n<size:10>[Container: RabbitMQ]</size>\n\nTrajna vrsta asinhronih zahtev." <<eFTIGate.Sporočilniposrednik>> as eFTIGate.Sporočilniposrednik
+database "==Podatkovna baza eFTI Gate\n<size:10>[Container: PostgreSQL]</size>\n\nRegister identifikatorjev, registri povezav, stanje zahtev." <<eFTIGate.PodatkovnabazaeFTIGate>> as eFTIGate.PodatkovnabazaeFTIGate
+rectangle "==Dostopna točka eDelivery\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.DostopnatočkaeDelivery>> as eFTIGate.DostopnatočkaeDelivery
+rectangle "==Upravljavska aplikacija\n<size:10>[Container: Spletna aplikacija]</size>\n\nRegistri povezav, priklop platform (tudi čl. 6(4)), certifikati, šifranti, pregled revizijskih sledi, statistika." <<eFTIGate.Upravljavskaaplikacija>> as eFTIGate.Upravljavskaaplikacija
+database "==Shramba revizijskih sledi\n<size:10>[Container]</size>\n\nNespremenljiva hramba (npr. WORM ali veriženje zgoščenih vrednosti), 2 leti ali več (čl. 6(2)(h))." <<eFTIGate.Shrambarevizijskihsledi>> as eFTIGate.Shrambarevizijskihsledi
+rectangle "==Nadzor delovanja in SIEM\n<size:10>[Container]</size>\n\nMetrike, alarmi, varnostni dogodki; povezava s SOC." <<eFTIGate.NadzordelovanjainSIEM>> as eFTIGate.NadzordelovanjainSIEM
+rectangle "==Okolje TCT za platforme\n<size:10>[Container]</size>\n\nUsklajeni testni scenariji TCT za vmesnik #2 pred priklopom platforme (decentraliziran model M2.3)." <<eFTIGate.OkoljeTCTzaplatforme>> as eFTIGate.OkoljeTCTzaplatforme
 rectangle "==Nacionalni seznam certificiranih platform\n<size:10>[Software System]</size>\n\nImenovani organ in organi za ugotavljanje skladnosti (akreditira Slovenska akreditacija)." <<Nacionalniseznamcertificiranihplatform>> as Nacionalniseznamcertificiranihplatform
 rectangle "==Unijski referenčni seznam\n<size:10>[Software System]</size>\n\nStatusi certifikatov platform eFTI (DU o certificiranju, v sprejemanju)." <<Unijskireferenčniseznam>> as Unijskireferenčniseznam
 
-rectangle "Storitev prehoda (Gate Service)\n<size:10>[Container: Java 21+, Spring Boot]</size>" <<SlovenskiprehodeFTI.StoritevprehodaGateService>> {
-  rectangle "==Preverjanje certifikacijskega statusa\n<size:10>[Component: Java]</size>\n\nPreveri ključ in certifikacijski status platforme pred izmenjavo (čl. 6(2)(d)(i)); dnevna sinhronizacija z Unijskim referenčnim seznamom je R2." <<SlovenskiprehodeFTI.StoritevprehodaGateService.Preverjanjecertifikacijskegastatusa>> as SlovenskiprehodeFTI.StoritevprehodaGateService.Preverjanjecertifikacijskegastatusa
-  rectangle "==Povezovalnik eDelivery\n<size:10>[Component: Java]</size>\n\nAbstrakcija komunikacije z dostopno točko AS4; preslikava korelacijskih identifikatorjev v glavo AS4." <<SlovenskiprehodeFTI.StoritevprehodaGateService.PovezovalnikeDelivery>> as SlovenskiprehodeFTI.StoritevprehodaGateService.PovezovalnikeDelivery
-  rectangle "==Odjemalec WS (WS Plugin)\n<size:10>[Component: Java, SOAP]</size>\n\nSOAP odjemalec za Domibus WS plugin." <<SlovenskiprehodeFTI.StoritevprehodaGateService.OdjemalecWSWSPlugin>> as SlovenskiprehodeFTI.StoritevprehodaGateService.OdjemalecWSWSPlugin
-  rectangle "==Revizijska sled in dnevniki\n<size:10>[Component: Java, JSON]</size>\n\nObvezni zapisi po čl. 6(2)(c), (g) in TGD §9.2; časovni žigi v ms; zaščita pred spremembami (TGD §9.3)." <<SlovenskiprehodeFTI.StoritevprehodaGateService.Revizijskasledindnevniki>> as SlovenskiprehodeFTI.StoritevprehodaGateService.Revizijskasledindnevniki
-  rectangle "==Statistika in metrike\n<size:10>[Component: Java]</size>\n\nMetrike za nadzor delovanja; letna statistika dostopov za poročanje po čl. 17 Uredbe (EU) 2020/1056." <<SlovenskiprehodeFTI.StoritevprehodaGateService.Statistikainmetrike>> as SlovenskiprehodeFTI.StoritevprehodaGateService.Statistikainmetrike
-  rectangle "==Skupna knjižnica\n<size:10>[Component: Java]</size>\n\nModeli sporočil po XSD, validacija ovojnice in glave, pretvorbe med različicami." <<SlovenskiprehodeFTI.StoritevprehodaGateService.Skupnaknjižnica>> as SlovenskiprehodeFTI.StoritevprehodaGateService.Skupnaknjižnica
-  rectangle "==Jedro prehoda (Gate Core)\n<size:10>[Component: Spring Boot]</size>\n\nObdelava zahtev prek UIL, iskanj po identifikatorjih in sporočil o nadaljnjem ukrepanju; vloga »prehod, ki zahteva dostop« in »prehod, ki prejme zahtevo«; časovna omejitev 60 s." <<SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore>> as SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore
-  rectangle "==Iskalni mehanizem\n<size:10>[Component: Java]</size>\n\nIz UIL razbere prehod in platformo, išče v registru identifikatorjev, posreduje iskanja drugim prehodom, združi rezultate (čl. 8; TGD §6.2–6.3)." <<SlovenskiprehodeFTI.StoritevprehodaGateService.Iskalnimehanizem>> as SlovenskiprehodeFTI.StoritevprehodaGateService.Iskalnimehanizem
-  rectangle "==Register identifikatorjev\n<size:10>[Component: Java]</size>\n\nNalaganje, zamenjava, aktivacija, deaktivacija in izbris UIL z identifikatorji; nastavljiv nabor identifikatorjev (čl. 11; TGD §6.1, 6.4)." <<SlovenskiprehodeFTI.StoritevprehodaGateService.Registeridentifikatorjev>> as SlovenskiprehodeFTI.StoritevprehodaGateService.Registeridentifikatorjev
-  rectangle "==Registri povezav\n<size:10>[Component: Java]</size>\n\nRegister prehodov (ID, certifikati), register AAP (ID, certifikati), register platform (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." <<SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav>> as SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav
+rectangle "eFTI Gate Service\n<size:10>[Container: Java 21+, Spring Boot]</size>" <<eFTIGate.eFTIGateService>> {
+  rectangle "==Preverjanje certifikacijskega statusa\n<size:10>[Component: Java]</size>\n\nPreveri ključ in certifikacijski status platforme pred izmenjavo (čl. 6(2)(d)(i)); dnevna sinhronizacija z Unijskim referenčnim seznamom je R2." <<eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa>> as eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa
+  rectangle "==Povezovalnik eDelivery\n<size:10>[Component: Java]</size>\n\nAbstrakcija komunikacije z dostopno točko AS4; preslikava korelacijskih identifikatorjev v glavo AS4." <<eFTIGate.eFTIGateService.PovezovalnikeDelivery>> as eFTIGate.eFTIGateService.PovezovalnikeDelivery
+  rectangle "==Odjemalec WS (WS Plugin)\n<size:10>[Component: Java, SOAP]</size>\n\nSOAP odjemalec za Domibus WS plugin." <<eFTIGate.eFTIGateService.OdjemalecWSWSPlugin>> as eFTIGate.eFTIGateService.OdjemalecWSWSPlugin
+  rectangle "==Revizijska sled in dnevniki\n<size:10>[Component: Java, JSON]</size>\n\nObvezni zapisi po čl. 6(2)(c), (g) in TGD §9.2; časovni žigi v ms; zaščita pred spremembami (TGD §9.3)." <<eFTIGate.eFTIGateService.Revizijskasledindnevniki>> as eFTIGate.eFTIGateService.Revizijskasledindnevniki
+  rectangle "==Statistika in metrike\n<size:10>[Component: Java]</size>\n\nMetrike za nadzor delovanja; letna statistika dostopov za poročanje po čl. 17 Uredbe (EU) 2020/1056." <<eFTIGate.eFTIGateService.Statistikainmetrike>> as eFTIGate.eFTIGateService.Statistikainmetrike
+  rectangle "==Skupna knjižnica\n<size:10>[Component: Java]</size>\n\nModeli sporočil po XSD, validacija ovojnice in glave, pretvorbe med različicami." <<eFTIGate.eFTIGateService.Skupnaknjižnica>> as eFTIGate.eFTIGateService.Skupnaknjižnica
+  rectangle "==Jedro (Gate Core)\n<size:10>[Component: Spring Boot]</size>\n\nObdelava zahtev prek UIL, iskanj po identifikatorjih in sporočil o nadaljnjem ukrepanju; vloga »prehod, ki zahteva dostop« in »prehod, ki prejme zahtevo«; časovna omejitev 60 s." <<eFTIGate.eFTIGateService.JedroGateCore>> as eFTIGate.eFTIGateService.JedroGateCore
+  rectangle "==Iskalni mehanizem\n<size:10>[Component: Java]</size>\n\nIz UIL razbere eFTI Gate in platformo, išče v registru identifikatorjev, posreduje iskanja drugim eFTI Gate, združi rezultate (čl. 8; TGD §6.2–6.3)." <<eFTIGate.eFTIGateService.Iskalnimehanizem>> as eFTIGate.eFTIGateService.Iskalnimehanizem
+  rectangle "==Register identifikatorjev\n<size:10>[Component: Java]</size>\n\nNalaganje, zamenjava, aktivacija, deaktivacija in izbris UIL z identifikatorji; nastavljiv nabor identifikatorjev (čl. 11; TGD §6.1, 6.4)." <<eFTIGate.eFTIGateService.Registeridentifikatorjev>> as eFTIGate.eFTIGateService.Registeridentifikatorjev
+  rectangle "==Registri povezav\n<size:10>[Component: Java]</size>\n\nRegister eFTI Gate drugih DČ (ID, certifikati), register AAP (ID, certifikati), register platform (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." <<eFTIGate.eFTIGateService.Registripovezav>> as eFTIGate.eFTIGateService.Registripovezav
 }
 
-SlovenskiprehodeFTI.Upravljavskaaplikacija .[#707070,thickness=2].> SlovenskiprehodeFTI.Shrambarevizijskihsledi : "<color:#707070>Pregled revizijskih sledi"
-SlovenskiprehodeFTI.OkoljeTCTzaplatforme .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav : "<color:#707070>Rezultat TCT za priklop"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> Unijskireferenčniseznam : "<color:#707070>Sinhronizacija statusov certifikatov (R2)\n<color:#707070><size:8>[HTTPS]</size>"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> Nacionalniseznamcertificiranihplatform : "<color:#707070>Nacionalni vnosi certificiranih platform\n<color:#707070><size:8>[HTTPS ali ročno]</size>"
-SlovenskiprehodeFTI.APIzapristojneorgane3 .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore : "<color:#707070>Predaja zahtev"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.Sporočilniposrednik : "<color:#707070>Asinhrona obdelava\n<color:#707070><size:8>[AMQP]</size>"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Iskalnimehanizem : "<color:#707070>Razreši cilj, išči"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav : "<color:#707070>Preveri pošiljatelja (AAP, prehod)"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Preverjanjecertifikacijskegastatusa : "<color:#707070>Preveri platformo"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.PovezovalnikeDelivery : "<color:#707070>Pošlji in prejmi sporočila"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Revizijskasledindnevniki : "<color:#707070>Revizijska sled"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Statistikainmetrike : "<color:#707070>Dogodki"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Skupnaknjižnica : "<color:#707070>Validacija in modeli"
-SlovenskiprehodeFTI.StoritevprehodaGateService.JedroprehodaGateCore .[#707070,thickness=2].> SlovenskiprehodeFTI.Podatkovnabazaprehoda : "<color:#707070>Stanje zahtev\n<color:#707070><size:8>[JDBC]</size>"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Iskalnimehanizem .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Registeridentifikatorjev : "<color:#707070>Lokalno iskanje"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Iskalnimehanizem .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav : "<color:#707070>Prehodi za posredovanje iskanj"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Iskalnimehanizem .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.PovezovalnikeDelivery : "<color:#707070>Iskanje v drugih prehodih"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav : "<color:#707070>Register platform"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Registeridentifikatorjev .[#707070,thickness=2].> SlovenskiprehodeFTI.Podatkovnabazaprehoda : "<color:#707070>Zapisi UIL in identifikatorjev\n<color:#707070><size:8>[JDBC]</size>"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav .[#707070,thickness=2].> SlovenskiprehodeFTI.Podatkovnabazaprehoda : "<color:#707070>Registri povezav\n<color:#707070><size:8>[JDBC]</size>"
-SlovenskiprehodeFTI.StoritevprehodaGateService.PovezovalnikeDelivery .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.OdjemalecWSWSPlugin : "<color:#707070>Uporablja"
-SlovenskiprehodeFTI.StoritevprehodaGateService.OdjemalecWSWSPlugin .[#707070,thickness=2].> SlovenskiprehodeFTI.DostopnatočkaeDelivery : "<color:#707070>Pošiljanje in prejem sporočil AS4\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
-SlovenskiprehodeFTI.DostopnatočkaeDelivery .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.PovezovalnikeDelivery : "<color:#707070>Dostava prejetih sporočil\n<color:#707070><size:8>[JMS/WS]</size>"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Revizijskasledindnevniki .[#707070,thickness=2].> SlovenskiprehodeFTI.Shrambarevizijskihsledi : "<color:#707070>Zapisi revizijske sledi"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Revizijskasledindnevniki .[#707070,thickness=2].> SlovenskiprehodeFTI.NadzordelovanjainSIEM : "<color:#707070>Tehnični in varnostni dogodki"
-SlovenskiprehodeFTI.StoritevprehodaGateService.Statistikainmetrike .[#707070,thickness=2].> SlovenskiprehodeFTI.NadzordelovanjainSIEM : "<color:#707070>Metrike"
-SlovenskiprehodeFTI.Upravljavskaaplikacija .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Registripovezav : "<color:#707070>Upravljanje registrov in politike priklopa"
-SlovenskiprehodeFTI.Upravljavskaaplikacija .[#707070,thickness=2].> SlovenskiprehodeFTI.StoritevprehodaGateService.Statistikainmetrike : "<color:#707070>Letna statistika"
+eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.Shrambarevizijskihsledi : "<color:#707070>Pregled revizijskih sledi"
+eFTIGate.OkoljeTCTzaplatforme .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>Rezultat TCT za priklop"
+eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> Unijskireferenčniseznam : "<color:#707070>Sinhronizacija statusov certifikatov (R2)\n<color:#707070><size:8>[HTTPS]</size>"
+eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> Nacionalniseznamcertificiranihplatform : "<color:#707070>Nacionalni vnosi certificiranih platform\n<color:#707070><size:8>[HTTPS ali ročno]</size>"
+eFTIGate.APIzapristojneorgane3 .[#707070,thickness=2].> eFTIGate.eFTIGateService.JedroGateCore : "<color:#707070>Predaja zahtev"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.Sporočilniposrednik : "<color:#707070>Asinhrona obdelava\n<color:#707070><size:8>[AMQP]</size>"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Iskalnimehanizem : "<color:#707070>Razreši cilj, išči"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>Preveri pošiljatelja (AAP, eFTI Gate)"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa : "<color:#707070>Preveri platformo"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.PovezovalnikeDelivery : "<color:#707070>Pošlji in prejmi sporočila"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Revizijskasledindnevniki : "<color:#707070>Revizijska sled"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Statistikainmetrike : "<color:#707070>Dogodki"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.eFTIGateService.Skupnaknjižnica : "<color:#707070>Validacija in modeli"
+eFTIGate.eFTIGateService.JedroGateCore .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>Stanje zahtev\n<color:#707070><size:8>[JDBC]</size>"
+eFTIGate.eFTIGateService.Iskalnimehanizem .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registeridentifikatorjev : "<color:#707070>Lokalno iskanje"
+eFTIGate.eFTIGateService.Iskalnimehanizem .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>eFTI Gate za posredovanje iskanj"
+eFTIGate.eFTIGateService.Iskalnimehanizem .[#707070,thickness=2].> eFTIGate.eFTIGateService.PovezovalnikeDelivery : "<color:#707070>Iskanje v drugih eFTI Gate"
+eFTIGate.eFTIGateService.Preverjanjecertifikacijskegastatusa .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>Register platform"
+eFTIGate.eFTIGateService.Registeridentifikatorjev .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>Zapisi UIL in identifikatorjev\n<color:#707070><size:8>[JDBC]</size>"
+eFTIGate.eFTIGateService.Registripovezav .[#707070,thickness=2].> eFTIGate.PodatkovnabazaeFTIGate : "<color:#707070>Registri povezav\n<color:#707070><size:8>[JDBC]</size>"
+eFTIGate.eFTIGateService.PovezovalnikeDelivery .[#707070,thickness=2].> eFTIGate.eFTIGateService.OdjemalecWSWSPlugin : "<color:#707070>Uporablja"
+eFTIGate.eFTIGateService.OdjemalecWSWSPlugin .[#707070,thickness=2].> eFTIGate.DostopnatočkaeDelivery : "<color:#707070>Pošiljanje in prejem sporočil AS4\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
+eFTIGate.DostopnatočkaeDelivery .[#707070,thickness=2].> eFTIGate.eFTIGateService.PovezovalnikeDelivery : "<color:#707070>Dostava prejetih sporočil\n<color:#707070><size:8>[JMS/WS]</size>"
+eFTIGate.eFTIGateService.Revizijskasledindnevniki .[#707070,thickness=2].> eFTIGate.Shrambarevizijskihsledi : "<color:#707070>Zapisi revizijske sledi"
+eFTIGate.eFTIGateService.Revizijskasledindnevniki .[#707070,thickness=2].> eFTIGate.NadzordelovanjainSIEM : "<color:#707070>Tehnični in varnostni dogodki"
+eFTIGate.eFTIGateService.Statistikainmetrike .[#707070,thickness=2].> eFTIGate.NadzordelovanjainSIEM : "<color:#707070>Metrike"
+eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.eFTIGateService.Registripovezav : "<color:#707070>Upravljanje registrov in politike priklopa"
+eFTIGate.Upravljavskaaplikacija .[#707070,thickness=2].> eFTIGate.eFTIGateService.Statistikainmetrike : "<color:#707070>Letna statistika"
 @enduml

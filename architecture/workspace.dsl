@@ -1,5 +1,5 @@
 /*
- * Slovenski prehod eFTI (eFTI-vrata) – model C4 (osnutek v0.2, 19. 11. 2026)
+ * eFTI Gate (slovenski prehod eFTI, eFTI-vrata) – model C4 (osnutek v0.2, 19. 11. 2026)
  * Vir resnice za diagrame v Prilogi D in pogl. 5 TS (M3). Diagramov ne urejamo ročno.
  *
  * Oznake (tags):
@@ -12,7 +12,7 @@
  * (PE, IM, RID, ED, AAP, RD, UA, UP, OP, TCT); scripts/build-traceability.py iz nje doda stolpec »Element C4«.
  * Številke vmesnikov sledijo ICD v0.5 §3.1 (osnutek); v modelu so uporabljeni #1–#3.
  */
-workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
+workspace "eFTI Gate (SI)" "Model C4 za tehnične specifikacije (M3)" {
 
     !identifiers hierarchical
 
@@ -23,26 +23,26 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
 
         # ---------- Osebe ----------
         uradnik = person "Uradnik pristojnega organa" "Policist, inšpektor ali carinik, ki med nadzorom zahteva podatke eFTI (čl. 1(3) IU 2024/1942)." "Zunanji"
-        operater = person "Upravljavec prehoda" "Skrbnik pri MZIE ali izvajalcu vzdrževanja; nacionalna služba za pomoč (raven 2)."
+        operater = person "Upravljavec eFTI Gate" "Skrbnik pri MZIE ali izvajalcu vzdrževanja; nacionalna služba za pomoč (raven 2)."
         gospodarskiSubjekt = person "Gospodarski subjekt" "Prevoznik, špediter, pošiljatelj ali prejemnik; podatke eFTI vodi na certificirani platformi." "Zunanji"
 
         # ---------- Sistemi ----------
         group "Slovenija" {
-            vrata = softwareSystem "Slovenski prehod eFTI" "Prehod eFTI (čl. 6 IU 2024/1942) z iskalnim mehanizmom (čl. 8) in registrom identifikatorjev (čl. 11)." {
+            vrata = softwareSystem "eFTI Gate" "Slovenski prehod eFTI (čl. 6 IU 2024/1942) z iskalnim mehanizmom (čl. 8) in registrom identifikatorjev (čl. 11)." {
                 properties {
                     "komp" "PE"
                 }
 
-                gateService = container "Storitev prehoda (Gate Service)" "Jedro prehoda: vmesniki, obdelava zahtev, usmerjanje, revizijska sled. V RI ena storitev iz knjižnic." "Java 21+, Spring Boot" "RI" {
+                gateService = container "eFTI Gate Service" "Jedro eFTI Gate: vmesniki, obdelava zahtev, usmerjanje, revizijska sled. V RI ena storitev iz knjižnic." "Java 21+, Spring Boot" "RI" {
                     properties {
                         "komp" "PE"
                     }
-                    jedro = component "Jedro prehoda (Gate Core)" "Obdelava zahtev prek UIL, iskanj po identifikatorjih in sporočil o nadaljnjem ukrepanju; vloga »prehod, ki zahteva dostop« in »prehod, ki prejme zahtevo«; časovna omejitev 60 s." "Spring Boot" "RI" {
+                    jedro = component "Jedro (Gate Core)" "Obdelava zahtev prek UIL, iskanj po identifikatorjih in sporočil o nadaljnjem ukrepanju; vloga »prehod, ki zahteva dostop« in »prehod, ki prejme zahtevo«; časovna omejitev 60 s." "Spring Boot" "RI" {
                         properties {
                             "komp" "PE"
                         }
                     }
-                    iskalnik = component "Iskalni mehanizem" "Iz UIL razbere prehod in platformo, išče v registru identifikatorjev, posreduje iskanja drugim prehodom, združi rezultate (čl. 8; TGD §6.2–6.3)." "Java" "RI" {
+                    iskalnik = component "Iskalni mehanizem" "Iz UIL razbere eFTI Gate in platformo, išče v registru identifikatorjev, posreduje iskanja drugim eFTI Gate, združi rezultate (čl. 8; TGD §6.2–6.3)." "Java" "RI" {
                         properties {
                             "komp" "IM"
                         }
@@ -52,7 +52,7 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
                             "komp" "RID"
                         }
                     }
-                    registri = component "Registri povezav" "Register prehodov (ID, certifikati), register AAP (ID, certifikati), register platform (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." "Java" "Dodatek SI" {
+                    registri = component "Registri povezav" "Register eFTI Gate drugih DČ (ID, certifikati), register AAP (ID, certifikati), register platform (ID, ključi, certifikacijski status, politika priklopa) (čl. 6(3)(d)–(f))." "Java" "Dodatek SI" {
                         properties {
                             "komp" "PE"
                         }
@@ -99,7 +99,7 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
                         "komp" "PE"
                     }
                 }
-                db = container "Podatkovna baza prehoda" "Register identifikatorjev, registri povezav, stanje zahtev." "PostgreSQL" "RI,Database" {
+                db = container "Podatkovna baza eFTI Gate" "Register identifikatorjev, registri povezav, stanje zahtev." "PostgreSQL" "RI,Database" {
                     properties {
                         "komp" "RID"
                     }
@@ -141,7 +141,7 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
                 }
             }
 
-            organi = softwareSystem "Sistemi pristojnih organov (AAP, register dovoljenj, uporabniška aplikacija)" "Dostopovna točka organa (čl. 4), register dovoljenj (čl. 5) in uporabniška aplikacija (čl. 7) Policije, FURS, IRSI in drugih organov. V prehodu ali pri organih: odloči M2 (čl. 4(4))." "Odprto" {
+            organi = softwareSystem "Sistemi pristojnih organov (AAP, register dovoljenj, uporabniška aplikacija)" "Dostopovna točka organa (čl. 4), register dovoljenj (čl. 5) in uporabniška aplikacija (čl. 7) Policije, FURS, IRSI in drugih organov. V eFTI Gate ali pri organih: odloči M2 (čl. 4(4))." "Odprto" {
                 properties {
                     "komp" "AAP"
                 }
@@ -152,21 +152,21 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
         }
 
         group "EU eFTI okolje" {
-            tujaVrata = softwareSystem "Prehodi eFTI drugih DČ" "Mrežna topologija prehodov." "Zunanji"
+            tujaVrata = softwareSystem "eFTI Gate drugih DČ" "Mrežna topologija eFTI Gate." "Zunanji"
             referencniSeznam = softwareSystem "Unijski referenčni seznam" "Statusi certifikatov platform eFTI (DU o certificiranju, v sprejemanju)." "Zunanji,Odprto"
             smlSmp = softwareSystem "eDelivery SML/SMP" "Dinamično odkrivanje platform za #2." "Zunanji"
-            tujePlatforme = softwareSystem "Platforme eFTI drugih DČ" "Priključene na prehode drugih DČ." "Zunanji"
+            tujePlatforme = softwareSystem "Platforme eFTI drugih DČ" "Priključene na eFTI Gate drugih DČ." "Zunanji"
             helpdeskEU = softwareSystem "Služba za pomoč EK (raven 3)" "Čl. 12(2) IU 2024/1942." "Zunanji"
         }
 
         group "Testno okolje eFTI4LIVE" {
-            ri = softwareSystem "Referenčni prehod (RI) in Launchpad" "Sidro skladnosti v integracijskem omrežju; TCT in varnostni testi s podpisanim poročilom." "Zunanji,Test"
+            ri = softwareSystem "Referenčni eFTI Gate (RI) in Launchpad" "Sidro skladnosti v integracijskem omrežju; TCT in varnostni testi s podpisanim poročilom." "Zunanji,Test"
         }
 
         # ---------- Odnosi: osebe ----------
         uradnik -> organi "Vloži zahtevo za dostop ali sporočilo o nadaljnjem ukrepanju"
         gospodarskiSubjekt -> platformaSI "Vodi podatke eFTI"
-        operater -> vrata.admin "Upravlja prehod"
+        operater -> vrata.admin "Upravlja eFTI Gate"
         vrata.monitoring -> operater "Alarmi"
         operater -> helpdeskEU "Prijave na raven 3"
 
@@ -189,7 +189,7 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
         vrata.caApi -> vrata.idp "Preverjanje odjemalca in žetonov"
         vrata.gateService.jedro -> vrata.mq "Asinhrona obdelava" "AMQP"
         vrata.gateService.jedro -> vrata.gateService.iskalnik "Razreši cilj, išči"
-        vrata.gateService.jedro -> vrata.gateService.registri "Preveri pošiljatelja (AAP, prehod)"
+        vrata.gateService.jedro -> vrata.gateService.registri "Preveri pošiljatelja (AAP, eFTI Gate)"
         vrata.gateService.jedro -> vrata.gateService.certCheck "Preveri platformo"
         vrata.gateService.jedro -> vrata.gateService.edeliveryConnector "Pošlji in prejmi sporočila"
         vrata.gateService.jedro -> vrata.gateService.logger "Revizijska sled"
@@ -197,8 +197,8 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
         vrata.gateService.jedro -> vrata.gateService.commons "Validacija in modeli"
         vrata.gateService.jedro -> vrata.db "Stanje zahtev" "JDBC"
         vrata.gateService.iskalnik -> vrata.gateService.roi "Lokalno iskanje"
-        vrata.gateService.iskalnik -> vrata.gateService.registri "Prehodi za posredovanje iskanj"
-        vrata.gateService.iskalnik -> vrata.gateService.edeliveryConnector "Iskanje v drugih prehodih"
+        vrata.gateService.iskalnik -> vrata.gateService.registri "eFTI Gate za posredovanje iskanj"
+        vrata.gateService.iskalnik -> vrata.gateService.edeliveryConnector "Iskanje v drugih eFTI Gate"
         vrata.gateService.certCheck -> vrata.gateService.registri "Register platform"
         vrata.gateService.roi -> vrata.db "Zapisi UIL in identifikatorjev" "JDBC"
         vrata.gateService.registri -> vrata.db "Registri povezav" "JDBC"
@@ -221,28 +221,28 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
             "plantuml.sequenceDiagram" "false"
         }
 
-        systemLandscape "C0-Pokrajina" "Slovenski prehod v okolju eFTI" {
+        systemLandscape "C0-Pokrajina" "eFTI Gate v okolju eFTI" {
             include *
             autoLayout lr
         }
 
-        systemContext vrata "C1-Kontekst" "Raven 1: kontekst slovenskega prehoda eFTI" {
+        systemContext vrata "C1-Kontekst" "Raven 1: kontekst eFTI Gate" {
             include *
             include uradnik gospodarskiSubjekt tujePlatforme
             autoLayout lr
         }
 
-        container vrata "C2-Vsebniki" "Raven 2: vsebniki (izhodišče RI, dodatki SI, R2)" {
+        container vrata "C2-Vsebniki" "Raven 2: vsebniki eFTI Gate (izhodišče RI, dodatki SI, R2)" {
             include *
             autoLayout lr
         }
 
-        component vrata.gateService "C3-Komponente" "Raven 3: komponente storitve prehoda" {
+        component vrata.gateService "C3-Komponente" "Raven 3: komponente eFTI Gate Service" {
             include *
             autoLayout lr
         }
 
-        dynamic vrata "D1-UIL-lokalna-platforma" "PU-CA-1 / PU-G2P-1: dostop prek UIL, platforma na slovenskem prehodu (TGD §3.3.1 a, c)" {
+        dynamic vrata "D1-UIL-lokalna-platforma" "PU-CA-1 / PU-G2P-1: dostop prek UIL, platforma na slovenskem eFTI Gate (TGD §3.3.1 a, c)" {
             organi -> vrata.caApi "Zahteva z UIL in pravicami obdelave"
             vrata.caApi -> vrata.gateService "Predaja (ID zahteve vrnjen organu)"
             vrata.gateService -> vrata.mq "Asinhrona obdelava"
@@ -255,14 +255,14 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
             autoLayout lr
         }
 
-        dynamic vrata "D2-UIL-tuji-prehod" "PU-CA-1 / PU-G2G-1: dostop prek UIL, platforma na tujem prehodu (TGD §3.3.1 b)" {
+        dynamic vrata "D2-UIL-tuji-eFTI-Gate" "PU-CA-1 / PU-G2G-1: dostop prek UIL, platforma na tujem eFTI Gate (TGD §3.3.1 b)" {
             organi -> vrata.caApi "Zahteva z UIL"
             vrata.caApi -> vrata.gateService "Predaja"
-            vrata.gateService -> vrata.ap "UIL kaže na drug prehod"
+            vrata.gateService -> vrata.ap "UIL kaže na drug eFTI Gate"
             vrata.ap -> tujaVrata "#1 G2G zahteva (statično odkrivanje)"
             tujaVrata -> tujePlatforme "#2 G2P"
             tujaVrata -> vrata.ap "Odgovor po isti poti"
-            vrata.ap -> vrata.gateService "Preveri ključ prehoda, dostavi"
+            vrata.ap -> vrata.gateService "Preveri ključ eFTI Gate, dostavi"
             organi -> vrata.caApi "Pridobi odgovor"
             autoLayout lr
         }
@@ -271,11 +271,11 @@ workspace "Slovenski prehod eFTI" "Model C4 za tehnične specifikacije (M3)" {
             vrata.caApi -> vrata.gateService.jedro "Iskanje (npr. registrska oznaka)"
             vrata.gateService.jedro -> vrata.gateService.iskalnik "Išči"
             vrata.gateService.iskalnik -> vrata.gateService.roi "Lokalni zadetki"
-            vrata.gateService.iskalnik -> vrata.gateService.registri "Seznam prehodov"
-            vrata.gateService.iskalnik -> vrata.gateService.edeliveryConnector "Posreduj iskanje vsem prehodom"
+            vrata.gateService.iskalnik -> vrata.gateService.registri "Seznam eFTI Gate"
+            vrata.gateService.iskalnik -> vrata.gateService.edeliveryConnector "Posreduj iskanje vsem eFTI Gate"
             vrata.gateService.edeliveryConnector -> vrata.gateService.wsPlugin "Pošlji"
             vrata.gateService.wsPlugin -> vrata.ap "#1 G2G iskanje"
-            vrata.ap -> vrata.gateService.edeliveryConnector "Delni rezultati drugih prehodov"
+            vrata.ap -> vrata.gateService.edeliveryConnector "Delni rezultati drugih eFTI Gate"
             vrata.gateService.jedro -> vrata.db "Asinhrono: sprotni rezultati; sinhrono: združeni s statusi"
             autoLayout lr
         }

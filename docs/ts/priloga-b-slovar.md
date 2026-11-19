@@ -4,7 +4,7 @@
 
 | Izraz (IU 2024/1942) | Sopomenke v TS in virih | Angleško (TGD, ICD) | Opredelitev / vir |
 |---|---|---|---|
-| prehod eFTI | eFTI-vrata, vrata | eFTI Gate | komponenta IKT za funkcije iz čl. 6 (čl. 1(12)) |
+| prehod eFTI | eFTI-vrata, vrata; **eFTI Gate** (ime v diagramih C4, Priloga D) | eFTI Gate | komponenta IKT za funkcije iz čl. 6 (čl. 1(12)) |
 | prehod, ki zahteva dostop | — | requesting gate | čl. 1(13) |
 | prehod, ki prejme zahtevo | — | receiving gate | čl. 1(14) |
 | dostopovna točka organa | AAP | Authority Access Point (AAP) | čl. 1(11), čl. 4 |

@@ -1,0 +1,78 @@
+@startuml
+set separator none
+title eFTI Gate - Dynamic
+
+left to right direction
+skinparam ranksep 60
+skinparam nodesep 30
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam rectangle<<eFTIGate.APIzapristojneorgane3>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<eFTIGate.DostopnatočkaeDelivery>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<PlatformeeFTIdrugihDČ>> {
+  BackgroundColor #8a8a8a
+  FontColor #ffffff
+  BorderColor #606060
+  shadowing false
+}
+skinparam rectangle<<SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija>> {
+  BackgroundColor #e67e22
+  FontColor #ffffff
+  BorderColor #a15817
+  shadowing false
+}
+skinparam rectangle<<eFTIGate.eFTIGateService>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<eFTIGatedrugihDČ>> {
+  BackgroundColor #8a8a8a
+  FontColor #ffffff
+  BorderColor #606060
+  shadowing false
+}
+skinparam rectangle<<eFTIGate>> {
+  BorderColor #0b4884
+  FontColor #0b4884
+  shadowing false
+}
+
+rectangle "eFTI Gate\n<size:10>[Software System]</size>" <<eFTIGate>> {
+  rectangle "==API za pristojne organe (#3)\n<size:10>[Container: REST/JSON, mTLS, OIDC]</size>\n\nREST vmesnik za AAP; asinhrono: organ prejme ID zahteve in pridobi odgovor pozneje. Specifikacija OpenAPI." <<eFTIGate.APIzapristojneorgane3>> as eFTIGate.APIzapristojneorgane3
+  rectangle "==Dostopna točka eDelivery\n<size:10>[Container: Domibus (EK), AS4]</size>\n\nAS4 za #1 (statično odkrivanje) in #2 (SML/SMP); PMode po TGD Annex 1; ključi v HSM." <<eFTIGate.DostopnatočkaeDelivery>> as eFTIGate.DostopnatočkaeDelivery
+  rectangle "==eFTI Gate Service\n<size:10>[Container: Java 21+, Spring Boot]</size>\n\nJedro eFTI Gate: vmesniki, obdelava zahtev, usmerjanje, revizijska sled. V RI ena storitev iz knjižnic." <<eFTIGate.eFTIGateService>> as eFTIGate.eFTIGateService
+}
+
+rectangle "==Sistemi pristojnih organov (AAP, register dovoljenj, uporabniška aplikacija)\n<size:10>[Software System]</size>\n\nDostopovna točka organa (čl. 4), register dovoljenj (čl. 5) in uporabniška aplikacija (čl. 7) Policije, FURS, IRSI in drugih organov. V eFTI Gate ali pri organih: odloči M2 (čl. 4(4))." <<SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija>> as SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija
+rectangle "==eFTI Gate drugih DČ\n<size:10>[Software System]</size>\n\nMrežna topologija eFTI Gate." <<eFTIGatedrugihDČ>> as eFTIGatedrugihDČ
+rectangle "==Platforme eFTI drugih DČ\n<size:10>[Software System]</size>\n\nPriključene na eFTI Gate drugih DČ." <<PlatformeeFTIdrugihDČ>> as PlatformeeFTIdrugihDČ
+
+SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija .[#707070,thickness=2].> eFTIGate.APIzapristojneorgane3 : "<color:#707070>1. Zahteva z UIL\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+eFTIGate.APIzapristojneorgane3 .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>2. Predaja"
+eFTIGate.eFTIGateService .[#707070,thickness=2].> eFTIGate.DostopnatočkaeDelivery : "<color:#707070>3. UIL kaže na drug eFTI Gate\n<color:#707070><size:8>[SOAP/HTTPS]</size>"
+eFTIGate.DostopnatočkaeDelivery .[#707070,thickness=2].> eFTIGatedrugihDČ : "<color:#707070>4. #1 G2G zahteva (statično odkrivanje)\n<color:#707070><size:8>[AS4, statično odkrivanje]</size>"
+eFTIGatedrugihDČ .[#707070,thickness=2].> PlatformeeFTIdrugihDČ : "<color:#707070>5. #2 G2P\n<color:#707070><size:8>[AS4]</size>"
+eFTIGatedrugihDČ .[#707070,thickness=2].> eFTIGate.DostopnatočkaeDelivery : "<color:#707070>6. Odgovor po isti poti\n<color:#707070><size:8>[AS4]</size>"
+eFTIGate.DostopnatočkaeDelivery .[#707070,thickness=2].> eFTIGate.eFTIGateService : "<color:#707070>7. Preveri ključ eFTI Gate, dostavi\n<color:#707070><size:8>[JMS/WS]</size>"
+SistemipristojnihorganovAAPregisterdovoljenjuporabniškaaplikacija .[#707070,thickness=2].> eFTIGate.APIzapristojneorgane3 : "<color:#707070>8. Pridobi odgovor\n<color:#707070><size:8>[REST/JSON, mTLS]</size>"
+@enduml
