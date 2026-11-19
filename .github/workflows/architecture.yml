@@ -19,6 +19,11 @@ jobs:
           python3 -m pip install --quiet pyyaml
           python3 scripts/check-openapi.py
           python3 scripts/build-api-docs.py --check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Lint OpenAPI specifications (Redocly, recommended rules)
+        run: npx -y @redocly/cli@2.71.2 lint interfaces/openapi/*.yaml
       - name: Annex C is up to date
         run: |
           python3 scripts/build-traceability.py

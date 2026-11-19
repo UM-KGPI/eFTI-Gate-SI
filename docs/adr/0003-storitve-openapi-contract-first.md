@@ -21,4 +21,4 @@
 
 - Pristojni organi in ponudniki AAP lahko razvoj začnejo vzporedno z izvajalcem eFTI Gate.
 - Izvajalec mora pogodbe uskladiti z ICD in XSD, ko bosta dokončna; spremembe potrdi MZIE (SI-GATE-FR-300).
-- Polna validacija z linterjem (npr. Redocly) še ni del CI; zdaj se izvaja strukturna kontrola `scripts/check-openapi.py`.
+- CI ob vsaki spremembi izvede strukturno kontrolo `scripts/check-openapi.py` in validacijo z Redocly CLI 2.71.2 (priporočena pravila); prva validacija 19. 11. 2026 brez napak in opozoril.
