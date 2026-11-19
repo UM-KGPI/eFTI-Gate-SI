@@ -149,6 +149,7 @@ Velja za uporabniške vmesnike v obsegu JN (upravljavska aplikacija; uporabnišk
 |---|---|---|---|---|---|
 | SI-GATE-NFR-140 | Izvajalec mora v 5 delovnih dneh po koncu meseca predložiti poročilo o storitvah: razpoložljivost, prijave s prioritetami in časi reševanja, doseganje SLA, odprte prijave z ukrepi, spremembe in izdaje, varnostni dogodki. | NL PvE NF-75–78 | M | OP | P |
 | SI-GATE-NFR-141 | Izvajalec mora MZIE zagotoviti podatke o delovanju za nacionalno kontaktno točko eFTI in poročanje v mreži za operativno podporo (npr. število zahtev po vmesnikih, napake, nedosegljivost). | čl. 12(6), 13(3)(a) | M | OP | P |
+| SI-GATE-NFR-142 | Prehod mora za vsako koledarsko leto zagotoviti statistiko števila zahtev pristojnih organov za dostop do podatkov eFTI (po organih, vrstah zahtev, vmesnikih in podsklopih podatkov, kjer so znani) kot dopolnilni vir za poročanje DČ Komisiji; prvo poročilo do 21. 8. 2027. | čl. 17 Uredbe (EU) 2020/1056 | M | PE, UP | D |
 
 ## 8.10 Prenosljivost, lastništvo in predaja
 

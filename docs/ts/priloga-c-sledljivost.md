@@ -2,7 +2,7 @@
 
 > **Generirano** s `scripts/build-traceability.py` iz tabel zahtev v poglavjih; ne urejaj ročno.
 >
-> Število zahtev: 220. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0.
+> Število zahtev: 227. Pomen stolpcev P, Komp. in Preverjanje: pogl. 6.0.
 
 | Oznaka | Kratek opis | Vir | P | Komp. | Preverjanje | Pogl. |
 |---|---|---|---|---|---|---|
@@ -192,6 +192,7 @@
 | SI-GATE-NFR-133 | Prehod mora prenesti konice zahtev ob terenskih nadzorih (sočasna iskanja po identifikatorjih, ki se … | CTG Security (Testfest Performance) | M | PE | T | 8 |
 | SI-GATE-NFR-140 | Izvajalec mora v 5 delovnih dneh po koncu meseca predložiti poročilo o storitvah: razpoložljivost, prijave s … | NL PvE NF-75–78 | M | OP | P | 8 |
 | SI-GATE-NFR-141 | Izvajalec mora MZIE zagotoviti podatke o delovanju za nacionalno kontaktno točko eFTI in poročanje v mreži … | čl. 12(6), 13(3)(a) | M | OP | P | 8 |
+| SI-GATE-NFR-142 | Prehod mora za vsako koledarsko leto zagotoviti statistiko števila zahtev pristojnih organov za dostop do … | čl. 17 Uredbe (EU) 2020/1056 | M | PE, UP | D | 8 |
 | SI-GATE-NFR-150 | MZIE postane lastnik izvorne kode, konfiguracije in dokumentacije rešitve ob predaji; uporabljene … | NL PvE NF-84; ADR-0002 | M | OP | P | 8 |
 | SI-GATE-NFR-151 | Ob prenehanju pogodbe mora izvajalec brezplačno predati vso izvorno kodo in podatke v izvirnih, trajnih … | NL PvE NF-83 | M | OP | P | 8 |
 | SI-GATE-NFR-152 | Rešitev mora biti nameščljiva v standardnih vsebnikih (npr. OCI) in prenosljiva med okolji gostovanja brez … | NL PvE NF-81; RI (Docker) | M | PE, OP | D | 8 |
@@ -226,3 +227,9 @@
 | SI-GATE-NFR-282 | Prehod mora tehnično podpirati priklop platform glede na status v registru platform: »certificirana« in, če … | M2.3; Praga (pismo EK, stališča DČ) | M | PE, UP | D | 9 |
 | SI-GATE-NFR-283 | Prehod mora spremljati delež napak v izmenjavi s posamezno platformo (format, obvezna polja, protokol) in ob … | M2.3 (spremljanje v produkciji) | M | PE, UP | T | 9 |
 | SI-GATE-NFR-284 | Register platform mora podpirati postopek iz čl. 6(4) za platforme, certificirane v drugih DČ … | čl. 6(4) | M | UP | D | 9 |
+| SI-GATE-NFR-300 | Izvajalec mora rešitev izdelati v fazah iz 10.5 in v 10 delovnih dneh po podpisu pogodbe [predlog] … | 10.2; [predlog] | M | OP | P | 10 |
+| SI-GATE-NFR-301 | Izvajalec mora v 3 tednih po podpisu pogodbe [predlog] vzpostaviti testni prehod (na osnovi RI ali lastni) v … | TG2.2, TG2.3 (Praga); [predlog] | M | PE, OP | D | 10 |
+| SI-GATE-NFR-302 | Izdaja R1 mora biti v produkciji in prevzeta (F1–F4) najpozneje 9. 7. 2027. | čl. 5(1) Uredbe (EU) 2020/1056 | M | OP | P | 10 |
+| SI-GATE-NFR-303 | Izdaja R2 mora biti v produkciji najpozneje 6 mesecev po zagonu [predlog]. | [predlog] | M | OP | P | 10 |
+| SI-GATE-NFR-304 | Po zagonu mora izvajalec spremembe uvajati v ciklu, usklajenem s 6-mesečnim ciklom izdaj EU (delegirani akt … | časovnica integracijskega omrežja (9. 11. 2026) | M | OP | P | 10 |
+| SI-GATE-NFR-305 | Izvajalec mora MZIE vsaka dva tedna poročati o napredku glede na kritično pot (10.3) in o odvisnostih od EU … | [predlog] | M | OP | P | 10 |
