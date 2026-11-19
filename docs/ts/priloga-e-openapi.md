@@ -6,10 +6,10 @@
 
 | Storitev | Datoteka | Različica | Vmesnik | Odjemalci | Izdaja | Varnost | Element C4 | Operacij |
 |---|---|---|---|---|---|---|---|---|
-| eFTI Authorisation Registry API | `efti-authorisation-registry-api.yaml` | 0.1.0-draft.1 | Authorisation Registry | kadrovski sistemi pristojnih organov | R2, pogojno (M2) | mTLS + OAuth 2.0 (client credentials) | `vrata.arApi` | 4 |
-| eFTI Gate AAP API | `efti-gate-aap-api.yaml` | 1.0.0-draft.1 | #3 G2A | AAP pristojnih organov | R1 | mTLS + OAuth 2.0 (client credentials) | `vrata.caApi` | 6 |
-| eFTI Gate Administration API | `efti-gate-admin-api.yaml` | 1.0.0-draft.1 | upravljanje | upravljavska aplikacija, avtomatizacija MZIE | R1 (sinhronizacija statusov R2) | mTLS + OpenID Connect | `vrata.adminApi` | 17 |
-| eFTI Gate Audit and Statistics API | `efti-gate-audit-api.yaml` | 1.0.0-draft.1 | revizija, poročanje | upravljavska aplikacija, poročanje MZIE | R1 | mTLS + OpenID Connect | `vrata.auditApi` | 5 |
+| eFTI Authorisation Registry API | `efti-authorisation-registry-api.yaml` | 0.1.0-draft.1 | Authorisation Registry | kadrovski sistemi pristojnih organov | R2, pogojno (M2) | mTLS + OAuth 2.0 (client credentials) | `gate.arApi` | 4 |
+| eFTI Gate AAP API | `efti-gate-aap-api.yaml` | 1.0.0-draft.1 | #3 G2A | AAP pristojnih organov | R1 | mTLS + OAuth 2.0 (client credentials) | `gate.aapApi` | 6 |
+| eFTI Gate Administration API | `efti-gate-admin-api.yaml` | 1.0.0-draft.1 | upravljanje | upravljavska aplikacija, avtomatizacija MZIE | R1 (sinhronizacija statusov R2) | mTLS + OpenID Connect | `gate.adminApi` | 17 |
+| eFTI Gate Audit and Statistics API | `efti-gate-audit-api.yaml` | 1.0.0-draft.1 | revizija, poročanje | upravljavska aplikacija, poročanje MZIE | R1 | mTLS + OpenID Connect | `gate.auditApi` | 5 |
 
 Vmesnik #2 (eFTI Gate ↔ eFTI Platform) je na ravni EU določen z eDelivery (AS4); profil REST je nacionalna možnost (čl. 9(4) IU 2024/1942, ICD v0.5 §9) in se tu ne specificira, dokler o njem ne odloči MZIE (SI-GATE-FR-134, SI-GATE-FR-306).
 

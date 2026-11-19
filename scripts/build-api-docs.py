@@ -16,10 +16,10 @@ METHODS = ["get", "post", "put", "patch", "delete"]
 
 # metapodatki storitev, ki niso v samih specifikacijah (vmesnik, odjemalci, izdaja, element C4)
 META = {
-    "efti-gate-aap-api.yaml": ("#3 G2A", "AAP pristojnih organov", "R1", "vrata.caApi"),
-    "efti-gate-admin-api.yaml": ("upravljanje", "upravljavska aplikacija, avtomatizacija MZIE", "R1 (sinhronizacija statusov R2)", "vrata.adminApi"),
-    "efti-gate-audit-api.yaml": ("revizija, poročanje", "upravljavska aplikacija, poročanje MZIE", "R1", "vrata.auditApi"),
-    "efti-authorisation-registry-api.yaml": ("Authorisation Registry", "kadrovski sistemi pristojnih organov", "R2, pogojno (M2)", "vrata.arApi"),
+    "efti-gate-aap-api.yaml": ("#3 G2A", "AAP pristojnih organov", "R1", "gate.aapApi"),
+    "efti-gate-admin-api.yaml": ("upravljanje", "upravljavska aplikacija, avtomatizacija MZIE", "R1 (sinhronizacija statusov R2)", "gate.adminApi"),
+    "efti-gate-audit-api.yaml": ("revizija, poročanje", "upravljavska aplikacija, poročanje MZIE", "R1", "gate.auditApi"),
+    "efti-authorisation-registry-api.yaml": ("Authorisation Registry", "kadrovski sistemi pristojnih organov", "R2, pogojno (M2)", "gate.arApi"),
 }
 
 
